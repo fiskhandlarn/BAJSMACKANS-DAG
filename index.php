@@ -129,13 +129,6 @@ $days = [
 
 $now = new Carbon('now');
 $tomorrow = new Carbon('tomorrow');
-echo "\n\n----\n\n";
-
-$now = new Carbon('13 october');
-$tomorrow = new Carbon('14 october');
-echo $now . "\n";
-echo $tomorrow . "\n";
-echo "\n\n----\n\n";
 foreach($days as $idx => $daydata) {
   $isToday = $now->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
   $isTomorrow = $tomorrow->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
@@ -162,7 +155,6 @@ foreach($days as $idx => $daydata) {
 EOT;
     $json = sprintf($json, ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
     $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhook_url;
-    echo $exec;
-    //exec($exec);
+    exec($exec);
   }
 }
