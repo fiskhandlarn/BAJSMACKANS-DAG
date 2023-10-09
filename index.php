@@ -12,7 +12,7 @@ $days = [
     "image" => "https://res.cloudinary.com/hufennija/image/upload/q_auto,f_auto,fl_progressive,c_lfill/2367529.jpg"
   ],
   [
-    "day" => Carbon::createFromTimestamp(easter_date())->sub("47 days"),
+    "day" => Carbon::createFromTimestamp(easter_date())->sub(\DateInterval::createFromDateString("47 days")),
     "title" => "Fettisdagen :semla:",
     "link" => "https://sv.wikipedia.org/wiki/Fettisdagen",
     "image" => "https://cdn.valio.fi/mediafiles/f0ca373f-3641-483b-83ef-88f2d2bad34c/1440x1080-recipe-hero/4x3/klassisk-laktosfri-semla.jpg",
