@@ -128,8 +128,19 @@ $days = [
 ];
 
 $now = new Carbon('now');
+$tomorrow = new Carbon('tomorrow');
+echo "\n\n----\n\n";
+
+$now = new Carbon('13 october');
+$tomorrow = new Carbon('14 october');
+echo $now . "\n";
+echo $tomorrow . "\n";
+echo "\n\n----\n\n";
 foreach($days as $idx => $daydata) {
-  if($now->format("Y-m-d") == $daydata["day"]->format("Y-m-d")) {
+  $isToday = $now->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
+  $isTomorrow = $tomorrow->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
+
+  if($isToday || $isTomorrow) {
     $webhook_url = "https://hooks.slack.com/services/<REDACTED>";
     $json = <<<EOT
 {
@@ -138,7 +149,7 @@ foreach($days as $idx => $daydata) {
                         "type": "section",
                         "text": {
                                 "type": "mrkdwn",
-                                "text": ":warning: Idag är det *%s* - %s"
+                                "text": "%s är det *%s* - %s"
                         }
                 },
                 {
@@ -149,8 +160,9 @@ foreach($days as $idx => $daydata) {
         ]
 }
 EOT;
-    $json = sprintf($json, $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
+    $json = sprintf($json, ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
     $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhook_url;
-    exec($exec);
+    echo $exec;
+    //exec($exec);
   }
 }
