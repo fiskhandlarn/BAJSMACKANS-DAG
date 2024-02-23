@@ -6,6 +6,30 @@
     "image": "https://cdn.valio.fi/mediafiles/f0ca373f-3641-483b-83ef-88f2d2bad34c/1440x1080-recipe-hero/4x3/klassisk-laktosfri-semla.jpg"
   },
   {
+    "day": "january 10",
+    "title": "Mazarinens dag",
+    "link": "https://sv.wikipedia.org/wiki/Mazarin_(bakverk)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Mazariner1.jpg/375px-Mazariner1.jpg"
+  },
+  {
+    "day": "january 12",
+    "title": "Marsipandagen",
+    "link": "https://sv.wikipedia.org/wiki/Marsipan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/95/Marcipangris_cropped.jpg"
+  },
+  {
+    "day": "february 3",
+    "title": "Morotskakans dag :carrot:",
+    "link": "https://sv.wikipedia.org/wiki/Morotskaka",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Morotskaka.JPG/1200px-Morotskaka.JPG?20080902011204"
+  },
+  {
+    "day": "february 5",
+    "title": "Nutelladagen",
+    "link": "https://www.ica.se/artikel/nutelladagen/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Nutella_ak.jpg"
+  },
+  {
     "day": "february 5",
     "title": "Runebergsdagen",
     "link": "https://sv.wikipedia.org/wiki/Runebergst%C3%A5rta",
@@ -18,10 +42,22 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Sm%C3%A5lands_nationaldag.jpg/1920px-Sm%C3%A5lands_nationaldag.jpg"
   },
   {
+    "day": "march 3",
+    "title": "Mandelkubbens dag",
+    "link": "https://sv.wikipedia.org/wiki/Mandelkubb",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Mandelkubb.JPG/375px-Mandelkubb.JPG"
+  },
+  {
     "day": "7 march",
     "title": "Punschrullens dag :punschrulle:",
     "link": "https://sv.wikipedia.org/wiki/Dammsugare_(bakverk)",
     "image": "https://www.torebrings.se/bilder/artikelbilder/16/16011mega.jpg"
+  },
+  {
+    "day": "march 13",
+    "title": "Mazarinens dag (Return of the Mazarin)",
+    "link": "https://sv.wikipedia.org/wiki/Mazarin_(bakverk)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Mazariner1.jpg/375px-Mazariner1.jpg"
   },
   {
     "day": "15 march",
@@ -36,6 +72,18 @@
     "image": "https://res.cloudinary.com/coopsverige/images/w_1200,h_1200/v1610649402/417035/V%C3%A5fflor+utan+%C3%A4gg.jpg"
   },
   {
+    "day": "second saturday of april",
+    "title": "Surdegsdagen :bread:",
+    "link": "https://www.kungsornen.se/tips-tricks/teman-bakning/surdegsdagen/",
+    "image": "https://static.standard.co.uk/s3fs-public/thumbnails/image/2020/04/30/10/jake-gyllenhaal.png"
+  },
+  {
+    "day": "12 april",
+    "title": "Lakritsdagen",
+    "link": "https://sv.wikipedia.org/wiki/Lakrits",
+    "image": "https://res.cloudinary.com/anora/image/upload/t_FullWidthImage-XS-IN/f_auto/folkofolk%2FLakritsgodis"
+  },
+  {
     "day": "second wednesday of may",
     "title": "Syltkakans dag",
     "link": "https://sv.wikipedia.org/wiki/Hallongrotta",
@@ -43,9 +91,27 @@
   },
   {
     "day": "1 may",
-    "title": "Budapestbakelsens dag",
+    "title": "Budapestbakelsens dag :flag-hu:",
     "link": "https://sv.wikipedia.org/wiki/Budapestbakelse",
     "image": "https://www.bakemyday.se/wp-content/uploads/2018/10/2866.png"
+  },
+  {
+    "day": "11 may",
+    "title": "Chokladbollens dag",
+    "link": "https://sv.wikipedia.org/wiki/Chokladboll",
+    "image": "https://64.media.tumblr.com/tumblr_m2ojbvuC5F1r9ez18o4_400.gifv"
+  },
+  {
+    "day": "15 may",
+    "title": "Kardemummabullens dag",
+    "link": "https://sv.wikipedia.org/wiki/Bulle",
+    "image": "https://www.bonjour.se/contentassets/b07a8ebb7dc940fd85e9175db59180cd/221071_kardemummabulle_opv_med.jpg"
+  },
+  {
+    "day": "27 may",
+    "title": "Muffinsdagen :cupcake:",
+    "link": "https://www.kungsornen.se/tips-tricks/teman-bakning/muffinsdagen/",
+    "image": "https://www.sharmispassions.com/wp-content/uploads/2019/04/VanillaMuffins7-500x500.jpg"
   },
   {
     "day": "6 june",
@@ -54,10 +120,22 @@
     "image": "http://d2ihp3fq52ho68.cloudfront.net/YTo2OntzOjI6ImlkIjtpOjEzMDMwMDE7czoxOiJ3IjtpOjEwMjA7czoxOiJoIjtpOjMyMDA7czoxOiJjIjtpOjA7czoxOiJzIjtpOjA7czoxOiJrIjtzOjQwOiIxYjU3NzdiOGRiYTRjYjA1YTVhZjE2M2MwZWIzZmI5ODc4MGMyYTc2Ijt9"
   },
   {
+    "day": "9 august",
+    "title": "Rulltårtans dag",
+    "link": "https://matwebben.se/startsida/receptkategorier/tillfallen/rulltartans-dag/",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Swissroll.jpg"
+  },
+  {
     "day": "last monday of september",
     "title": "Prinsesstårtans vecka",
     "link": "https://sv.wikipedia.org/wiki/Prinsesst%C3%A5rta",
     "image": "https://shared.cdn.smp.schibsted.com/v2/images/a2da274e-e4ef-44d3-a772-9860c59ffcaa?fit=crop&h=1425&w=1900&s=b72122d42b58f4045e8c2b74aced479715c53d8b"
+  },
+  {
+    "day": "29 september",
+    "title": "Internationella kaffedagen",
+    "link": "https://sv.wikipedia.org/wiki/Internationella_kaffedagen",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"
   },
   {
     "day": "first sunday of october",
@@ -66,8 +144,14 @@
     "image": "https://i0.wp.com/media.zeinaskitchen.se/2016/04/08042016-IMG_4958-e1487070756944.jpg?fit=2000%2C1333&ssl=1"
   },
   {
+    "day": "second friday of october",
+    "title": "Äggets dag :egg:",
+    "link": "https://blog.omlet.se/2021/10/04/aggets-dag-9-fascinerande-fakta-om-agg/",
+    "image": "https://i.ytimg.com/vi/WAVT9aUKmJc/maxresdefault.jpg"
+  },
+  {
     "day": "october 4",
-    "title": "Kanelbullens dag",
+    "title": "Kanelbullens dag :cinnamon_roll:",
     "link": "https://sv.wikipedia.org/wiki/Kanelbullens_dag",
     "image": "https://res.cloudinary.com/hufennija/image/upload/q_auto,f_auto,fl_progressive,c_lfill/2367529.jpg"
   },
@@ -76,6 +160,12 @@
     "title": "Räkmackans dag :shrimp:",
     "link": "https://sv.wikipedia.org/wiki/R%C3%A4ksm%C3%B6rg%C3%A5s",
     "image": "https://res.cloudinary.com/coopsverige/images/w_1200,h_1200/v1566997026/380073/R%C3%A4kmacka.jpg"
+  },
+  {
+    "day": "18 october",
+    "title": "Chokladmuffinsens dag :cupcake:",
+    "link": "https://chalmers.it/posts/2013-chokladmuffinsens-dag-18-e-oktober",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/68/Schokoladenmuffins.JPG"
   },
   {
     "day": "20 october",
@@ -90,8 +180,14 @@
     "image": "https://dst15js82dk7j.cloudfront.net/234186/74095187-Jd85r.jpg"
   },
   {
+    "day": "31 october",
+    "title": "Halloween :doot:",
+    "link": "https://sv.wikipedia.org/wiki/Halloween",
+    "image": "https://media.tenor.com/xXMKqzQrpJ0AAAAM/skeleton-trumpet.gif"
+  },
+  {
     "day": "6 november",
-    "title": "Gustav Adolfs dödsdag",
+    "title": "Gustav Adolfs dödsdag :skull:",
     "link": "https://sv.wikipedia.org/wiki/Gustav_Adolfsbakelse",
     "image": "https://cached-images.bonnier.news/gcs/bilder/epi-30-dn/Images/2011/11/05/gustav-683.jpg"
   },
@@ -102,21 +198,57 @@
     "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_221660/cf_259/kladdig_kladdkaka.jpg"
   },
   {
+    "day": "10 november",
+    "title": "Äppelkakans dag :apple:",
+    "link": "https://sv.wikipedia.org/wiki/%C3%84ppelkaka",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/51/Appelkaka.jpg"
+  },
+  {
+    "day": "11 november",
+    "title": "Chokladens dag",
+    "link": "https://www.youtube.com/watch?v=EwTZ2xpQwpA",
+    "image": "https://shared.cdn.smp.schibsted.com/v2/images/8c8768e1-257f-4446-b0e1-9a1c98536003?fit=crop&h=1425&w=1900&s=ef7aabb4001453b643f45e169cfaa5ee3f63e51d"
+  },
+  {
     "day": "13 november",
-    "title": "Smörgåstårtans dag :heart:",
+    "title": "Smörgåstårtans dag :sandwich:",
     "link": "https://sv.wikipedia.org/wiki/Sm%C3%B6rg%C3%A5st%C3%A5rta",
     "image": "https://images.recept.se/images/recipes/festlig-raktarta-med-polarbrod_7949.jpg?fit=crop&crop=focalpoint&auto=format&fp-x=0.5&fp-y=0.58863806555395&fp-z=1&w=800&h=570&auto=format"
   },
   {
     "day": "14 november",
-    "title": "Ostkakans dag",
+    "title": "Ostkakans dag :cheese_wedge:",
     "link": "https://sv.wikipedia.org/wiki/Ostkaka",
     "image": "http://1.bp.blogspot.com/-NQDqu--2rOQ/VHNMmvt112I/AAAAAAAADIk/T3WrEdkfaZ0/s1600/Tacotallrik%2C%2Bostkaka%2Boch%2Bbudapest%2B052%2B(2).jpg"
+  },
+  {
+    "day": "17 november",
+    "title": "Napoleonbakelsens dag",
+    "link": "https://sv.wikipedia.org/wiki/Napoleonbakelse",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/38/Napoleonbakelse.jpg"
+  },
+  {
+    "day": "22 november",
+    "title": "Wienerbrödets dag",
+    "link": "https://sv.wikipedia.org/wiki/Wienerbr%C3%B6d",
+    "image": "https://solstollarna.se/bilder/sol/bild03.jpg"
+  },
+  {
+    "day": "9 december",
+    "title": "Pepparkakans dag",
+    "link": "https://sv.wikipedia.org/wiki/Pepparkaka#Pepparkakans_dag",
+    "image": "https://i.pinimg.com/736x/5b/e0/07/5be0070ae625ebdea00efbadfe583ea7.jpg"
   },
   {
     "day": "13 december",
     "title": "Lussekattsdagen",
     "link": "https://sv.wikipedia.org/wiki/Lussekatt",
     "image": "https://images.recept.se/images/recipes/vara-godaste-lussekatter-med-smor_6992.jpg?fit=crop&crop=focalpoint&auto=format&fp-x=0.5&fp-y=0.46765511080213&fp-z=1&w=1200&h=628"
+  },
+  {
+    "day": "18 dec",
+    "title": "Kakans dag :cookie:",
+    "link": "https://sv.wikipedia.org/wiki/Kaka",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Choco_chip_cookie.jpg"
   }
 ]
