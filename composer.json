@@ -1,5 +1,6 @@
 {
     "require": {
-        "carbondate/carbon": "^1.33"
+        "carbondate/carbon": "^1.33",
+        "vlucas/phpdotenv": "^5.6"
     }
 }

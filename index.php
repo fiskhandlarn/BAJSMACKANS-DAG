@@ -1,6 +1,9 @@
 <?php
 
-require 'vendor/autoload.php';
+declare(strict_types=1);
+
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/src/env.php';
 
 use Carbon\Carbon;
 
@@ -129,12 +132,13 @@ $days = [
 
 $now = new Carbon('now');
 $tomorrow = new Carbon('tomorrow');
+$webhookURL = env('WEBHOOK_URL');
+
 foreach($days as $idx => $daydata) {
   $isToday = $now->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
   $isTomorrow = $tomorrow->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
-    $webhook_url = "https://hooks.slack.com/services/<REDACTED>";
     $json = <<<EOT
 {
         "blocks": [
@@ -154,7 +158,7 @@ foreach($days as $idx => $daydata) {
 }
 EOT;
     $json = sprintf($json, ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
-    $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhook_url;
+    $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
     exec($exec);
   }
 }
