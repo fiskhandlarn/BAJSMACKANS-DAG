@@ -1,6 +1,34 @@
 {
-    "require": {
-        "carbondate/carbon": "^1.33",
-        "vlucas/phpdotenv": "^5.6"
+  "name": "fiskhandlarn/bajsmackans-dag",
+  "authors": [
+    {
+      "name": "fiskhandlarn",
+      "email": "fiskhandlarn@gmail.com"
+    },
+    {
+      "name": "tz",
+      "email": "nahkampf@gmail.com"
     }
+  ],
+  "license": "WTFPL",
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "require": {
+    "php": "^8",
+    "carbondate/carbon": "^1.33",
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^6.4"
+  },
+  "scripts": {
+    "lint": [
+      "find . -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n"
+    ],
+    "app": [
+      "php index.php"
+    ]
+  }
 }
