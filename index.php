@@ -43,11 +43,14 @@ $now = new Carbon('now');
 $tomorrow = new Carbon('tomorrow');
 $webhookURL = env('WEBHOOK_URL');
 
+echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
+
 foreach($days as $idx => $daydata) {
   $isToday = $now->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
   $isTomorrow = $tomorrow->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
+    echo "🎉 " . $daydata['title'] . " is today or tomorrow! 🎉\n";
     $json = <<<EOT
 {
         "blocks": [
