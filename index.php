@@ -7,6 +7,8 @@ require_once __DIR__ . '/src/env.php';
 
 use Carbon\Carbon;
 
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 $days = [
   [
     "day" => new Carbon("october 4"),
