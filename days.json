@@ -66,6 +66,12 @@
     "image": "https://dms-api.ntm.eu/api/v1/images/jp5m3v6r/smart/width/980/height/551/as/jpeg"
   },
   {
+    "day": "17 march",
+    "title": "Hallongrottans dag",
+    "link": "https://svenskahogtider.com/2023/03/14/nar-ar-hallongrottans-dag/",
+    "image": "https://hogtider.files.wordpress.com/2023/03/hallongrottor-konditori-jonkoping.jpg"
+  },
+  {
     "day": "25 march",
     "title": "Jungfru Maria bebådelsedag :waffle:",
     "link": "https://sv.wikipedia.org/wiki/Jungfru_Marie_beb%C3%A5delsedag",
@@ -76,6 +82,12 @@
     "title": "Surdegsdagen :bread:",
     "link": "https://www.kungsornen.se/tips-tricks/teman-bakning/surdegsdagen/",
     "image": "https://static.standard.co.uk/s3fs-public/thumbnails/image/2020/04/30/10/jake-gyllenhaal.png"
+  },
+  {
+    "day": "10 april",
+    "title": "Bulle med bulle-dagen ",
+    "link": "https://www.facebook.com/BulleMedBullensDag/?locale=sv_SE",
+    "image": "https://static.bonniernews.se/bildix/api/images/d74dd66d-5222-4994-9a4a-81d9fcd9fb02.jpeg"
   },
   {
     "day": "12 april",
@@ -175,7 +187,7 @@
   },
   {
     "day": "24 october",
-    "title": "FN-bakelse :flag-un:",
+    "title": "FN-dagen :flag-un:",
     "link": "https://sv.wikipedia.org/wiki/FN-bakelse",
     "image": "https://dst15js82dk7j.cloudfront.net/234186/74095187-Jd85r.jpg"
   },
