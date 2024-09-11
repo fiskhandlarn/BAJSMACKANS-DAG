@@ -2,13 +2,19 @@
 
 <img src="fika.png" alt="fika" title="In Sweden we call this floorsucker" width="200" />
 
-Run:
+## Install
+
+```bash
+composer install
+```
+
+## Run
 
 ```bash
 composer run app
 ```
 
-Lint:
+## Lint
 
 ```bash
 composer run lint
