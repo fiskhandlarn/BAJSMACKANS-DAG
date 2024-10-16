@@ -70,8 +70,12 @@ foreach($days as $idx => $daydata) {
 }
 EOT;
     $json = sprintf($json, ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
-    $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
-    exec($exec);
+    if ($webhookURL) {
+      $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
+      exec($exec);
+    } else {
+      echo "No webhook URL found.\n";
+    }
     echo "\n\n";
   }
 }
