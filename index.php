@@ -69,7 +69,7 @@ foreach($days as $idx => $daydata) {
   $isTomorrow = $tomorrow->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
-    echo "🎉 " . $daydata['title'] . " is today or tomorrow! 🎉\n";
+    echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n";
     $json = <<<EOT
 {
         "blocks": [
