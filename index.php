@@ -40,7 +40,26 @@ foreach($days as $key => $value) {
 }
 
 $now = new Carbon('now');
-$tomorrow = new Carbon('tomorrow');
+
+if (php_sapi_name() == "cli") {
+  global $argv;
+
+  foreach ( $argv as $argument ) {
+    if( $argument != $argv[ 0 ] ) {
+      $pair = explode( "=", $argument );
+      if (2 === count($pair)) {
+        $variableName = $pair[0];
+        $variableValue = $pair[1];
+
+        if ('--date' === $variableName) {
+          $now = new Carbon($variableValue);
+        }
+      }
+    }
+  }
+}
+
+$tomorrow = new Carbon($now . '+ 1 day');
 $webhookURL = env('WEBHOOK_URL');
 
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";

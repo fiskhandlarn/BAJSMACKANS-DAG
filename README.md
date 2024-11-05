@@ -14,6 +14,13 @@ composer install
 composer run app
 ```
 
+Test date:
+
+```bash
+php index.php --date="january 10"
+```
+
+
 ## Lint
 
 ```bash
