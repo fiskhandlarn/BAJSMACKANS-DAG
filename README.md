@@ -20,11 +20,18 @@ Test date:
 php index.php --date="january 10"
 ```
 
-
 ## Lint
 
+### PHP
+
 ```bash
-composer run lint
+composer run lint:php
+```
+
+### JSON
+
+```bash
+composer run lint:json
 ```
 
 ## Sources
