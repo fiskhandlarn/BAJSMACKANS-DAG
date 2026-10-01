@@ -40,12 +40,17 @@ foreach($days as $key => $value) {
 }
 
 $now = new Carbon('now');
+$isDebug = false;
 
 if (php_sapi_name() == "cli") {
   global $argv;
 
   foreach ( $argv as $argument ) {
     if( $argument != $argv[ 0 ] ) {
+      if ('--debug' === $argument) {
+        $isDebug = true;
+      }
+
       $pair = explode( "=", $argument );
       if (2 === count($pair)) {
         $variableName = $pair[0];
@@ -89,6 +94,11 @@ foreach($days as $idx => $daydata) {
 }
 EOT;
     $json = sprintf($json, ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
+
+    if ($isDebug) {
+      echo $json . "\n";
+    }
+
     if ($webhookURL) {
       $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
       exec($exec);
