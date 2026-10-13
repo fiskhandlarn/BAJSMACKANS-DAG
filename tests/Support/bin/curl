@@ -1,0 +1,6 @@
+#!/bin/sh
+# Stands in for curl in tests: saves the --data argument so a test can read what would be posted.
+while [ $# -gt 0 ]; do
+  [ "$1" = --data ] && printf '%s' "$2" > tests/_output/curl-data.json
+  shift
+done

@@ -88,7 +88,7 @@ EOT;
 
     if ($webhookURL) {
       // --fail turns HTTP errors into a non-zero exit code
-      $exec = "curl --fail --silent --show-error -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
+      $exec = "curl --fail --silent --show-error -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
       exec($exec, result_code: $resultCode);
 
       if (0 !== $resultCode) {

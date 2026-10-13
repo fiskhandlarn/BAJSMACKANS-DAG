@@ -87,6 +87,16 @@ class DaysCest
         $I->seeResultCodeIsNot(0);
     }
 
+    // A ' in a title must not break the shell command that runs curl.
+    public function apostropheInTitle(CliTester $I): void
+    {
+        @unlink('tests/_output/curl-data.json');
+        $I->runShellCommand("PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/apostrophe.json WEBHOOK_URL=http://example.invalid/ php -d variables_order=EGPCS index.php --date='2030-03-25 08:00'", false);
+        $I->seeResultCodeIs(0);
+        $posted = json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true);
+        Assert::assertStringContainsString("Våffeldagen (it's waffle day)", $posted['blocks'][0]['text']['text'] ?? '');
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];
