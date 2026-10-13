@@ -70,6 +70,15 @@ class DaysCest
         $I->seeInShellOutput($example['entry']['title'] . ' is tomorrow!');
     }
 
+    // A year other than the current one, crossing into the next year.
+    public function newYearsEve(CliTester $I): void
+    {
+        // variables_order=EGPCS so the DATA_JSON override reaches $_ENV
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL= php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'");
+        $I->seeInShellOutput('Nyårsafton is today!');
+        $I->seeInShellOutput('Nyårsdagen is tomorrow!');
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];
