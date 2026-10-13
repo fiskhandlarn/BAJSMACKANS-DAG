@@ -11,34 +11,14 @@ use PHPUnit\Framework\Assert;
 use Tests\Support\CliTester;
 
 require_once __DIR__ . '/../../src/env.php';
+require_once __DIR__ . '/../../src/days.php';
 
 // Every entry in DATA_JSON becomes a test case, so new entries are covered automatically.
 class DaysCest
 {
-    private const TIMEZONE = 'Europe/Stockholm'; // same as index.php
-
     private static function entries(): array
     {
         return json_decode(file_get_contents(__DIR__ . '/../../' . env('DATA_JSON')), true);
-    }
-
-    // Mirrors the date resolution in index.php, but returns null instead of skipping.
-    private static function resolve(string $day): ?string
-    {
-        try {
-            if (false !== strpos($day, 'before')) {
-                if (!preg_match('#(\d+ days) before (\w+\b)#', $day, $matches)) {
-                    return null;
-                }
-                $carbon = Carbon::createFromTimestamp(call_user_func($matches[2]), self::TIMEZONE)->sub(\DateInterval::createFromDateString($matches[1]));
-            } else {
-                $carbon = new Carbon($day, self::TIMEZONE);
-            }
-        } catch (\Throwable) {
-            return null;
-        }
-
-        return $carbon->toDateString();
     }
 
     protected function days(): array
@@ -47,7 +27,7 @@ class DaysCest
         foreach (self::entries() as $i => $entry) {
             $examples["#$i " . ($entry['title'] ?? '?')] = [
                 'entry' => $entry,
-                'date' => self::resolve((string) ($entry['day'] ?? '')),
+                'date' => resolveDay((string) ($entry['day'] ?? ''), Carbon::now(TIMEZONE)->year)?->toDateString(),
             ];
         }
 
@@ -61,7 +41,7 @@ class DaysCest
         }
 
         // cron runs at 08:00; empty WEBHOOK_URL so nothing is posted
-        $date = (new Carbon($example['date'] . ' 08:00', self::TIMEZONE))->modify($modifier)->format('Y-m-d H:i');
+        $date = (new Carbon($example['date'] . ' 08:00', TIMEZONE))->modify($modifier)->format('Y-m-d H:i');
         $I->runShellCommand('WEBHOOK_URL= php index.php --date=' . escapeshellarg($date));
     }
 
