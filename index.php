@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/env.php';
+require_once __DIR__ . '/src/days.php';
 
 use Carbon\Carbon;
 
 error_reporting(E_ALL & ~E_DEPRECATED);
-
-define('TIMEZONE', 'Europe/Stockholm');
 
 date_default_timezone_set(TIMEZONE);
 
@@ -26,18 +25,12 @@ if (!$days) {
 }
 
 foreach($days as $key => $value) {
-  $day = $days[$key]['day'];
+  $carbon = resolveDay($days[$key]['day'], Carbon::now(TIMEZONE)->year);
 
-  if (false !== strpos($day, 'before')) {
-    if (preg_match('#(\d+ days) before (\w+\b)#', $day, $matches)) {
-      $carbon = Carbon::createFromTimestamp(call_user_func($matches[2]), TIMEZONE)->sub(\DateInterval::createFromDateString($matches[1]));
-    } else {
-      // skip this day
-      unset($days[$key]);
-      continue;
-    }
-  } else {
-    $carbon = new Carbon($day, TIMEZONE);
+  if (!$carbon) {
+    // skip this day
+    unset($days[$key]);
+    continue;
   }
 
   $days[$key]['day'] = $carbon;
