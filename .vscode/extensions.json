@@ -1,5 +1,6 @@
 {
     "recommendations": [
+        "devsense.phptools-vscode",
         "pflannery.vscode-versionlens"
     ]
 }
