@@ -1,0 +1,36 @@
+name: Daily
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # 08:00 CEST (summer)
+    - cron: '0 7 * * *' # 08:00 CET (winter)
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      # cron is UTC; only the trigger matching Stockholm's current offset runs
+      - id: local-time-gate
+        run: |
+          zone=$(TZ=Europe/Stockholm date +%Z)
+          if [ "${{ github.event_name }}" = workflow_dispatch ] \
+            || { [ "${{ github.event.schedule }}" = '0 6 * * *' ] && [ "$zone" = CEST ]; } \
+            || { [ "${{ github.event.schedule }}" = '0 7 * * *' ] && [ "$zone" = CET ]; }; then
+            echo run=true >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.local-time-gate.outputs.run
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - if: steps.local-time-gate.outputs.run
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.1'
+          coverage: none
+      - if: steps.local-time-gate.outputs.run
+        run: printf 'WEBHOOK_URL=%s\nDATA_JSON=days.json\n' "$WEBHOOK_URL" > .env
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+      - if: steps.local-time-gate.outputs.run
+        run: composer install --no-dev --no-interaction --no-progress
+      - if: steps.local-time-gate.outputs.run
+        run: php index.php
