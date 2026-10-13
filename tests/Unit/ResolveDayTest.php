@@ -15,8 +15,8 @@ class ResolveDayTest extends Unit
     public static function days(): array
     {
         return [
-            ['47 days before easter_date', 2026, '2026-02-17'],
-            ['47 days before easter_date', 2027, '2027-02-09'],
+            ['47 days before easter', 2026, '2026-02-17'],
+            ['47 days before easter', 2027, '2027-02-09'],
             ['january 10', 2026, '2026-01-10'],
             ['7 march', 2027, '2027-03-07'],
             ['18 dec', 2026, '2026-12-18'],
@@ -37,7 +37,8 @@ class ResolveDayTest extends Unit
 
     public function testUnparseableIsNull(): void
     {
-        $this->assertNull(resolveDay('5 dayz before easter_date', 2026));
+        $this->assertNull(resolveDay('5 dayz before easter', 2026));
+        $this->assertNull(resolveDay('47 days before easter_dat', 2026));
         $this->assertNull(resolveDay('januray 10', 2026));
     }
 }
