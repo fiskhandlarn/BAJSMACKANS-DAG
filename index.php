@@ -84,8 +84,8 @@ foreach($days as $idx => $daydata) {
     }
 
     if ($webhookURL) {
-      // --fail turns HTTP errors into a non-zero exit code
-      $exec = "curl --fail --silent --show-error -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
+      // --fail turns HTTP errors into a non-zero exit code; timeouts stop a hung Slack from blocking the run
+      $exec = "curl --fail --silent --show-error --connect-timeout 10 --max-time 30 -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
       exec($exec, result_code: $resultCode);
 
       if (0 !== $resultCode) {
