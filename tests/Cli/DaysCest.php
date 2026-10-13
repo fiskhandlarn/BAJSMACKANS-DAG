@@ -79,6 +79,14 @@ class DaysCest
         $I->seeInShellOutput('Nyårsdagen is tomorrow!');
     }
 
+    // A failed Slack post must fail the run, or the scheduled workflow stays green.
+    public function failedPost(CliTester $I): void
+    {
+        // port 9 (discard) refuses the connection, so curl fails
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:9/ php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'", false);
+        $I->seeResultCodeIsNot(0);
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];

@@ -51,6 +51,7 @@ if (php_sapi_name() == "cli") {
 
 $tomorrow = new Carbon($now . '+ 1 day', TIMEZONE);
 $webhookURL = env('WEBHOOK_URL');
+$failed = false;
 
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
 
@@ -86,11 +87,19 @@ EOT;
     }
 
     if ($webhookURL) {
-      $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
-      exec($exec);
+      // --fail turns HTTP errors into a non-zero exit code
+      $exec = "curl --fail --silent --show-error -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
+      exec($exec, result_code: $resultCode);
+
+      if (0 !== $resultCode) {
+        echo "Posting to Slack failed.\n";
+        $failed = true;
+      }
     } else {
       echo "No webhook URL found.\n";
     }
     echo "\n\n";
   }
 }
+
+exit($failed ? 1 : 0);
