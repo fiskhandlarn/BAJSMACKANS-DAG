@@ -110,6 +110,7 @@ class DaysCest
     private function postedText(CliTester $I, string $date): string
     {
         @unlink('tests/_output/curl-data.json');
+        @unlink('tests/_output/curl-args.txt');
         $I->runShellCommand("PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php -d variables_order=EGPCS index.php --date='$date 08:00'", false);
         $I->seeResultCodeIs(0);
         $posted = json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true);
@@ -127,6 +128,15 @@ class DaysCest
     public function doubleQuoteInTitle(CliTester $I): void
     {
         Assert::assertStringContainsString('The "best" bun day', $this->postedText($I, '2030-03-27'));
+    }
+
+    // A Slack that accepts the connection but never answers must not block the run until the job limit.
+    public function curlTimeouts(CliTester $I): void
+    {
+        $this->postedText($I, '2030-03-25');
+        $args = (string) @file_get_contents('tests/_output/curl-args.txt');
+        Assert::assertStringContainsString("--connect-timeout\n10\n", $args);
+        Assert::assertStringContainsString("--max-time\n30\n", $args);
     }
 
     public function noDuplicateTitles(CliTester $I): void
