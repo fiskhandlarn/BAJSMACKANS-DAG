@@ -15,8 +15,12 @@ class ResolveDayTest extends Unit
     public static function days(): array
     {
         return [
+            // Fettisdagen, from https://sv.wikipedia.org/wiki/Fettisdagen
+            ['47 days before easter', 2025, '2025-03-04'],
             ['47 days before easter', 2026, '2026-02-17'],
             ['47 days before easter', 2027, '2027-02-09'],
+            ['47 days before easter', 2028, '2028-02-29'],
+            ['47 days before easter', 2029, '2029-02-13'],
             ['january 10', 2026, '2026-01-10'],
             ['7 march', 2027, '2027-03-07'],
             ['18 dec', 2026, '2026-12-18'],
