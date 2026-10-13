@@ -87,6 +87,23 @@ class DaysCest
         $I->seeResultCodeIsNot(0);
     }
 
+    // An HTTP error from Slack must fail the run too, not only a refused connection.
+    public function httpErrorPost(CliTester $I): void
+    {
+        $server = proc_open(['php', '-S', '127.0.0.1:8765', 'tests/Support/http-500.php'], [['pipe', 'r'], ['file', '/dev/null', 'w'], ['file', '/dev/null', 'w']], $pipes);
+        for ($i = 0; $i < 50 && !@fsockopen('127.0.0.1', 8765); $i++) {
+            usleep(100000);
+        }
+
+        try {
+            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'", false);
+            $I->seeResultCodeIsNot(0);
+            $I->seeInShellOutput('Posting to Slack failed.');
+        } finally {
+            proc_terminate($server);
+        }
+    }
+
     // Runs index.php with the fake curl from tests/Support/bin and returns the text of the posted message.
     private function postedText(CliTester $I, string $date): string
     {
