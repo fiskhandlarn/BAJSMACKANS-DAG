@@ -7,6 +7,7 @@ The app is a CLI script that posts to a Slack webhook once a day at 08:00 Stockh
 `.github/workflows/daily.yml` runs the script on a schedule from `main`:
 - Two UTC cron triggers (06:00 and 07:00). A check on Stockholm's current offset (CEST/CET) lets only the 08:00-local one do work. A manual run always works.
 - The `WEBHOOK_URL` repo secret is written to `.env` before `composer install`, because `env()` in `src/env.php` reads `$_ENV`.
+- The run fails when `WEBHOOK_URL` is empty, so a missing secret shows up on every run, not only on days with a match.
 - Uses the runner's preinstalled PHP and composer. The PR `test` job keeps `setup-php` 8.1 with coverage off.
 
 ## Manual steps
