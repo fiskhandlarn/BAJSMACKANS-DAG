@@ -1,0 +1,5 @@
+actor: CliTester
+suite_namespace: Tests\Cli
+modules:
+    enabled:
+        - Cli
