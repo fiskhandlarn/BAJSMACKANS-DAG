@@ -139,6 +139,15 @@ class DaysCest
         Assert::assertStringContainsString("--max-time\n30\n", $args);
     }
 
+    // GitHub's runner PHP has no E in variables_order, so process env vars never reach $_ENV.
+    public function processEnvWithoutEInVariablesOrder(CliTester $I): void
+    {
+        // port 9 (discard) refuses the connection, so nothing is posted
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:9/ php -d variables_order=GPCS index.php --date='2030-12-31 08:00'", false);
+        $I->seeInShellOutput('Nyårsafton is today!');
+        $I->dontSeeInShellOutput('No webhook URL found.');
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];

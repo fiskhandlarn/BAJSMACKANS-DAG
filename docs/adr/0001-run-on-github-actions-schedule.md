@@ -11,6 +11,6 @@ The app is a CLI script (`php index.php`) that posts to a Slack webhook once a d
 
 - GitHub cron runs in UTC. The workflow has two triggers (06:00 and 07:00 UTC), and a step checks Stockholm's current offset (CEST/CET) so only one of them runs.
 - Runs can start 5–30+ minutes late, most often at the top of the hour. That is acceptable for a fika reminder.
-- `WEBHOOK_URL` is a repo secret and is written to `.env` before `composer install`. We do not pass it as a plain env var, because `env()` reads `$_ENV` and immutable phpdotenv skips variables that are already in `$_SERVER`.
+- `WEBHOOK_URL` is a repo secret, passed to the step as an env var. The runner's PHP has no `E` in `variables_order`, so env vars never reach `$_ENV`, and immutable phpdotenv will not load `.env` over a var that is already set. `env()` in `src/env.php` therefore falls back to `getenv()`.
 - On a public repo, scheduled workflows turn off after 60 days with no repo activity. GitHub emails a warning first, and one click turns the workflow back on.
 - The old crontab must be removed when this goes live, or Slack gets two posts each day.

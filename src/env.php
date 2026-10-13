@@ -12,7 +12,8 @@ Dotenv::createImmutable(realpath(__DIR__ . '/../'))->safeLoad();
 if (!function_exists('env')) {
     function env(string $key, mixed $default = null): mixed
     {
-        $value = $_ENV[$key] ?? false;
+        // getenv() covers process env vars, which skip $_ENV when variables_order has no E (as on GitHub's runners)
+        $value = $_ENV[$key] ?? getenv($key);
 
         if ($value === false) {
             return $default;
