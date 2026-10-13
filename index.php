@@ -9,7 +9,9 @@ use Carbon\Carbon;
 
 error_reporting(E_ALL & ~E_DEPRECATED);
 
-date_default_timezone_set('Europe/Stockholm');
+define('TIMEZONE', 'Europe/Stockholm');
+
+date_default_timezone_set(TIMEZONE);
 
 $daysJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
 
@@ -28,20 +30,20 @@ foreach($days as $key => $value) {
 
   if (false !== strpos($day, 'before')) {
     if (preg_match('#(\d+ days) before (\w+\b)#', $day, $matches)) {
-      $carbon = Carbon::createFromTimestamp(call_user_func($matches[2]))->sub(\DateInterval::createFromDateString($matches[1]));
+      $carbon = Carbon::createFromTimestamp(call_user_func($matches[2]), TIMEZONE)->sub(\DateInterval::createFromDateString($matches[1]));
     } else {
       // skip this day
       unset($days[$key]);
       continue;
     }
   } else {
-    $carbon = new Carbon($day);
+    $carbon = new Carbon($day, TIMEZONE);
   }
 
   $days[$key]['day'] = $carbon;
 }
 
-$now = new Carbon('now');
+$now = new Carbon('now', TIMEZONE);
 $isDebug = false;
 
 if (php_sapi_name() == "cli") {
@@ -66,7 +68,7 @@ if (php_sapi_name() == "cli") {
   }
 }
 
-$tomorrow = new Carbon($now . '+ 1 day');
+$tomorrow = new Carbon($now . '+ 1 day', TIMEZONE);
 $webhookURL = env('WEBHOOK_URL');
 
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
