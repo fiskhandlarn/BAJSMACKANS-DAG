@@ -39,4 +39,9 @@ class ResolveDayTest extends Unit
     {
         $this->assertNull(resolveDay('5 dayz before easter_date', 2026));
     }
+
+    public function testUnparseableDayIsNull(): void
+    {
+        $this->assertNull(resolveDay('januray 10', 2026));
+    }
 }

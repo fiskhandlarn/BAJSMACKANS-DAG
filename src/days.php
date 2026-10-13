@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 
 const TIMEZONE = 'Europe/Stockholm';
 
@@ -17,5 +18,9 @@ function resolveDay(string $day, int $year): ?Carbon
         return Carbon::createFromTimestamp(call_user_func($matches[2], $year), TIMEZONE)->sub(\DateInterval::createFromDateString($matches[1]));
     }
 
-    return new Carbon("$day $year", TIMEZONE);
+    try {
+        return new Carbon("$day $year", TIMEZONE);
+    } catch (InvalidFormatException) {
+        return null;
+    }
 }
