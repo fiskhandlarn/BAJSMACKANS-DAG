@@ -18,7 +18,6 @@ jobs:
           # cron is UTC; skip the trigger that isn't 08:00 in Stockholm today
           case "$SCHEDULE/$(TZ=Europe/Stockholm date +%Z)" in '0 6 * * */CET'|'0 7 * * */CEST') exit 0;; esac
           : "${WEBHOOK_URL:?WEBHOOK_URL secret missing}"
-          printf 'WEBHOOK_URL=%s\nDATA_JSON=days.json\n' "$WEBHOOK_URL" > .env
           composer install --no-dev --no-interaction --no-progress
           php index.php
         env:
