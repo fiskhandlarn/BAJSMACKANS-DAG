@@ -46,7 +46,7 @@ composer run lint:json
 composer run test
 ```
 
-Every entry in the data file is tested automatically (today, tomorrow, required fields).
+Every entry in the data file is tested automatically (today, tomorrow, required fields), plus a check for duplicate titles.
 
 ## Sources
 

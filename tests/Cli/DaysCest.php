@@ -89,4 +89,16 @@ class DaysCest
         $I->seeResultCodeIs(0);
         $I->seeInShellOutput($example['entry']['title'] . ' is tomorrow!');
     }
+
+    public function noDuplicateTitles(CliTester $I): void
+    {
+        $seen = [];
+        foreach (self::entries() as $entry) {
+            // "Foo :coffee:" and "foo" are the same event
+            $seen[] = trim(mb_strtolower(preg_replace('#:[\w+-]+:#', '', $entry['title'])));
+        }
+
+        $duplicates = array_keys(array_filter(array_count_values($seen), fn ($n) => $n > 1));
+        Assert::assertSame([], $duplicates, 'duplicate titles');
+    }
 }
