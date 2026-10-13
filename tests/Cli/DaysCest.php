@@ -73,8 +73,7 @@ class DaysCest
     // A year other than the current one, crossing into the next year.
     public function newYearsEve(CliTester $I): void
     {
-        // variables_order=EGPCS so the DATA_JSON override reaches $_ENV
-        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL= php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'");
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL= php index.php --date='2030-12-31 08:00'");
         $I->seeInShellOutput('Nyårsafton is today!');
         $I->seeInShellOutput('Nyårsdagen is tomorrow!');
     }
@@ -83,7 +82,7 @@ class DaysCest
     public function failedPost(CliTester $I): void
     {
         // port 9 (discard) refuses the connection, so curl fails
-        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:9/ php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'", false);
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:9/ php index.php --date='2030-12-31 08:00'", false);
         $I->seeResultCodeIsNot(0);
     }
 
@@ -98,7 +97,7 @@ class DaysCest
         try {
             // without this, a missing or foreign server would turn the test into a refused-connection or 404 test
             Assert::assertStringContainsString(' 500 ', $status, 'tests/Support/http-500.php is not answering on 127.0.0.1:8765');
-            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'", false);
+            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php index.php --date='2030-12-31 08:00'", false);
             $I->seeResultCodeIsNot(0);
             $I->seeInShellOutput('Posting to Slack failed.');
         } finally {
@@ -111,7 +110,7 @@ class DaysCest
     {
         @unlink('tests/_output/curl-data.json');
         @unlink('tests/_output/curl-args.txt');
-        $I->runShellCommand("PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php -d variables_order=EGPCS index.php --date='$date 08:00'", false);
+        $I->runShellCommand("PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00'", false);
         $I->seeResultCodeIs(0);
         $posted = json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true);
 
