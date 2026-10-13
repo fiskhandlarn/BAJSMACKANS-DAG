@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/env.php';
+require_once __DIR__ . '/src/days.php';
 
 use Carbon\Carbon;
 
 error_reporting(E_ALL & ~E_DEPRECATED);
-
-define('TIMEZONE', 'Europe/Stockholm');
 
 date_default_timezone_set(TIMEZONE);
 
@@ -23,24 +22,6 @@ $days = @json_decode($daysJSON, true);
 
 if (!$days) {
   die("Invalid JSON.\n");
-}
-
-foreach($days as $key => $value) {
-  $day = $days[$key]['day'];
-
-  if (false !== strpos($day, 'before')) {
-    if (preg_match('#(\d+ days) before (\w+\b)#', $day, $matches)) {
-      $carbon = Carbon::createFromTimestamp(call_user_func($matches[2]), TIMEZONE)->sub(\DateInterval::createFromDateString($matches[1]));
-    } else {
-      // skip this day
-      unset($days[$key]);
-      continue;
-    }
-  } else {
-    $carbon = new Carbon($day, TIMEZONE);
-  }
-
-  $days[$key]['day'] = $carbon;
 }
 
 $now = new Carbon('now', TIMEZONE);
@@ -74,8 +55,9 @@ $webhookURL = env('WEBHOOK_URL');
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
 
 foreach($days as $idx => $daydata) {
-  $isToday = $now->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
-  $isTomorrow = $tomorrow->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
+  // resolve against each date's own year so --date and new year's eve work; unparseable days resolve to null and never match
+  $isToday = $now->format("Y-m-d") == resolveDay($daydata["day"], $now->year)?->format("Y-m-d");
+  $isTomorrow = $tomorrow->format("Y-m-d") == resolveDay($daydata["day"], $tomorrow->year)?->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
     echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n";
