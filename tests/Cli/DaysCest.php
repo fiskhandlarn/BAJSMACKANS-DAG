@@ -91,11 +91,13 @@ class DaysCest
     public function httpErrorPost(CliTester $I): void
     {
         $server = proc_open(['php', '-S', '127.0.0.1:8765', 'tests/Support/http-500.php'], [['pipe', 'r'], ['file', '/dev/null', 'w'], ['file', '/dev/null', 'w']], $pipes);
-        for ($i = 0; $i < 50 && !@fsockopen('127.0.0.1', 8765); $i++) {
+        for ($i = 0; $i < 50 && !str_contains($status = (@get_headers('http://127.0.0.1:8765/') ?: [''])[0], ' 500 '); $i++) {
             usleep(100000);
         }
 
         try {
+            // without this, a missing or foreign server would turn the test into a refused-connection or 404 test
+            Assert::assertStringContainsString(' 500 ', $status, 'tests/Support/http-500.php is not answering on 127.0.0.1:8765');
             $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'", false);
             $I->seeResultCodeIsNot(0);
             $I->seeInShellOutput('Posting to Slack failed.');
