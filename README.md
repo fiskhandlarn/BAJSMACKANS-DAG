@@ -20,11 +20,24 @@ Test date:
 php index.php --date="january 10"
 ```
 
+Output JSON payload:
+
+```bash
+php index.php --date="january 10" --debug
+```
 
 ## Lint
 
+### PHP
+
 ```bash
-composer run lint
+composer run lint:php
+```
+
+### JSON
+
+```bash
+composer run lint:json
 ```
 
 ## Sources
