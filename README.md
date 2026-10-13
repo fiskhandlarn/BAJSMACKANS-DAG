@@ -40,6 +40,14 @@ composer run lint:php
 composer run lint:json
 ```
 
+## Test
+
+```bash
+composer run test
+```
+
+Every entry in the data file is tested automatically (today, tomorrow, required fields).
+
 ## Sources
 
 - https://www.lyckasmedbakning.nu/bak-fikakalender-2016/
