@@ -62,25 +62,22 @@ foreach($days as $idx => $daydata) {
 
   if($isToday || $isTomorrow) {
     echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n";
-    $json = <<<EOT
-{
-        "blocks": [
-                {
-                        "type": "section",
-                        "text": {
-                                "type": "mrkdwn",
-                                "text": "%s är det *%s* - %s"
-                        }
-                },
-                {
-                        "type": "image",
-                        "image_url": "%s",
-                        "alt_text": "%s"
-                }
-        ]
-}
-EOT;
-    $json = sprintf($json, ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
+    $json = json_encode([
+      'blocks' => [
+        [
+          'type' => 'section',
+          'text' => [
+            'type' => 'mrkdwn',
+            'text' => sprintf('%s är det *%s* - %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title'], $daydata['link']),
+          ],
+        ],
+        [
+          'type' => 'image',
+          'image_url' => $daydata['image'],
+          'alt_text' => $daydata['title'],
+        ],
+      ],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 
     if ($isDebug) {
       echo $json . "\n";
