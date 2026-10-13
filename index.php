@@ -24,18 +24,6 @@ if (!$days) {
   die("Invalid JSON.\n");
 }
 
-foreach($days as $key => $value) {
-  $carbon = resolveDay($days[$key]['day'], Carbon::now(TIMEZONE)->year);
-
-  if (!$carbon) {
-    // skip this day
-    unset($days[$key]);
-    continue;
-  }
-
-  $days[$key]['day'] = $carbon;
-}
-
 $now = new Carbon('now', TIMEZONE);
 $isDebug = false;
 
@@ -67,8 +55,9 @@ $webhookURL = env('WEBHOOK_URL');
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
 
 foreach($days as $idx => $daydata) {
-  $isToday = $now->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
-  $isTomorrow = $tomorrow->format("Y-m-d") == $daydata["day"]->format("Y-m-d");
+  // resolve against each date's own year so --date and new year's eve work; unparseable days resolve to null and never match
+  $isToday = $now->format("Y-m-d") == resolveDay($daydata["day"], $now->year)?->format("Y-m-d");
+  $isTomorrow = $tomorrow->format("Y-m-d") == resolveDay($daydata["day"], $tomorrow->year)?->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
     echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n";
