@@ -51,6 +51,7 @@ if (php_sapi_name() == "cli") {
 
 $tomorrow = new Carbon($now . '+ 1 day', TIMEZONE);
 $webhookURL = env('WEBHOOK_URL');
+$failed = false;
 
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
 
@@ -61,36 +62,41 @@ foreach($days as $idx => $daydata) {
 
   if($isToday || $isTomorrow) {
     echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n";
-    $json = <<<EOT
-{
-        "blocks": [
-                {
-                        "type": "section",
-                        "text": {
-                                "type": "mrkdwn",
-                                "text": "%s är det *%s* - %s"
-                        }
-                },
-                {
-                        "type": "image",
-                        "image_url": "%s",
-                        "alt_text": "%s"
-                }
-        ]
-}
-EOT;
-    $json = sprintf($json, ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata["title"], $daydata["link"], $daydata["image"], $daydata["title"]);
+    $json = json_encode([
+      'blocks' => [
+        [
+          'type' => 'section',
+          'text' => [
+            'type' => 'mrkdwn',
+            'text' => sprintf('%s är det *%s* - %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title'], $daydata['link']),
+          ],
+        ],
+        [
+          'type' => 'image',
+          'image_url' => $daydata['image'],
+          'alt_text' => $daydata['title'],
+        ],
+      ],
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 
     if ($isDebug) {
       echo $json . "\n";
     }
 
     if ($webhookURL) {
-      $exec = "curl -X POST -H 'Content-type: application/json' --data '" . $json . "' " . $webhookURL;
-      exec($exec);
+      // --fail turns HTTP errors into a non-zero exit code; timeouts stop a hung Slack from blocking the run
+      $exec = "curl --fail --silent --show-error --connect-timeout 10 --max-time 30 -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
+      exec($exec, result_code: $resultCode);
+
+      if (0 !== $resultCode) {
+        echo "Posting to Slack failed.\n";
+        $failed = true;
+      }
     } else {
       echo "No webhook URL found.\n";
     }
     echo "\n\n";
   }
 }
+
+exit($failed ? 1 : 0);

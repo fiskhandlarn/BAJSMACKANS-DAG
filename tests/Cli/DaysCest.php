@@ -79,6 +79,66 @@ class DaysCest
         $I->seeInShellOutput('Nyårsdagen is tomorrow!');
     }
 
+    // A failed Slack post must fail the run, or the scheduled workflow stays green.
+    public function failedPost(CliTester $I): void
+    {
+        // port 9 (discard) refuses the connection, so curl fails
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:9/ php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'", false);
+        $I->seeResultCodeIsNot(0);
+    }
+
+    // An HTTP error from Slack must fail the run too, not only a refused connection.
+    public function httpErrorPost(CliTester $I): void
+    {
+        $server = proc_open(['php', '-S', '127.0.0.1:8765', 'tests/Support/http-500.php'], [['pipe', 'r'], ['file', '/dev/null', 'w'], ['file', '/dev/null', 'w']], $pipes);
+        for ($i = 0; $i < 50 && !str_contains($status = (@get_headers('http://127.0.0.1:8765/') ?: [''])[0], ' 500 '); $i++) {
+            usleep(100000);
+        }
+
+        try {
+            // without this, a missing or foreign server would turn the test into a refused-connection or 404 test
+            Assert::assertStringContainsString(' 500 ', $status, 'tests/Support/http-500.php is not answering on 127.0.0.1:8765');
+            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php -d variables_order=EGPCS index.php --date='2030-12-31 08:00'", false);
+            $I->seeResultCodeIsNot(0);
+            $I->seeInShellOutput('Posting to Slack failed.');
+        } finally {
+            proc_terminate($server);
+        }
+    }
+
+    // Runs index.php with the fake curl from tests/Support/bin and returns the text of the posted message.
+    private function postedText(CliTester $I, string $date): string
+    {
+        @unlink('tests/_output/curl-data.json');
+        @unlink('tests/_output/curl-args.txt');
+        $I->runShellCommand("PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php -d variables_order=EGPCS index.php --date='$date 08:00'", false);
+        $I->seeResultCodeIs(0);
+        $posted = json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true);
+
+        return $posted['blocks'][0]['text']['text'] ?? '';
+    }
+
+    // A ' in a title must not break the shell command that runs curl.
+    public function apostropheInTitle(CliTester $I): void
+    {
+        Assert::assertStringContainsString("Våffeldagen (it's waffle day)", $this->postedText($I, '2030-03-25'));
+    }
+
+    // A " in a title must not break the JSON payload.
+    public function doubleQuoteInTitle(CliTester $I): void
+    {
+        Assert::assertStringContainsString('The "best" bun day', $this->postedText($I, '2030-03-27'));
+    }
+
+    // A Slack that accepts the connection but never answers must not block the run until the job limit.
+    public function curlTimeouts(CliTester $I): void
+    {
+        $this->postedText($I, '2030-03-25');
+        $args = (string) @file_get_contents('tests/_output/curl-args.txt');
+        Assert::assertStringContainsString("--connect-timeout\n10\n", $args);
+        Assert::assertStringContainsString("--max-time\n30\n", $args);
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];

@@ -9,9 +9,12 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+    # a normal run takes under a minute; fail fast instead of the 6 h default
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: |
+      - name: Post today's and tomorrow's days to Slack
+        run: |
           # cron is UTC; skip the trigger that isn't 08:00 in Stockholm today
           case "$SCHEDULE/$(TZ=Europe/Stockholm date +%Z)" in '0 6 * * */CET'|'0 7 * * */CEST') exit 0;; esac
           : "${WEBHOOK_URL:?WEBHOOK_URL secret missing}"
