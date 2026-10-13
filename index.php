@@ -9,6 +9,8 @@ use Carbon\Carbon;
 
 error_reporting(E_ALL & ~E_DEPRECATED);
 
+date_default_timezone_set('Europe/Stockholm');
+
 $daysJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
 
 if (!$daysJSON) {
