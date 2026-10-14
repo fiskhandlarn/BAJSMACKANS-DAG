@@ -17,3 +17,5 @@ The repo is public and `.github/workflows/daily.yml` uses the `WEBHOOK_URL` secr
 Change `composer.lock` only through composer (`composer require`, `composer update`), never by hand.
 
 Write `composer.json` constraints as caret ranges with the full patch version, `^n.n.n` (e.g. `^3.14.2`, not `^3.14`). `composer require vendor/package:^n.n.n` (with `--dev` for dev packages) does both.
+
+`config.platform.php` in `composer.json` is the minimum PHP version, so composer resolves for it on any machine. Raise it together with `require.php`.
