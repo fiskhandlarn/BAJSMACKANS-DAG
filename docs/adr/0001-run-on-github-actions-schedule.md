@@ -11,6 +11,7 @@ The app is a CLI script (`php index.php`) that posts to a Slack webhook once a d
 
 - The workflow has one trigger at 07:45 with `timezone: Europe/Stockholm`, so GitHub handles summer and winter time. It started as two UTC triggers with a home-made gate; `timezone` replaced that (#13).
 - Runs can start late, and GitHub can drop them, most often at the full hour. 07:45 avoids the full hour; with no delay, the post arrives at 07:45 instead of 08:00.
+- A dropped run means no post that day. GitHub does not record dropped runs, so nothing alerts on it either. Both remedies are deferred until drops recur: a fallback trigger that posts only if the first run did not (#14), and a dead-man's switch such as healthchecks.io (#15).
 - `WEBHOOK_URL` is a repo secret, passed to the step as an env var. The runner's PHP has no `E` in `variables_order`, so env vars never reach `$_ENV`, and immutable phpdotenv will not load `.env` over a var that is already set. `env()` in `src/env.php` therefore falls back to `getenv()`.
 - On a public repo, scheduled workflows turn off after 60 days with no repo activity. GitHub emails a warning first, and one click turns the workflow back on.
 - The old crontab must be removed when this goes live, or Slack gets two posts each day.
