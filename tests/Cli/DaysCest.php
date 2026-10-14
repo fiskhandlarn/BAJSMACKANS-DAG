@@ -150,6 +150,25 @@ class DaysCest
         Assert::assertStringEndsWith(' · dev', $this->postedContext($I, '2030-03-25', 'GIT_DIR=/nonexistent'));
     }
 
+    // A copy without its own .git, inside another git repo, must not report that repo's SHA.
+    public function versionInsideOtherRepo(CliTester $I): void
+    {
+        $repo = sys_get_temp_dir() . '/bajsmackans-dag-' . uniqid();
+        mkdir("$repo/app", 0777, true);
+        copy('index.php', "$repo/app/index.php");
+        foreach (['src', 'vendor', 'tests'] as $dir) {
+            symlink(realpath($dir), "$repo/app/$dir");
+        }
+
+        try {
+            shell_exec('git -C ' . escapeshellarg($repo) . ' init -q && git -C ' . escapeshellarg($repo) . ' -c user.name=test -c user.email=test@example.invalid commit -q --allow-empty -m init');
+            $I->runShellCommand('DATA_JSON=tests/Support/Data/quotes.json php ' . escapeshellarg("$repo/app/index.php") . " --date='2030-03-25 08:00' --debug");
+            $I->seeInShellOutput('|BAJSMACKANS-DAG> · dev');
+        } finally {
+            shell_exec('rm -rf ' . escapeshellarg($repo));
+        }
+    }
+
     // --debug previews the payload and never posts, even with a webhook URL set.
     public function debugNeverPosts(CliTester $I): void
     {

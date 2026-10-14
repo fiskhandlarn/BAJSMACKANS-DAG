@@ -54,7 +54,8 @@ $webhookURL = env('WEBHOOK_URL');
 $failed = false;
 $repoURL = 'https://github.com/fiskhandlarn/BAJSMACKANS-DAG';
 // the short SHA of the running commit is the app's version; no git or .git gives 'dev'
-$version = trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__) . ' rev-parse --short HEAD 2>/dev/null'));
+// git searches parent directories, so without its own .git (a file in a worktree) a copy inside another repo would report that repo's SHA
+$version = file_exists(__DIR__ . '/.git') ? trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__) . ' rev-parse --short HEAD 2>/dev/null')) : '';
 $versionText = $version ? "<$repoURL/commit/$version|$version>" : 'dev';
 
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n\n";

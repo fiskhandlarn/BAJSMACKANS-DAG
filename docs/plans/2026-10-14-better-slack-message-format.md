@@ -7,11 +7,11 @@ Issue #12. A post puts the day's link after ` - ` on the same line as the day, a
 `index.php` builds the message:
 - The link goes on its own line under the day.
 - A Slack `context` block under the image links to the GitHub repo and shows the short SHA of the running commit, linked to that commit.
-- The SHA comes from `git rev-parse --short HEAD`. The daily workflow's checkout includes `.git`, so this works on the runner. Without git or `.git`, the version reads `dev` and has no link.
+- The SHA comes from `git rev-parse --short HEAD`. The daily workflow's checkout includes `.git`, so this works on the runner. Without git or the app's own `.git`, the version reads `dev` and has no link. The `.git` check stops a copy inside another repo from reporting that repo's SHA, since git searches parent directories.
 
 `--debug` prints the payload and never posts, even with `WEBHOOK_URL` set, so a preview can't reach Slack by mistake.
 
-`tests/Cli/DaysCest.php` checks the posted payload through the fake curl in `tests/Support/bin/curl`: the link line, the repo link, the SHA, the `dev` fallback and that `--debug` doesn't post.
+`tests/Cli/DaysCest.php` checks the posted payload through the fake curl in `tests/Support/bin/curl`: the link line, the repo link, the SHA, the `dev` fallback (also for a copy inside another repo) and that `--debug` doesn't post.
 
 ## Manual steps
 None.
