@@ -11,7 +11,7 @@ Issue #12. A post puts the day's link after ` - ` on the same line as the day, a
 
 `--debug` prints the payload and never posts, even with `WEBHOOK_URL` set, so a preview can't reach Slack by mistake.
 
-`tests/Cli/DaysCest.php` checks the posted payload through the fake curl in `tests/Support/bin/curl`: the card fields, the repo link, the SHA, the `dev` fallback (also for a copy inside another repo) and that `--debug` doesn't post.
+`tests/Cli/DaysCest.php` checks the posted payload as received by a test server (see `docs/plans/2026-10-14-post-with-guzzle.md`): the card fields, the repo link, the SHA, the `dev` fallback (also for a copy inside another repo) and that `--debug` doesn't post.
 
 ## Manual steps
 None.

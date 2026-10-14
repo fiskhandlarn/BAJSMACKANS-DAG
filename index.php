@@ -5,8 +5,11 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/env.php';
 require_once __DIR__ . '/src/days.php';
+require_once __DIR__ . '/src/slack.php';
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 error_reporting(E_ALL & ~E_DEPRECATED);
 
@@ -107,11 +110,10 @@ foreach($calendar as $idx => $temadag) {
       echo "```json\n" . $json . "\n```\n\n";
       echo "Not posting to Slack in debug mode.\n";
     } elseif ($webhookURL) {
-      // --fail turns HTTP errors into a non-zero exit code; timeouts stop a hung Slack from blocking the run
-      $exec = "curl --fail --silent --show-error --connect-timeout 10 --max-time 30 -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
-      exec($exec, result_code: $resultCode);
-
-      if (0 !== $resultCode) {
+      // Guzzle throws on HTTP error statuses, refused connections and timeouts; the remaining announcements and reminders still run
+      try {
+        (new Client())->post($webhookURL, slackPostOptions($json));
+      } catch (GuzzleException) {
         echo "Posting to Slack failed.\n";
         $failed = true;
       }
