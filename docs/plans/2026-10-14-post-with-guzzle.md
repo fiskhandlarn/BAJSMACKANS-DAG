@@ -4,7 +4,7 @@
 Issue #9. The daily run posted each announcement and reminder by building a `curl` command line and running it with `exec()`, quoting the payload with `escapeshellarg`. The only failure signal was curl's exit code, and the tests faked curl with a shell script on `PATH`.
 
 ## Change
-`guzzlehttp/guzzle` is in `require`. `index.php` POSTs each announcement and reminder to `WEBHOOK_URL` with a Guzzle client. Any Guzzle exception (HTTP error status, refused connection, timeout) prints `Posting to Slack failed.`, the remaining announcements and reminders still run, and the run exits 1.
+`guzzlehttp/guzzle` and `ext-curl` are in `require`. Guzzle applies the connect timeout only through its curl handler; without `ext-curl` it falls back to PHP streams, which ignore it. `index.php` POSTs each announcement and reminder to `WEBHOOK_URL` with a Guzzle client. Any Guzzle exception (HTTP error status, refused connection, timeout) prints `Posting to Slack failed.`, the remaining announcements and reminders still run, and the run exits 1.
 
 `slackPostOptions()` in `src/slack.php` builds the request options: the payload as `body` with a JSON content type, a 10 s connect timeout and a 30 s total timeout. The payload goes in `body`, not Guzzle's `json` option, because that option re-encodes it with Unicode and slashes escaped; `body` sends exactly what `--debug` prints.
 
