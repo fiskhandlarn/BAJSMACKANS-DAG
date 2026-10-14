@@ -11,3 +11,11 @@ When a commit changes something the plan describes, update the plan in that same
 ## Workflows
 
 The repo is public and `.github/workflows/daily.yml` uses the `WEBHOOK_URL` secret. Trigger PR workflows with `pull_request`, which gives fork PRs no secrets. Never use `pull_request_target`: it runs with the repo's secrets, and checking out the PR's code in it hands those secrets to any fork.
+
+## Dependencies
+
+Change `composer.lock` only through composer (`composer require`, `composer update`), never by hand.
+
+Write `composer.json` constraints as caret ranges with the full patch version, `^n.n.n` (e.g. `^3.14.2`, not `^3.14`). `composer require vendor/package:^n.n.n` (with `--dev` for dev packages) does both.
+
+`config.platform.php` in `composer.json` is the minimum PHP version, so composer resolves for it on any machine. Raise it together with `require.php`.
