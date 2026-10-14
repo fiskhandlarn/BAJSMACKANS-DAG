@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | grep -q 'composer\\.lock$' && { echo 'composer.lock is generated: change it only through composer (composer require / composer update), never by hand.' >&2; exit 2; } || exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
