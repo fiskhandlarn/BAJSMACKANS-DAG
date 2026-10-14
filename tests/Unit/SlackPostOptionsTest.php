@@ -18,4 +18,10 @@ class SlackPostOptionsTest extends Unit
         $this->assertSame(10, $options['connect_timeout']);
         $this->assertSame(30, $options['timeout']);
     }
+
+    // A redirect must not re-send the payload to wherever Slack's response points.
+    public function testNoRedirects(): void
+    {
+        $this->assertFalse(slackPostOptions([])['allow_redirects']);
+    }
 }

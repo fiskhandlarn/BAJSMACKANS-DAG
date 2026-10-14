@@ -120,6 +120,16 @@ class DaysCest
         });
     }
 
+    // A redirect from Slack must fail the run too: the payload was not delivered, and is never re-sent to the redirect's target.
+    public function redirectPost(CliTester $I): void
+    {
+        $this->withServer('tests/Support/http-302.php', '302', function () use ($I) {
+            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php index.php --date='2030-12-31 08:00'", false);
+            $I->seeResultCodeIsNot(0);
+            $I->seeInShellOutput('Posting to Slack failed.');
+        });
+    }
+
     // Runs index.php against a server that saves the request body, and returns the posted payload.
     private function posted(CliTester $I, string $date, string $env = '', string $args = ''): array
     {

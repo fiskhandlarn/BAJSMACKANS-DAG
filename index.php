@@ -110,10 +110,15 @@ foreach($calendar as $idx => $temadag) {
       echo "```json\n" . json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n```\n\n";
       echo "Not posting to Slack in debug mode.\n";
     } elseif ($webhookURL) {
-      // Guzzle throws on HTTP error statuses, refused connections and timeouts; the remaining announcements and reminders still run
+      // Guzzle throws on 4xx/5xx statuses, refused connections and timeouts; an unfollowed 3xx means nothing was delivered either
       try {
-        (new Client())->post($webhookURL, slackPostOptions($payload));
+        $posted = (new Client())->post($webhookURL, slackPostOptions($payload))->getStatusCode() < 300;
       } catch (GuzzleException) {
+        $posted = false;
+      }
+
+      // the remaining announcements and reminders still run
+      if (!$posted) {
         echo "Posting to Slack failed.\n";
         $failed = true;
       }
