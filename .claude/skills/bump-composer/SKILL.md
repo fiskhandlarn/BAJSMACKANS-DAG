@@ -8,7 +8,7 @@ Follow the "Dependencies" rules in `AGENTS.md` throughout.
 
 1. Branch off an up-to-date `main` as `chore/bump-composer-deps`. Done when `git status` is clean on the new branch.
 2. Run `composer outdated --direct` and keep its table as the **before** state.
-3. Run `composer update -W`.
+3. Run `composer update -W`, then `composer outdated --direct --major-only`. For each package listed, run `composer require -W vendor/pkg:^<latest>` (`--dev` for `require-dev`). A major composer cannot resolve stays on its current constraint and goes to step 5 as a blocker.
 4. **Pin**: list installed versions with `composer show --direct`, drop any leading `v`, then run `composer require --no-update vendor/pkg:^x.y.z` per package (`--dev` for `require-dev`), then `composer update --lock`. Done when every constraint in `composer.json` is `^` plus the exact installed version.
 5. **Blockers**: run `composer outdated`. For every package still listed, run `composer why-not vendor/pkg <latest>` and note the blocker. Leave blocked packages where they are; transitive ones stay out of `composer.json`. Done when every listed package has a named blocker.
 6. Run `composer run lint:php`, `composer run lint:json` and `composer run test`. Done when all three are green.
