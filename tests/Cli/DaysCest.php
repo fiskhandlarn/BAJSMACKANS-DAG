@@ -83,42 +83,68 @@ class DaysCest
         $I->seeInShellOutput('Nyårsdagen is tomorrow!');
     }
 
+    // Runs index.php posting to $webhookURL and checks the post failed the run.
+    private function seePostFails(CliTester $I, string $webhookURL): void
+    {
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=$webhookURL php index.php --date='2030-12-31 08:00'", false);
+        $I->seeResultCodeIs(1);
+        $I->seeInShellOutput('Posting to Slack failed.');
+    }
+
     // A failed Slack post must fail the run, or the scheduled workflow stays green.
     public function failedPost(CliTester $I): void
     {
-        // port 9 (discard) refuses the connection, so curl fails
-        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:9/ php index.php --date='2030-12-31 08:00'", false);
-        $I->seeResultCodeIsNot(0);
+        // port 9 (discard) refuses the connection, so the post fails
+        $this->seePostFails($I, 'http://127.0.0.1:9/');
     }
 
-    // An HTTP error from Slack must fail the run too, not only a refused connection.
-    public function httpErrorPost(CliTester $I): void
+    // A malformed WEBHOOK_URL must fail the post, not crash the run before the remaining announcements and reminders.
+    public function malformedWebhookURL(CliTester $I): void
     {
-        $server = proc_open(['php', '-S', '127.0.0.1:8765', 'tests/Support/http-500.php'], [['pipe', 'r'], ['file', '/dev/null', 'w'], ['file', '/dev/null', 'w']], $pipes);
-        for ($i = 0; $i < 50 && !str_contains($status = (@get_headers('http://127.0.0.1:8765/') ?: [''])[0], ' 500 '); $i++) {
+        $this->seePostFails($I, 'http://:80');
+    }
+
+    // Runs $test with the php -S $router answering on 127.0.0.1:8765.
+    private function withServer(string $router, string $status, callable $test): void
+    {
+        $server = proc_open(['php', '-S', '127.0.0.1:8765', $router], [['pipe', 'r'], ['file', '/dev/null', 'w'], ['file', '/dev/null', 'w']], $pipes);
+        for ($i = 0; $i < 50 && !str_contains($line = (@get_headers('http://127.0.0.1:8765/') ?: [''])[0], " $status "); $i++) {
             usleep(100000);
         }
 
         try {
             // without this, a missing or foreign server would turn the test into a refused-connection or 404 test
-            Assert::assertStringContainsString(' 500 ', $status, 'tests/Support/http-500.php is not answering on 127.0.0.1:8765');
-            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php index.php --date='2030-12-31 08:00'", false);
-            $I->seeResultCodeIsNot(0);
-            $I->seeInShellOutput('Posting to Slack failed.');
+            Assert::assertStringContainsString(" $status ", $line, "$router is not answering on 127.0.0.1:8765");
+            $test();
         } finally {
             proc_terminate($server);
+            // waits for the server to exit, so the next test can bind the port
+            proc_close($server);
         }
     }
 
-    // Runs index.php with the fake curl from tests/Support/bin and returns the posted payload.
+    // An HTTP error from Slack must fail the run too, not only a refused connection.
+    public function httpErrorPost(CliTester $I): void
+    {
+        $this->withServer('tests/Support/http-500.php', '500', fn () => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
+    }
+
+    // A redirect from Slack must fail the run too: the payload was not delivered, and is never re-sent to the redirect's target.
+    public function redirectPost(CliTester $I): void
+    {
+        $this->withServer('tests/Support/http-302.php', '302', fn () => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
+    }
+
+    // Runs index.php against a server that saves the request body, and returns the posted payload.
     private function posted(CliTester $I, string $date, string $env = '', string $args = ''): array
     {
-        @unlink('tests/_output/curl-data.json');
-        @unlink('tests/_output/curl-args.txt');
-        $I->runShellCommand("$env PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00' $args", false);
-        $I->seeResultCodeIs(0);
+        @unlink('tests/_output/request-body.json');
+        $this->withServer('tests/Support/save-request.php', '200', function () use ($I, $date, $env, $args) {
+            $I->runShellCommand("$env DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://127.0.0.1:8765/ php index.php --date='$date 08:00' $args", false);
+            $I->seeResultCodeIs(0);
+        });
 
-        return json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true) ?? [];
+        return json_decode((string) @file_get_contents('tests/_output/request-body.json'), true) ?? [];
     }
 
     // Returns the body text of the posted card.
@@ -187,7 +213,7 @@ class DaysCest
         $I->dontSeeInShellOutput('No webhook URL found.');
     }
 
-    // A ' in a title must not break the shell command that runs curl.
+    // A ' in a title must reach Slack intact.
     public function apostropheInTitle(CliTester $I): void
     {
         Assert::assertStringContainsString("Våffeldagen (it's waffle day)", $this->postedText($I, '2030-03-25'));
@@ -197,15 +223,6 @@ class DaysCest
     public function doubleQuoteInTitle(CliTester $I): void
     {
         Assert::assertStringContainsString('The "best" bun day', $this->postedText($I, '2030-03-27'));
-    }
-
-    // A Slack that accepts the connection but never answers must not block the run until the job limit.
-    public function curlTimeouts(CliTester $I): void
-    {
-        $this->postedText($I, '2030-03-25');
-        $args = (string) @file_get_contents('tests/_output/curl-args.txt');
-        Assert::assertStringContainsString("--connect-timeout\n10\n", $args);
-        Assert::assertStringContainsString("--max-time\n30\n", $args);
     }
 
     // GitHub's runner PHP has no E in variables_order, so process env vars never reach $_ENV.

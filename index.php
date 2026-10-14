@@ -5,8 +5,11 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/env.php';
 require_once __DIR__ . '/src/days.php';
+require_once __DIR__ . '/src/slack.php';
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 error_reporting(E_ALL & ~E_DEPRECATED);
 
@@ -68,7 +71,7 @@ foreach($calendar as $idx => $temadag) {
   if($isToday || $isTomorrow) {
     echo "------------------------------------------------------\n";
     echo "🎉 " . $temadag['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
-    $json = json_encode([
+    $payload = [
       'blocks' => [
         [
           'type' => 'card',
@@ -100,18 +103,23 @@ foreach($calendar as $idx => $temadag) {
           ],
         ],
       ],
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+    ];
 
     if ($isDebug) {
       // debug previews the payload, so it never posts, whatever WEBHOOK_URL says
-      echo "```json\n" . $json . "\n```\n\n";
+      echo "```json\n" . json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n```\n\n";
       echo "Not posting to Slack in debug mode.\n";
     } elseif ($webhookURL) {
-      // --fail turns HTTP errors into a non-zero exit code; timeouts stop a hung Slack from blocking the run
-      $exec = "curl --fail --silent --show-error --connect-timeout 10 --max-time 30 -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
-      exec($exec, result_code: $resultCode);
+      // Guzzle throws on 4xx/5xx statuses, refused connections, timeouts and unencodable payloads, and a malformed URL throws
+      // InvalidArgumentException; an unfollowed 3xx means nothing was delivered either
+      try {
+        $posted = (new Client())->post($webhookURL, slackPostOptions($payload))->getStatusCode() < 300;
+      } catch (GuzzleException | InvalidArgumentException) {
+        $posted = false;
+      }
 
-      if (0 !== $resultCode) {
+      // the remaining announcements and reminders still run
+      if (!$posted) {
         echo "Posting to Slack failed.\n";
         $failed = true;
       }

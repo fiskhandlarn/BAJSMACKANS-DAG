@@ -1,7 +1,0 @@
-#!/bin/sh
-# Stands in for curl in tests: saves all arguments, one per line, and the --data argument so a test can read what would be posted.
-printf '%s\n' "$@" > tests/_output/curl-args.txt
-while [ $# -gt 0 ]; do
-  [ "$1" = --data ] && printf '%s' "$2" > tests/_output/curl-data.json
-  shift
-done
