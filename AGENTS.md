@@ -8,6 +8,10 @@ Keep plans short prose: context, change, manual steps, verification. Name files 
 
 When a commit changes something the plan describes, update the plan in that same commit.
 
+## Branches
+
+Never commit directly to `main`: it has branch protection. Commit on a branch and merge through a pull request.
+
 ## Workflows
 
 The repo is public and `.github/workflows/daily.yml` uses the `WEBHOOK_URL` secret. Trigger PR workflows with `pull_request`, which gives fork PRs no secrets. Never use `pull_request_target`: it runs with the repo's secrets, and checking out the PR's code in it hands those secrets to any fork.
