@@ -153,10 +153,6 @@ class DaysCest
         Assert::assertSame('y', $card['hero_image']['image_url'] ?? null);
         Assert::assertSame('x', $card['subtitle']['text'] ?? null);
         Assert::assertSame(":warning: Idag är det Våffeldagen (it's waffle day)", $card['body']['text'] ?? null);
-        // the body Slack receives keeps Unicode and slashes unescaped, as --debug prints it
-        $body = (string) file_get_contents('tests/_output/request-body.json');
-        Assert::assertStringContainsString('Våffeldagen', $body);
-        Assert::assertStringContainsString('<https://github.com/fiskhandlarn/BAJSMACKANS-DAG|', $body);
     }
 
     // The message says which app and which commit sent it.

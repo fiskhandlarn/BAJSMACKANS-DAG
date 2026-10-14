@@ -6,11 +6,11 @@ Issue #9. The daily run posted each announcement and reminder by building a `cur
 ## Change
 `guzzlehttp/guzzle` and `ext-curl` are in `require`. Guzzle applies the connect timeout only through its curl handler; without `ext-curl` it falls back to PHP streams, which ignore it. `index.php` POSTs each announcement and reminder to `WEBHOOK_URL` with a Guzzle client. Any Guzzle exception (HTTP error status, refused connection, timeout) prints `Posting to Slack failed.`, the remaining announcements and reminders still run, and the run exits 1.
 
-`slackPostOptions()` in `src/slack.php` builds the request options: the payload as `body` with a JSON content type, a 10 s connect timeout and a 30 s total timeout. The payload goes in `body`, not Guzzle's `json` option, because that option re-encodes it with Unicode and slashes escaped; `body` sends exactly what `--debug` prints.
+`slackPostOptions()` in `src/slack.php` builds the request options: the payload in Guzzle's `json` option, a 10 s connect timeout and a 30 s total timeout. Guzzle encodes it with Unicode and slashes escaped, so the bytes differ from what `--debug` prints, but Slack decodes the same message.
 
 `--debug` and the missing-webhook path are unchanged.
 
-Tests: `tests/Unit/SlackPostOptionsTest.php` checks the timeouts. `card` checks the received body keeps Unicode and slashes unescaped. The payload tests in `tests/Cli/DaysCest.php` post to a `php -S` server running `tests/Support/save-request.php`, which saves the request body to `tests/_output/` only when it has the JSON content type. `httpErrorPost` shares the same server helper. The fake curl in `tests/Support/bin/curl` is gone.
+Tests: `tests/Unit/SlackPostOptionsTest.php` checks the timeouts. The payload tests in `tests/Cli/DaysCest.php` post to a `php -S` server running `tests/Support/save-request.php`, which saves the request body to `tests/_output/` only when it has the JSON content type. `httpErrorPost` shares the same server helper. The fake curl in `tests/Support/bin/curl` is gone.
 
 ## Manual steps
 None.

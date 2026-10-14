@@ -71,7 +71,7 @@ foreach($calendar as $idx => $temadag) {
   if($isToday || $isTomorrow) {
     echo "------------------------------------------------------\n";
     echo "🎉 " . $temadag['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
-    $json = json_encode([
+    $payload = [
       'blocks' => [
         [
           'type' => 'card',
@@ -103,16 +103,16 @@ foreach($calendar as $idx => $temadag) {
           ],
         ],
       ],
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+    ];
 
     if ($isDebug) {
       // debug previews the payload, so it never posts, whatever WEBHOOK_URL says
-      echo "```json\n" . $json . "\n```\n\n";
+      echo "```json\n" . json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n```\n\n";
       echo "Not posting to Slack in debug mode.\n";
     } elseif ($webhookURL) {
       // Guzzle throws on HTTP error statuses, refused connections and timeouts; the remaining announcements and reminders still run
       try {
-        (new Client())->post($webhookURL, slackPostOptions($json));
+        (new Client())->post($webhookURL, slackPostOptions($payload));
       } catch (GuzzleException) {
         echo "Posting to Slack failed.\n";
         $failed = true;
