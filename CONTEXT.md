@@ -1,6 +1,6 @@
 # BAJSMACKANS-DAG
 
-Announces Swedish temadagar (pastry days, Halloween and the like) in Slack, on the day itself and the day before.
+Announces Swedish temadagar (pastry days, Halloween and the like) in Slack, on the temadag's date and the date before.
 
 ## Language
 
@@ -11,8 +11,7 @@ The set of all temadagar the app knows about.
 _Avoid_: Data file, days list, fikakalender
 
 **Source**:
-An external list of temadagar that the calendar draws from, such as a published baking calendar. The calendar has many sources.
-_Avoid_: Fikakalender
+An external list of temadagar that the calendar draws from, such as the fikakalender, a published baking calendar. The calendar has many sources.
 
 **Temadag**:
 A recurring themed day, such as Mazarinens dag or Halloween, with a title, a link and an image.
