@@ -71,16 +71,24 @@ foreach($days as $idx => $daydata) {
     $json = json_encode([
       'blocks' => [
         [
-          'type' => 'section',
-          'text' => [
+          'type' => 'card',
+          'title' => [
             'type' => 'mrkdwn',
-            'text' => sprintf("%s är det *%s*\n%s", ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title'], $daydata['link']),
+            'text' => $daydata['title'],
           ],
-        ],
-        [
-          'type' => 'image',
-          'image_url' => $daydata['image'],
-          'alt_text' => $daydata['title'],
+          'hero_image' => [
+            'type' => 'image',
+            'image_url' => $daydata['image'],
+            'alt_text' => $daydata['title'],
+          ],
+          'subtitle' => [
+            'type' => 'mrkdwn',
+            'text' => $daydata['link'],
+          ],
+          'body' => [
+            'type' => 'mrkdwn',
+            'text' => sprintf('%s är det %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title']),
+          ],
         ],
         [
           'type' => 'context',

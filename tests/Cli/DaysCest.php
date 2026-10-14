@@ -116,22 +116,27 @@ class DaysCest
         return json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true) ?? [];
     }
 
-    // Returns the text of the posted message.
+    // Returns the body text of the posted card.
     private function postedText(CliTester $I, string $date): string
     {
-        return $this->posted($I, $date)['blocks'][0]['text']['text'] ?? '';
+        return $this->posted($I, $date)['blocks'][0]['body']['text'] ?? '';
     }
 
     // Returns the text under the message: repo link and version.
     private function postedContext(CliTester $I, string $date, string $env = ''): string
     {
-        return $this->posted($I, $date, $env)['blocks'][2]['elements'][0]['text'] ?? '';
+        return $this->posted($I, $date, $env)['blocks'][1]['elements'][0]['text'] ?? '';
     }
 
-    // The link goes on its own line under the day.
-    public function linkOnOwnLine(CliTester $I): void
+    // The day is a card: title, image, link as subtitle, and today or tomorrow in the body.
+    public function card(CliTester $I): void
     {
-        Assert::assertSame(":warning: Idag är det *Våffeldagen (it's waffle day)*\nx", $this->postedText($I, '2030-03-25'));
+        $card = $this->posted($I, '2030-03-25')['blocks'][0] ?? [];
+        Assert::assertSame('card', $card['type'] ?? null);
+        Assert::assertSame("Våffeldagen (it's waffle day)", $card['title']['text'] ?? null);
+        Assert::assertSame('y', $card['hero_image']['image_url'] ?? null);
+        Assert::assertSame('x', $card['subtitle']['text'] ?? null);
+        Assert::assertSame(":warning: Idag är det Våffeldagen (it's waffle day)", $card['body']['text'] ?? null);
     }
 
     // The message says which app and which commit sent it.
