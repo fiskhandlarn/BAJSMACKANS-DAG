@@ -52,8 +52,13 @@ if (php_sapi_name() == "cli") {
 $tomorrow = new Carbon($now . '+ 1 day', TIMEZONE);
 $webhookURL = env('WEBHOOK_URL');
 $failed = false;
+$repoURL = 'https://github.com/fiskhandlarn/BAJSMACKANS-DAG';
+// the short SHA of the running commit is the app's version; no git or .git gives 'dev'
+// git searches parent directories, so without its own .git (a file in a worktree) a copy inside another repo would report that repo's SHA
+$version = file_exists(__DIR__ . '/.git') ? trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__) . ' rev-parse --short HEAD 2>/dev/null')) : '';
+$versionText = $version ? "<$repoURL/commit/$version|$version>" : 'dev';
 
-echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
+echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n\n";
 
 foreach($days as $idx => $daydata) {
   // resolve against each date's own year so --date and new year's eve work; unparseable days resolve to null and never match
@@ -61,29 +66,47 @@ foreach($days as $idx => $daydata) {
   $isTomorrow = $tomorrow->format("Y-m-d") == resolveDay($daydata["day"], $tomorrow->year)?->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
-    echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n";
+    echo "------------------------------------------------------\n";
+    echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
     $json = json_encode([
       'blocks' => [
         [
-          'type' => 'section',
-          'text' => [
+          'type' => 'card',
+          'title' => [
             'type' => 'mrkdwn',
-            'text' => sprintf('%s är det *%s* - %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title'], $daydata['link']),
+            'text' => $daydata['title'],
+          ],
+          'hero_image' => [
+            'type' => 'image',
+            'image_url' => $daydata['image'],
+            'alt_text' => $daydata['title'],
+          ],
+          'subtitle' => [
+            'type' => 'mrkdwn',
+            'text' => $daydata['link'],
+          ],
+          'body' => [
+            'type' => 'mrkdwn',
+            'text' => sprintf('%s är det %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title']),
           ],
         ],
         [
-          'type' => 'image',
-          'image_url' => $daydata['image'],
-          'alt_text' => $daydata['title'],
+          'type' => 'context',
+          'elements' => [
+            [
+              'type' => 'mrkdwn',
+              'text' => "<$repoURL|BAJSMACKANS-DAG> · $versionText",
+            ],
+          ],
         ],
       ],
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 
     if ($isDebug) {
-      echo $json . "\n";
-    }
-
-    if ($webhookURL) {
+      // debug previews the payload, so it never posts, whatever WEBHOOK_URL says
+      echo "```json\n" . $json . "\n```\n\n";
+      echo "Not posting to Slack in debug mode.\n";
+    } elseif ($webhookURL) {
       // --fail turns HTTP errors into a non-zero exit code; timeouts stop a hung Slack from blocking the run
       $exec = "curl --fail --silent --show-error --connect-timeout 10 --max-time 30 -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
       exec($exec, result_code: $resultCode);
@@ -95,6 +118,7 @@ foreach($days as $idx => $daydata) {
     } else {
       echo "No webhook URL found.\n";
     }
+    echo "------------------------------------------------------\n";
     echo "\n\n";
   }
 }

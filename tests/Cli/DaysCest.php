@@ -52,6 +52,11 @@ class DaysCest
             Assert::assertIsString($example['entry'][$key] ?? null, "missing $key");
             Assert::assertNotSame('', trim($example['entry'][$key]), "empty $key");
         }
+
+        // Slack rejects the whole message when a card's title or subtitle (the link) is over 150 characters
+        foreach (['title', 'link'] as $key) {
+            Assert::assertLessThanOrEqual(150, mb_strlen($example['entry'][$key]), "$key over 150 characters");
+        }
     }
 
     #[DataProvider('days')]
@@ -105,16 +110,81 @@ class DaysCest
         }
     }
 
-    // Runs index.php with the fake curl from tests/Support/bin and returns the text of the posted message.
-    private function postedText(CliTester $I, string $date): string
+    // Runs index.php with the fake curl from tests/Support/bin and returns the posted payload.
+    private function posted(CliTester $I, string $date, string $env = '', string $args = ''): array
     {
         @unlink('tests/_output/curl-data.json');
         @unlink('tests/_output/curl-args.txt');
-        $I->runShellCommand("PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00'", false);
+        $I->runShellCommand("$env PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00' $args", false);
         $I->seeResultCodeIs(0);
-        $posted = json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true);
 
-        return $posted['blocks'][0]['text']['text'] ?? '';
+        return json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true) ?? [];
+    }
+
+    // Returns the body text of the posted card.
+    private function postedText(CliTester $I, string $date): string
+    {
+        return $this->posted($I, $date)['blocks'][0]['body']['text'] ?? '';
+    }
+
+    // Returns the text under the message: repo link and version.
+    private function postedContext(CliTester $I, string $date, string $env = ''): string
+    {
+        return $this->posted($I, $date, $env)['blocks'][1]['elements'][0]['text'] ?? '';
+    }
+
+    // The day is a card: title, image, link as subtitle, and today or tomorrow in the body.
+    public function card(CliTester $I): void
+    {
+        $card = $this->posted($I, '2030-03-25')['blocks'][0] ?? [];
+        Assert::assertSame('card', $card['type'] ?? null);
+        Assert::assertSame("Våffeldagen (it's waffle day)", $card['title']['text'] ?? null);
+        Assert::assertSame('y', $card['hero_image']['image_url'] ?? null);
+        Assert::assertSame('x', $card['subtitle']['text'] ?? null);
+        Assert::assertSame(":warning: Idag är det Våffeldagen (it's waffle day)", $card['body']['text'] ?? null);
+    }
+
+    // The message says which app and which commit sent it.
+    public function repoLinkAndVersion(CliTester $I): void
+    {
+        $sha = trim((string) shell_exec('git rev-parse --short HEAD'));
+        Assert::assertSame(
+            "<https://github.com/fiskhandlarn/BAJSMACKANS-DAG|BAJSMACKANS-DAG> · <https://github.com/fiskhandlarn/BAJSMACKANS-DAG/commit/$sha|$sha>",
+            $this->postedContext($I, '2030-03-25'),
+        );
+    }
+
+    // When git fails (not installed, broken repo, dubious ownership), the version reads 'dev', not git's error text.
+    public function versionWhenGitFails(CliTester $I): void
+    {
+        Assert::assertStringEndsWith(' · dev', $this->postedContext($I, '2030-03-25', 'GIT_DIR=/nonexistent'));
+    }
+
+    // A copy without its own .git, inside another git repo, must not report that repo's SHA.
+    public function versionInsideOtherRepo(CliTester $I): void
+    {
+        $repo = sys_get_temp_dir() . '/bajsmackans-dag-' . uniqid();
+        mkdir("$repo/app", 0777, true);
+        copy('index.php', "$repo/app/index.php");
+        foreach (['src', 'vendor', 'tests'] as $dir) {
+            symlink(realpath($dir), "$repo/app/$dir");
+        }
+
+        try {
+            shell_exec('git -C ' . escapeshellarg($repo) . ' init -q && git -C ' . escapeshellarg($repo) . ' -c user.name=test -c user.email=test@example.invalid commit -q --allow-empty -m init');
+            $I->runShellCommand('DATA_JSON=tests/Support/Data/quotes.json php ' . escapeshellarg("$repo/app/index.php") . " --date='2030-03-25 08:00' --debug");
+            $I->seeInShellOutput('|BAJSMACKANS-DAG> · dev');
+        } finally {
+            shell_exec('rm -rf ' . escapeshellarg($repo));
+        }
+    }
+
+    // --debug previews the payload and never posts, even with a webhook URL set.
+    public function debugNeverPosts(CliTester $I): void
+    {
+        Assert::assertSame([], $this->posted($I, '2030-03-25', '', '--debug'));
+        $I->seeInShellOutput('Not posting to Slack in debug mode.');
+        $I->dontSeeInShellOutput('No webhook URL found.');
     }
 
     // A ' in a title must not break the shell command that runs curl.

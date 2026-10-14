@@ -20,11 +20,13 @@ Test date:
 php index.php --date="january 10"
 ```
 
-Output JSON payload:
+Output JSON payload (never posts to Slack):
 
 ```bash
 php index.php --date="january 10" --debug
 ```
+
+Paste the payload into Slack's [Block Kit Builder](https://app.slack.com/block-kit-builder/) to preview the message without posting it.
 
 ## Lint
 
