@@ -10,7 +10,7 @@ Issue #9. The daily run posted each announcement and reminder by building a `cur
 
 `--debug` and the missing-webhook path are unchanged.
 
-Tests: `tests/Unit/SlackPostOptionsTest.php` checks the timeouts. `card` checks the received body keeps Unicode and slashes unescaped. The payload tests in `tests/Cli/DaysCest.php` post to a `php -S` server running `tests/Support/save-request.php`, which saves the request body to `tests/_output/`. `httpErrorPost` shares the same server helper. The fake curl in `tests/Support/bin/curl` is gone.
+Tests: `tests/Unit/SlackPostOptionsTest.php` checks the timeouts. `card` checks the received body keeps Unicode and slashes unescaped. The payload tests in `tests/Cli/DaysCest.php` post to a `php -S` server running `tests/Support/save-request.php`, which saves the request body to `tests/_output/` only when it has the JSON content type. `httpErrorPost` shares the same server helper. The fake curl in `tests/Support/bin/curl` is gone.
 
 ## Manual steps
 None.
