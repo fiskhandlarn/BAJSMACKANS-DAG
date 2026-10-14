@@ -62,8 +62,8 @@ echo "Checking calendar against " . $now->toDateString() . " and " . $tomorrow->
 
 foreach($calendar as $idx => $temadag) {
   // resolve against each date's own year so --date and new year's eve work; unparseable day rules resolve to null and never match
-  $isToday = $now->format("Y-m-d") == resolveDay($temadag["day"], $now->year)?->format("Y-m-d");
-  $isTomorrow = $tomorrow->format("Y-m-d") == resolveDay($temadag["day"], $tomorrow->year)?->format("Y-m-d");
+  $isToday = $now->format("Y-m-d") == resolveDayRule($temadag["day"], $now->year)?->format("Y-m-d");
+  $isTomorrow = $tomorrow->format("Y-m-d") == resolveDayRule($temadag["day"], $tomorrow->year)?->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
     echo "------------------------------------------------------\n";

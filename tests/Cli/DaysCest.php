@@ -27,7 +27,7 @@ class DaysCest
         foreach (self::calendar() as $i => $temadag) {
             $examples["#$i " . ($temadag['title'] ?? '?')] = [
                 'temadag' => $temadag,
-                'date' => resolveDay((string) ($temadag['day'] ?? ''), Carbon::now(TIMEZONE)->year)?->toDateString(),
+                'date' => resolveDayRule((string) ($temadag['day'] ?? ''), Carbon::now(TIMEZONE)->year)?->toDateString(),
             ];
         }
 

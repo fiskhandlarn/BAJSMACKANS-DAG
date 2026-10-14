@@ -49,7 +49,7 @@ composer run test
 ```
 
 Every temadag in the calendar is tested automatically (today, tomorrow, required fields), plus a check for duplicate titles.
-Date parsing (`resolveDay()` in `src/days.php`) has unit tests with fixed expected dates.
+Date parsing (`resolveDayRule()` in `src/days.php`) has unit tests with fixed expected dates.
 
 ## Sources
 
