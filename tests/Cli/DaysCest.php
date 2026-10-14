@@ -83,12 +83,19 @@ class DaysCest
         $I->seeInShellOutput('Nyårsdagen is tomorrow!');
     }
 
+    // Runs index.php posting to $webhookURL and checks the post failed the run.
+    private function seePostFails(CliTester $I, string $webhookURL): void
+    {
+        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=$webhookURL php index.php --date='2030-12-31 08:00'", false);
+        $I->seeResultCodeIs(1);
+        $I->seeInShellOutput('Posting to Slack failed.');
+    }
+
     // A failed Slack post must fail the run, or the scheduled workflow stays green.
     public function failedPost(CliTester $I): void
     {
         // port 9 (discard) refuses the connection, so the post fails
-        $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:9/ php index.php --date='2030-12-31 08:00'", false);
-        $I->seeResultCodeIsNot(0);
+        $this->seePostFails($I, 'http://127.0.0.1:9/');
     }
 
     // Runs $test with the php -S $router answering on 127.0.0.1:8765.
@@ -113,21 +120,13 @@ class DaysCest
     // An HTTP error from Slack must fail the run too, not only a refused connection.
     public function httpErrorPost(CliTester $I): void
     {
-        $this->withServer('tests/Support/http-500.php', '500', function () use ($I) {
-            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php index.php --date='2030-12-31 08:00'", false);
-            $I->seeResultCodeIsNot(0);
-            $I->seeInShellOutput('Posting to Slack failed.');
-        });
+        $this->withServer('tests/Support/http-500.php', '500', fn () => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
     }
 
     // A redirect from Slack must fail the run too: the payload was not delivered, and is never re-sent to the redirect's target.
     public function redirectPost(CliTester $I): void
     {
-        $this->withServer('tests/Support/http-302.php', '302', function () use ($I) {
-            $I->runShellCommand("DATA_JSON=tests/Support/Data/new-year.json WEBHOOK_URL=http://127.0.0.1:8765/ php index.php --date='2030-12-31 08:00'", false);
-            $I->seeResultCodeIsNot(0);
-            $I->seeInShellOutput('Posting to Slack failed.');
-        });
+        $this->withServer('tests/Support/http-302.php', '302', fn () => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
     }
 
     // Runs index.php against a server that saves the request body, and returns the posted payload.
