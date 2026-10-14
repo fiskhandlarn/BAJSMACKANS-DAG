@@ -110,10 +110,11 @@ foreach($calendar as $idx => $temadag) {
       echo "```json\n" . json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n```\n\n";
       echo "Not posting to Slack in debug mode.\n";
     } elseif ($webhookURL) {
-      // Guzzle throws on 4xx/5xx statuses, refused connections and timeouts; an unfollowed 3xx means nothing was delivered either
+      // Guzzle throws on 4xx/5xx statuses, refused connections, timeouts and unencodable payloads, and a malformed URL throws
+      // InvalidArgumentException; an unfollowed 3xx means nothing was delivered either
       try {
         $posted = (new Client())->post($webhookURL, slackPostOptions($payload))->getStatusCode() < 300;
-      } catch (GuzzleException) {
+      } catch (GuzzleException | InvalidArgumentException) {
         $posted = false;
       }
 

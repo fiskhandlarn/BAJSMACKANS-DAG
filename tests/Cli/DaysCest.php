@@ -98,6 +98,12 @@ class DaysCest
         $this->seePostFails($I, 'http://127.0.0.1:9/');
     }
 
+    // A malformed WEBHOOK_URL must fail the post, not crash the run before the remaining announcements and reminders.
+    public function malformedWebhookURL(CliTester $I): void
+    {
+        $this->seePostFails($I, 'http://:80');
+    }
+
     // Runs $test with the php -S $router answering on 127.0.0.1:8765.
     private function withServer(string $router, string $status, callable $test): void
     {
