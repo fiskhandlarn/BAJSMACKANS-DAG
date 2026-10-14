@@ -18,6 +18,6 @@ The app is a CLI script that posts to a Slack webhook once a day at 08:00 Stockh
 3. Remove the old crontab the same day, or Slack gets two posts.
 
 ## Verification
-- Manual run: the log shows "Checking days against …" and not "No webhook URL found.".
+- Manual run: the log shows "Checking calendar against …" and not "No webhook URL found.".
 - A run with a bad webhook URL fails and logs "Posting to Slack failed.".
 - Next scheduled run starts at about 07:45 Stockholm time.

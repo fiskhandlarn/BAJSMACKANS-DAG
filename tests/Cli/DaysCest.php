@@ -13,10 +13,10 @@ use Tests\Support\CliTester;
 require_once __DIR__ . '/../../src/env.php';
 require_once __DIR__ . '/../../src/days.php';
 
-// Every entry in DATA_JSON becomes a test case, so new entries are covered automatically.
+// Every temadag in the calendar (DATA_JSON) becomes a test case, so new temadagar are covered automatically.
 class DaysCest
 {
-    private static function entries(): array
+    private static function temadagar(): array
     {
         return json_decode(file_get_contents(__DIR__ . '/../../' . env('DATA_JSON')), true);
     }
@@ -24,10 +24,10 @@ class DaysCest
     protected function days(): array
     {
         $examples = [];
-        foreach (self::entries() as $i => $entry) {
-            $examples["#$i " . ($entry['title'] ?? '?')] = [
-                'entry' => $entry,
-                'date' => resolveDay((string) ($entry['day'] ?? ''), Carbon::now(TIMEZONE)->year)?->toDateString(),
+        foreach (self::temadagar() as $i => $temadag) {
+            $examples["#$i " . ($temadag['title'] ?? '?')] = [
+                'temadag' => $temadag,
+                'date' => resolveDay((string) ($temadag['day'] ?? ''), Carbon::now(TIMEZONE)->year)?->toDateString(),
             ];
         }
 
@@ -37,7 +37,7 @@ class DaysCest
     private function runAt(CliTester $I, Example $example, string $modifier): void
     {
         if (null === $example['date']) {
-            Assert::fail('unparseable day: ' . ($example['entry']['day'] ?? '(missing)'));
+            Assert::fail('unparseable day: ' . ($example['temadag']['day'] ?? '(missing)'));
         }
 
         // cron runs at 08:00; empty WEBHOOK_URL so nothing is posted
@@ -49,13 +49,13 @@ class DaysCest
     public function fields(CliTester $I, Example $example): void
     {
         foreach (['day', 'title', 'link', 'image'] as $key) {
-            Assert::assertIsString($example['entry'][$key] ?? null, "missing $key");
-            Assert::assertNotSame('', trim($example['entry'][$key]), "empty $key");
+            Assert::assertIsString($example['temadag'][$key] ?? null, "missing $key");
+            Assert::assertNotSame('', trim($example['temadag'][$key]), "empty $key");
         }
 
         // Slack rejects the whole message when a card's title or subtitle (the link) is over 150 characters
         foreach (['title', 'link'] as $key) {
-            Assert::assertLessThanOrEqual(150, mb_strlen($example['entry'][$key]), "$key over 150 characters");
+            Assert::assertLessThanOrEqual(150, mb_strlen($example['temadag'][$key]), "$key over 150 characters");
         }
     }
 
@@ -64,7 +64,7 @@ class DaysCest
     {
         $this->runAt($I, $example, '+0 days');
         $I->seeResultCodeIs(0);
-        $I->seeInShellOutput($example['entry']['title'] . ' is today!');
+        $I->seeInShellOutput($example['temadag']['title'] . ' is today!');
     }
 
     #[DataProvider('days')]
@@ -72,7 +72,7 @@ class DaysCest
     {
         $this->runAt($I, $example, '-1 day');
         $I->seeResultCodeIs(0);
-        $I->seeInShellOutput($example['entry']['title'] . ' is tomorrow!');
+        $I->seeInShellOutput($example['temadag']['title'] . ' is tomorrow!');
     }
 
     // A year other than the current one, crossing into the next year.
@@ -220,9 +220,9 @@ class DaysCest
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];
-        foreach (self::entries() as $entry) {
-            // "Foo :coffee:" and "foo" are the same event
-            $seen[] = trim(mb_strtolower(preg_replace('#:[\w+-]+:#', '', $entry['title'])));
+        foreach (self::temadagar() as $temadag) {
+            // "Foo :coffee:" and "foo" are the same temadag
+            $seen[] = trim(mb_strtolower(preg_replace('#:[\w+-]+:#', '', $temadag['title'])));
         }
 
         $duplicates = array_keys(array_filter(array_count_values($seen), fn ($n) => $n > 1));
