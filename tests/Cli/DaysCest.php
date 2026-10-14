@@ -16,15 +16,15 @@ require_once __DIR__ . '/../../src/days.php';
 // Every temadag in the calendar (DATA_JSON) becomes a test case, so new temadagar are covered automatically.
 class DaysCest
 {
-    private static function temadagar(): array
+    private static function calendar(): array
     {
         return json_decode(file_get_contents(__DIR__ . '/../../' . env('DATA_JSON')), true);
     }
 
-    protected function days(): array
+    protected function temadagar(): array
     {
         $examples = [];
-        foreach (self::temadagar() as $i => $temadag) {
+        foreach (self::calendar() as $i => $temadag) {
             $examples["#$i " . ($temadag['title'] ?? '?')] = [
                 'temadag' => $temadag,
                 'date' => resolveDay((string) ($temadag['day'] ?? ''), Carbon::now(TIMEZONE)->year)?->toDateString(),
@@ -37,7 +37,7 @@ class DaysCest
     private function runAt(CliTester $I, Example $example, string $modifier): void
     {
         if (null === $example['date']) {
-            Assert::fail('unparseable day: ' . ($example['temadag']['day'] ?? '(missing)'));
+            Assert::fail('unparseable day rule: ' . ($example['temadag']['day'] ?? '(missing)'));
         }
 
         // cron runs at 08:00; empty WEBHOOK_URL so nothing is posted
@@ -45,7 +45,7 @@ class DaysCest
         $I->runShellCommand('WEBHOOK_URL= php index.php --date=' . escapeshellarg($date));
     }
 
-    #[DataProvider('days')]
+    #[DataProvider('temadagar')]
     public function fields(CliTester $I, Example $example): void
     {
         foreach (['day', 'title', 'link', 'image'] as $key) {
@@ -59,7 +59,7 @@ class DaysCest
         }
     }
 
-    #[DataProvider('days')]
+    #[DataProvider('temadagar')]
     public function today(CliTester $I, Example $example): void
     {
         $this->runAt($I, $example, '+0 days');
@@ -67,7 +67,7 @@ class DaysCest
         $I->seeInShellOutput($example['temadag']['title'] . ' is today!');
     }
 
-    #[DataProvider('days')]
+    #[DataProvider('temadagar')]
     public function tomorrow(CliTester $I, Example $example): void
     {
         $this->runAt($I, $example, '-1 day');
@@ -220,7 +220,7 @@ class DaysCest
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];
-        foreach (self::temadagar() as $temadag) {
+        foreach (self::calendar() as $temadag) {
             // "Foo :coffee:" and "foo" are the same temadag
             $seen[] = trim(mb_strtolower(preg_replace('#:[\w+-]+:#', '', $temadag['title'])));
         }

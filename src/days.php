@@ -7,7 +7,7 @@ use Carbon\Exceptions\InvalidFormatException;
 
 const TIMEZONE = 'Europe/Stockholm';
 
-// Resolves a "day" string from the calendar to a date in $year, or null if it can't be resolved.
+// Resolves a day rule from the calendar to a date in $year, or null if it can't be resolved.
 function resolveDay(string $day, int $year): ?Carbon
 {
     if (preg_match('#^(\d+) days before easter$#', $day, $matches)) {
