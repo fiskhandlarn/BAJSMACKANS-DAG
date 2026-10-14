@@ -5,7 +5,7 @@ Issue #12. A post puts the day's link after ` - ` on the same line as the day, a
 
 ## Change
 `index.php` builds the message:
-- The day is a Slack `card` block: the title as title, the image as hero image, the link as subtitle (its own line), and "Idag/Imorgon är det …" as body. Every link and title in `days.json` fits the card's limits (150 characters for title and subtitle, 200 for body).
+- The day is a Slack `card` block: the title as title, the image as hero image, the link as subtitle (its own line), and "Idag/Imorgon är det …" as body. Slack rejects the whole message when a field is over its limit (150 characters for title and subtitle, 200 for body), so the `fields` test in `tests/Cli/DaysCest.php` fails any title or link in `days.json` over 150 characters. The body stays under 200 for any title that passes.
 - A Slack `context` block under the card links to the GitHub repo and shows the short SHA of the running commit, linked to that commit.
 - The SHA comes from `git rev-parse --short HEAD`. The daily workflow's checkout includes `.git`, so this works on the runner. Without git or the app's own `.git`, the version reads `dev` and has no link. The `.git` check stops a copy inside another repo from reporting that repo's SHA, since git searches parent directories.
 

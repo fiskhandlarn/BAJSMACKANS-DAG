@@ -52,6 +52,11 @@ class DaysCest
             Assert::assertIsString($example['entry'][$key] ?? null, "missing $key");
             Assert::assertNotSame('', trim($example['entry'][$key]), "empty $key");
         }
+
+        // Slack rejects the whole message when a card's title or subtitle (the link) is over 150 characters
+        foreach (['title', 'link'] as $key) {
+            Assert::assertLessThanOrEqual(150, mb_strlen($example['entry'][$key]), "$key over 150 characters");
+        }
     }
 
     #[DataProvider('days')]
