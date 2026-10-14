@@ -12,15 +12,15 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 
 date_default_timezone_set(TIMEZONE);
 
-$daysJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
+$calendarJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
 
-if (!$daysJSON) {
+if (!$calendarJSON) {
   die(env('DATA_JSON') . " not found.\n");
 }
 
-$days = @json_decode($daysJSON, true);
+$calendar = @json_decode($calendarJSON, true);
 
-if (!$days) {
+if (!$calendar) {
   die("Invalid JSON.\n");
 }
 
@@ -58,36 +58,36 @@ $repoURL = 'https://github.com/fiskhandlarn/BAJSMACKANS-DAG';
 $version = file_exists(__DIR__ . '/.git') ? trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__) . ' rev-parse --short HEAD 2>/dev/null')) : '';
 $versionText = $version ? "<$repoURL/commit/$version|$version>" : 'dev';
 
-echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n\n";
+echo "Checking calendar against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n\n";
 
-foreach($days as $idx => $daydata) {
-  // resolve against each date's own year so --date and new year's eve work; unparseable days resolve to null and never match
-  $isToday = $now->format("Y-m-d") == resolveDay($daydata["day"], $now->year)?->format("Y-m-d");
-  $isTomorrow = $tomorrow->format("Y-m-d") == resolveDay($daydata["day"], $tomorrow->year)?->format("Y-m-d");
+foreach($calendar as $idx => $temadag) {
+  // resolve against each date's own year so --date and new year's eve work; unparseable day rules resolve to null and never match
+  $isToday = $now->format("Y-m-d") == resolveDayRule($temadag["day"], $now->year)?->format("Y-m-d");
+  $isTomorrow = $tomorrow->format("Y-m-d") == resolveDayRule($temadag["day"], $tomorrow->year)?->format("Y-m-d");
 
   if($isToday || $isTomorrow) {
     echo "------------------------------------------------------\n";
-    echo "🎉 " . $daydata['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
+    echo "🎉 " . $temadag['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
     $json = json_encode([
       'blocks' => [
         [
           'type' => 'card',
           'title' => [
             'type' => 'mrkdwn',
-            'text' => $daydata['title'],
+            'text' => $temadag['title'],
           ],
           'hero_image' => [
             'type' => 'image',
-            'image_url' => $daydata['image'],
-            'alt_text' => $daydata['title'],
+            'image_url' => $temadag['image'],
+            'alt_text' => $temadag['title'],
           ],
           'subtitle' => [
             'type' => 'mrkdwn',
-            'text' => $daydata['link'],
+            'text' => $temadag['link'],
           ],
           'body' => [
             'type' => 'mrkdwn',
-            'text' => sprintf('%s är det %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title']),
+            'text' => sprintf('%s är det %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $temadag['title']),
           ],
         ],
         [

@@ -14,7 +14,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Post today's and tomorrow's days to Slack
+      - name: Post announcements and reminders to Slack
         run: |
           : "${WEBHOOK_URL:?WEBHOOK_URL secret missing}"
           composer install --no-dev --no-interaction --no-progress

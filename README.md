@@ -48,8 +48,8 @@ composer run lint:json
 composer run test
 ```
 
-Every entry in the data file is tested automatically (today, tomorrow, required fields), plus a check for duplicate titles.
-Date parsing (`resolveDay()` in `src/days.php`) has unit tests with fixed expected dates.
+Every temadag in the calendar is tested automatically (today, tomorrow, required fields), plus a check for duplicate titles.
+Date parsing (`resolveDayRule()` in `src/days.php`) has unit tests with fixed expected dates.
 
 ## Sources
 

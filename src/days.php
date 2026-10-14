@@ -7,10 +7,10 @@ use Carbon\Exceptions\InvalidFormatException;
 
 const TIMEZONE = 'Europe/Stockholm';
 
-// Resolves a "day" string from the data file to a date in $year, or null if it can't be resolved.
-function resolveDay(string $day, int $year): ?Carbon
+// Resolves a day rule from the calendar to a date in $year, or null if it can't be resolved.
+function resolveDayRule(string $dayRule, int $year): ?Carbon
 {
-    if (preg_match('#^(\d+) days before easter$#', $day, $matches)) {
+    if (preg_match('#^(\d+) days before easter$#', $dayRule, $matches)) {
         // easter_days() is the number of days from 21 March to Easter Sunday,
         // 21 March being the start point of the Easter rule (first Sunday after
         // the first full moon on or after 21 March).
@@ -18,7 +18,7 @@ function resolveDay(string $day, int $year): ?Carbon
     }
 
     try {
-        return new Carbon("$day $year", TIMEZONE);
+        return new Carbon("$dayRule $year", TIMEZONE);
     } catch (InvalidFormatException) {
         return null;
     }

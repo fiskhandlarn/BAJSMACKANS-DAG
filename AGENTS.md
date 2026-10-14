@@ -19,3 +19,17 @@ Change `composer.lock` only through composer (`composer require`, `composer upda
 Write `composer.json` constraints as caret ranges with the full patch version, `^n.n.n` (e.g. `^3.14.2`, not `^3.14`). `composer require vendor/package:^n.n.n` (with `--dev` for dev packages) does both.
 
 `config.platform.php` in `composer.json` is the minimum PHP version, so composer resolves for it on any machine. Raise it together with `require.php`.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in this repo's GitHub Issues, used through the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five default triage labels, each label string equal to its role name. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.

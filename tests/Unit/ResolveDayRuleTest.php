@@ -9,10 +9,10 @@ use Codeception\Test\Unit;
 
 require_once __DIR__ . '/../../src/days.php';
 
-class ResolveDayTest extends Unit
+class ResolveDayRuleTest extends Unit
 {
-    // Expected dates are hard-coded so a bug in resolveDay() can't hide behind itself.
-    public static function days(): array
+    // Expected dates are hard-coded so a bug in resolveDayRule() can't hide behind itself.
+    public static function dayRules(): array
     {
         return [
             // Fettisdagen, from https://sv.wikipedia.org/wiki/Fettisdagen
@@ -30,10 +30,10 @@ class ResolveDayTest extends Unit
         ];
     }
 
-    #[DataProvider('days')]
-    public function testResolves(string $day, int $year, string $expected): void
+    #[DataProvider('dayRules')]
+    public function testResolves(string $dayRule, int $year, string $expected): void
     {
-        $carbon = resolveDay($day, $year);
+        $carbon = resolveDayRule($dayRule, $year);
 
         $this->assertSame($expected, $carbon->toDateString());
         $this->assertSame(TIMEZONE, $carbon->getTimezone()->getName());
@@ -41,8 +41,8 @@ class ResolveDayTest extends Unit
 
     public function testUnparseableIsNull(): void
     {
-        $this->assertNull(resolveDay('5 dayz before easter', 2026));
-        $this->assertNull(resolveDay('47 days before easter_dat', 2026));
-        $this->assertNull(resolveDay('januray 10', 2026));
+        $this->assertNull(resolveDayRule('5 dayz before easter', 2026));
+        $this->assertNull(resolveDayRule('47 days before easter_dat', 2026));
+        $this->assertNull(resolveDayRule('januray 10', 2026));
     }
 }
