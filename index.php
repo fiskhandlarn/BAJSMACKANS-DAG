@@ -52,6 +52,10 @@ if (php_sapi_name() == "cli") {
 $tomorrow = new Carbon($now . '+ 1 day', TIMEZONE);
 $webhookURL = env('WEBHOOK_URL');
 $failed = false;
+$repoURL = 'https://github.com/fiskhandlarn/BAJSMACKANS-DAG';
+// the short SHA of the running commit is the app's version; no git or .git gives 'dev'
+$version = trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__) . ' rev-parse --short HEAD 2>/dev/null'));
+$versionText = $version ? "<$repoURL/commit/$version|$version>" : 'dev';
 
 echo "Checking days against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n";
 
@@ -68,13 +72,22 @@ foreach($days as $idx => $daydata) {
           'type' => 'section',
           'text' => [
             'type' => 'mrkdwn',
-            'text' => sprintf('%s är det *%s* - %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title'], $daydata['link']),
+            'text' => sprintf("%s är det *%s*\n%s", ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $daydata['title'], $daydata['link']),
           ],
         ],
         [
           'type' => 'image',
           'image_url' => $daydata['image'],
           'alt_text' => $daydata['title'],
+        ],
+        [
+          'type' => 'context',
+          'elements' => [
+            [
+              'type' => 'mrkdwn',
+              'text' => "<$repoURL|BAJSMACKANS-DAG> · $versionText",
+            ],
+          ],
         ],
       ],
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);

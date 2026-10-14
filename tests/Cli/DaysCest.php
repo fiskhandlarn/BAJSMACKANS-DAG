@@ -105,16 +105,49 @@ class DaysCest
         }
     }
 
-    // Runs index.php with the fake curl from tests/Support/bin and returns the text of the posted message.
-    private function postedText(CliTester $I, string $date): string
+    // Runs index.php with the fake curl from tests/Support/bin and returns the posted payload.
+    private function posted(CliTester $I, string $date, string $env = ''): array
     {
         @unlink('tests/_output/curl-data.json');
         @unlink('tests/_output/curl-args.txt');
-        $I->runShellCommand("PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00'", false);
+        $I->runShellCommand("$env PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00'", false);
         $I->seeResultCodeIs(0);
-        $posted = json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true);
 
-        return $posted['blocks'][0]['text']['text'] ?? '';
+        return json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true) ?? [];
+    }
+
+    // Returns the text of the posted message.
+    private function postedText(CliTester $I, string $date): string
+    {
+        return $this->posted($I, $date)['blocks'][0]['text']['text'] ?? '';
+    }
+
+    // Returns the text under the message: repo link and version.
+    private function postedContext(CliTester $I, string $date, string $env = ''): string
+    {
+        return $this->posted($I, $date, $env)['blocks'][2]['elements'][0]['text'] ?? '';
+    }
+
+    // The link goes on its own line under the day.
+    public function linkOnOwnLine(CliTester $I): void
+    {
+        Assert::assertSame(":warning: Idag är det *Våffeldagen (it's waffle day)*\nx", $this->postedText($I, '2030-03-25'));
+    }
+
+    // The message says which app and which commit sent it.
+    public function repoLinkAndVersion(CliTester $I): void
+    {
+        $sha = trim((string) shell_exec('git rev-parse --short HEAD'));
+        Assert::assertSame(
+            "<https://github.com/fiskhandlarn/BAJSMACKANS-DAG|BAJSMACKANS-DAG> · <https://github.com/fiskhandlarn/BAJSMACKANS-DAG/commit/$sha|$sha>",
+            $this->postedContext($I, '2030-03-25'),
+        );
+    }
+
+    // Without a git repo, the version reads 'dev'.
+    public function versionWithoutGit(CliTester $I): void
+    {
+        Assert::assertStringEndsWith(' · dev', $this->postedContext($I, '2030-03-25', 'GIT_DIR=/nonexistent'));
     }
 
     // A ' in a title must not break the shell command that runs curl.
