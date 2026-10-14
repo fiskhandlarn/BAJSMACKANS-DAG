@@ -154,8 +154,8 @@ class DaysCest
         );
     }
 
-    // Without a git repo, the version reads 'dev'.
-    public function versionWithoutGit(CliTester $I): void
+    // When git fails (not installed, broken repo, dubious ownership), the version reads 'dev', not git's error text.
+    public function versionWhenGitFails(CliTester $I): void
     {
         Assert::assertStringEndsWith(' · dev', $this->postedContext($I, '2030-03-25', 'GIT_DIR=/nonexistent'));
     }
