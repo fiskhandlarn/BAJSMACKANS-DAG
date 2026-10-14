@@ -93,10 +93,10 @@ foreach($days as $idx => $daydata) {
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 
     if ($isDebug) {
+      // debug previews the payload, so it never posts, whatever WEBHOOK_URL says
       echo $json . "\n";
-    }
-
-    if ($webhookURL) {
+      echo "Not posting to Slack in debug mode.\n";
+    } elseif ($webhookURL) {
       // --fail turns HTTP errors into a non-zero exit code; timeouts stop a hung Slack from blocking the run
       $exec = "curl --fail --silent --show-error --connect-timeout 10 --max-time 30 -X POST -H 'Content-type: application/json' --data " . escapeshellarg($json) . " " . escapeshellarg($webhookURL);
       exec($exec, result_code: $resultCode);

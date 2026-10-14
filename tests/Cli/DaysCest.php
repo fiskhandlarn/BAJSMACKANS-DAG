@@ -106,11 +106,11 @@ class DaysCest
     }
 
     // Runs index.php with the fake curl from tests/Support/bin and returns the posted payload.
-    private function posted(CliTester $I, string $date, string $env = ''): array
+    private function posted(CliTester $I, string $date, string $env = '', string $args = ''): array
     {
         @unlink('tests/_output/curl-data.json');
         @unlink('tests/_output/curl-args.txt');
-        $I->runShellCommand("$env PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00'", false);
+        $I->runShellCommand("$env PATH=tests/Support/bin:\$PATH DATA_JSON=tests/Support/Data/quotes.json WEBHOOK_URL=http://example.invalid/ php index.php --date='$date 08:00' $args", false);
         $I->seeResultCodeIs(0);
 
         return json_decode((string) @file_get_contents('tests/_output/curl-data.json'), true) ?? [];
@@ -148,6 +148,14 @@ class DaysCest
     public function versionWithoutGit(CliTester $I): void
     {
         Assert::assertStringEndsWith(' · dev', $this->postedContext($I, '2030-03-25', 'GIT_DIR=/nonexistent'));
+    }
+
+    // --debug previews the payload and never posts, even with a webhook URL set.
+    public function debugNeverPosts(CliTester $I): void
+    {
+        Assert::assertSame([], $this->posted($I, '2030-03-25', '', '--debug'));
+        $I->seeInShellOutput('Not posting to Slack in debug mode.');
+        $I->dontSeeInShellOutput('No webhook URL found.');
     }
 
     // A ' in a title must not break the shell command that runs curl.

@@ -20,7 +20,7 @@ Test date:
 php index.php --date="january 10"
 ```
 
-Output JSON payload:
+Output JSON payload (never posts to Slack):
 
 ```bash
 php index.php --date="january 10" --debug
