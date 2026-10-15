@@ -15,3 +15,12 @@ function slackPostOptions(array $payload): array
         'timeout' => 30,
     ];
 }
+
+// A card subtitle linking each URL, labelled with its host.
+function slackSubtitle(array $links): string
+{
+    return implode(' · ', array_map(
+        fn(string $url) => "<$url|" . parse_url($url, PHP_URL_HOST) . '>',
+        $links,
+    ));
+}
