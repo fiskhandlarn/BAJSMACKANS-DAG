@@ -56,3 +56,4 @@ Date parsing (`resolveDayRule()` in `src/days.php`) has unit tests with fixed ex
 - https://www.lyckasmedbakning.nu/bak-fikakalender-2016/
 - https://recept.se/artikel/fikakalender-for-hela-aret
 - https://vilkendag.nu/temadagar
+- https://temadagar.se
