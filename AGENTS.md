@@ -24,6 +24,10 @@ Write `composer.json` constraints as caret ranges with the full patch version, `
 
 `config.platform.php` in `composer.json` is the minimum PHP version, so composer resolves for it on any machine. Raise it together with `require.php`.
 
+## Style
+
+Run `composer run fix:style` before committing. CI fails on `composer run lint:style`.
+
 ## Agent skills
 
 ### Issue tracker

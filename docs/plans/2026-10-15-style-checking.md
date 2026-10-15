@@ -14,6 +14,8 @@ Issue #20. CI linted PHP syntax and the data file but checked no style. `.editor
 
 The `lint` job in `.github/workflows/pull-request.yml` sets up PHP 8.1, like the `test` job, and runs `composer run lint:style`.
 
+`AGENTS.md` tells agents to run `fix:style` before committing.
+
 A separate commit reformats the repo: `fix:style` over every file, plus `.vscode/extensions.json`, `codeception.yml` and `tests/Cli.suite.yml` moved from 4 to 2 spaces by hand.
 
 ## Manual steps
