@@ -1,0 +1,5 @@
+# Paste into `crontab -e` on the server, which runs in Europe/Stockholm, and replace <token>.
+# The token is a fine-grained personal access token for this repo only, with Actions: read and write.
+# See docs/plans/2026-10-15-start-daily-run-from-server-crontab.md.
+GH_TOKEN=<token>
+0 8 * * * curl -fsS --connect-timeout 10 --max-time 30 -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" https://api.github.com/repos/fiskhandlarn/BAJSMACKANS-DAG/actions/workflows/daily.yml/dispatches -d '{"ref":"main"}'
