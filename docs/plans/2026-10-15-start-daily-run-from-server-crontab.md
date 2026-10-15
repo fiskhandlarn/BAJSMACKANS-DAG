@@ -11,10 +11,9 @@ GitHub never started a single scheduled daily run: the `schedule` slots on 2026-
 - #14 (fallback trigger) no longer applies. #15 (dead-man's switch) stays open: it is the only alert if the server is down.
 
 ## Manual steps
-1. Create a fine-grained personal access token for this repo only, with the repository permission Actions: read and write. Note its expiry date.
+1. Create a fine-grained personal access token for this repo only, with the repository permission Actions: read and write and no expiration.
 2. On the server, `crontab -e`, paste the lines from `crontab` in the repo root and replace `<token>`. The `curl` timeouts end a stalled request instead of letting it run into the next morning. With `-f`, an HTTP error makes curl exit non-zero, and cron mails its output when the server has mail set up.
 3. Set `GH_TOKEN` in the shell, then run the curl line by hand on a day the daily run has not posted, e.g. the day of setup after 08:00, so Slack does not get the same announcements and reminders twice. Check that a `workflow_dispatch` run of Daily appears.
-4. Renew the token before it expires.
 
 ## Verification
 - The next morning, a Daily run starts at about 08:00 Stockholm time, started by `workflow_dispatch`.
