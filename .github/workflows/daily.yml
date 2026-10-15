@@ -1,10 +1,7 @@
 name: Daily
 
 on:
-  schedule:
-    # off the full hour, when GitHub delays or drops scheduled runs
-    - cron: '45 7 * * *'
-      timezone: Europe/Stockholm
+  # started at 08:00 Stockholm time by a crontab on the server, not by schedule: GitHub drops scheduled runs (docs/adr/0002-start-daily-run-from-server-crontab.md)
   workflow_dispatch:
 
 jobs:

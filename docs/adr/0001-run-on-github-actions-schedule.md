@@ -1,5 +1,7 @@
 # Run on a GitHub Actions schedule instead of a server
 
+The trigger is superseded by `0002-start-daily-run-from-server-crontab.md`: a server crontab starts the workflow, because GitHub's `schedule` trigger never started a run. The rest of this ADR still holds.
+
 The app is a CLI script (`php index.php`) that posts to a Slack webhook once a day at 08:00 Europe/Stockholm. It used to run from a crontab on a developer's machine, with files copied over by hand. We now run it from a scheduled GitHub Actions workflow that checks out `main`. That way every merge to main is live with no deploy step. The script serves no requests and keeps no state, so a server and atomic deploys would add upkeep without solving anything.
 
 ## Considered Options

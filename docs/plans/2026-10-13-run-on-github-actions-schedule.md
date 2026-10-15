@@ -5,7 +5,7 @@ The app is a CLI script that posts to a Slack webhook once a day at 08:00 Stockh
 
 ## Change
 `.github/workflows/daily.yml` runs the script on a schedule from `main`:
-- One cron trigger at 07:45 in `Europe/Stockholm` (GitHub handles summer and winter time), off the full hour when GitHub delays or drops scheduled runs. A manual run always works.
+- A crontab on the server starts the workflow through `workflow_dispatch` at 08:00 Stockholm time. It replaced the `schedule` trigger, which never started a run: `docs/plans/2026-10-15-start-daily-run-from-server-crontab.md`.
 - The `WEBHOOK_URL` repo secret reaches the script as an env var. `env()` in `src/env.php` falls back to `getenv()`, because the runner's PHP leaves env vars out of `$_ENV`.
 - The run fails when `WEBHOOK_URL` is empty, so a missing secret shows up on every run, not only on days with a match.
 - A failed Slack post (refused connection, HTTP error, or timeout after 30 s) makes `index.php` exit 1, so the run fails. Tracked in #6.
@@ -20,4 +20,4 @@ The app is a CLI script that posts to a Slack webhook once a day at 08:00 Stockh
 ## Verification
 - Manual run: the log shows "Checking calendar against …" and not "No webhook URL found.".
 - A run with a bad webhook URL fails and logs "Posting to Slack failed.".
-- Next scheduled run starts at about 07:45 Stockholm time.
+- Next daily run starts at about 08:00 Stockholm time.
