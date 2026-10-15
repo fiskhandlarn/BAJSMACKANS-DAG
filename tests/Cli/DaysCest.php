@@ -379,6 +379,28 @@ class DaysCest
         $I->dontSeeInShellOutput('No webhook URL found.');
     }
 
+    // The add-temadag skill's preview parses --debug output; its Block Kit
+    // Builder link must decode back to the card it printed.
+    public function skillPreview(CliTester $I): void
+    {
+        $title = 'The "best" bun day';
+        $I->runShellCommand(
+            'DATA_JSON=tests/Support/Data/quotes.json SLACK_TEAM_ID=T0'
+                . ' php .claude/skills/add-temadag/preview.php 2030-03-27 '
+                . escapeshellarg($title),
+        );
+        [$json, $link] = explode("\n\n", trim($I->grabShellOutput()));
+        $card = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+        Assert::assertSame($title, $card['blocks'][0]['title']['text']);
+
+        $prefix = 'https://app.slack.com/block-kit-builder/T0/builder#';
+        Assert::assertStringStartsWith($prefix, $link);
+        Assert::assertSame(
+            $card,
+            json_decode(rawurldecode(substr($link, strlen($prefix))), true),
+        );
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];
