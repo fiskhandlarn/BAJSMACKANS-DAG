@@ -1,6 +1,6 @@
 {
-    "recommendations": [
-        "devsense.phptools-vscode",
-        "pflannery.vscode-versionlens"
-    ]
+  "recommendations": [
+    "devsense.phptools-vscode",
+    "pflannery.vscode-versionlens"
+  ]
 }
