@@ -81,6 +81,12 @@ class DaysCest
                 parse_url($url, PHP_URL_HOST),
                 "link without host: '$url'",
             );
+            // slackSubtitle() doesn't escape these for Slack's mrkdwn
+            Assert::assertDoesNotMatchRegularExpression(
+                '/[&<>]/',
+                $url,
+                "link with &, < or >: '$url'",
+            );
         }
 
         // Slack rejects the whole message when a card's title or subtitle is

@@ -9,7 +9,7 @@ Issue #28. A temadag has one `link` string, sent unchanged as the card's subtitl
 - Slack rejects the whole message when the subtitle is over 150 characters. The app never trims it: the `fields` test in `tests/Cli/DaysCest.php` checks the built subtitle, so a pull request with too many or too long links fails CI. The same test fails a missing, empty or non-array `links`, or a URL in it without a host.
 - `CONTEXT.md` says a temadag has one or more links.
 
-URLs are not escaped for Slack mrkdwn: none in the calendar contains `&`, `<` or `>`.
+URLs are not escaped for Slack mrkdwn, so the `fields` test also fails a URL containing `&`, `<` or `>`.
 
 ## Manual steps
 None.
