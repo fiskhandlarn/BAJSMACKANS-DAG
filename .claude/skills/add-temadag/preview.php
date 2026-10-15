@@ -16,7 +16,12 @@ if (!$date || !$title) {
     exit(1);
 }
 
-exec('php index.php --debug --date=' . escapeshellarg($date), $output);
+$command = PHP_BINARY . ' index.php --debug --date=' . escapeshellarg($date);
+exec($command, $output, $code);
+if (0 !== $code) {
+    fwrite(STDERR, implode("\n", $output) . "\n");
+    exit($code);
+}
 preg_match_all('/```json\n(.*?)\n```/s', implode("\n", $output), $matches);
 
 foreach ($matches[1] as $json) {
