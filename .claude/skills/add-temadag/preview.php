@@ -35,8 +35,8 @@ foreach ($matches[1] as $json) {
 
     // the builder reads the payload from the fragment, encoded like JS's
     // encodeURI: rawurlencode, then put back what encodeURI leaves alone.
-    // It percent-decodes the payload once more as Latin-1, so a % in a URL
-    // goes in as the JSON escape \u0025 (%C3%B6 would show as Ã¶)
+    // It percent-decodes the payload once more as Latin-1, so a % anywhere
+    // in it goes in as the JSON escape \u0025 (%C3%B6 would show as Ã¶)
     $kept = str_split(":/,;?@&=+$#!'()*");
     $fragment = strtr(
         rawurlencode(str_replace('%', '\u0025', json_encode($payload, $flags))),
