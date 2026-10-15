@@ -6,6 +6,15 @@
     "image": "https://cdn.valio.fi/mediafiles/f0ca373f-3641-483b-83ef-88f2d2bad34c/1440x1080-recipe-hero/4x3/klassisk-laktosfri-semla.jpg"
   },
   {
+    "day": "47 days before easter",
+    "title": "Internationella pannkaksdagen :pancakes:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Pannkaka",
+      "https://temadagar.se/internationella-pannkaksdagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Pannkakor_4.png/960px-Pannkakor_4.png"
+  },
+  {
     "day": "january 10",
     "title": "Mazarinens dag",
     "links": ["https://sv.wikipedia.org/wiki/Mazarin_(bakverk)"],
