@@ -126,13 +126,13 @@ class DaysCest
     // An HTTP error from Slack must fail the run too, not only a refused connection.
     public function httpErrorPost(CliTester $I): void
     {
-        $this->withServer('tests/Support/http-500.php', '500', fn () => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
+        $this->withServer('tests/Support/http-500.php', '500', fn() => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
     }
 
     // A redirect from Slack must fail the run too: the payload was not delivered, and is never re-sent to the redirect's target.
     public function redirectPost(CliTester $I): void
     {
-        $this->withServer('tests/Support/http-302.php', '302', fn () => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
+        $this->withServer('tests/Support/http-302.php', '302', fn() => $this->seePostFails($I, 'http://127.0.0.1:8765/'));
     }
 
     // Runs index.php against a server that saves the request body, and returns the posted payload.
@@ -242,7 +242,7 @@ class DaysCest
             $seen[] = trim(mb_strtolower(preg_replace('#:[\w+-]+:#', '', $temadag['title'])));
         }
 
-        $duplicates = array_keys(array_filter(array_count_values($seen), fn ($n) => $n > 1));
+        $duplicates = array_keys(array_filter(array_count_values($seen), fn($n) => $n > 1));
         Assert::assertSame([], $duplicates, 'duplicate titles');
     }
 }

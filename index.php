@@ -18,38 +18,38 @@ date_default_timezone_set(TIMEZONE);
 $calendarJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
 
 if (!$calendarJSON) {
-  die(env('DATA_JSON') . " not found.\n");
+    die(env('DATA_JSON') . " not found.\n");
 }
 
 $calendar = @json_decode($calendarJSON, true);
 
 if (!$calendar) {
-  die("Invalid JSON.\n");
+    die("Invalid JSON.\n");
 }
 
 $now = new Carbon('now', TIMEZONE);
 $isDebug = false;
 
 if (php_sapi_name() == "cli") {
-  global $argv;
+    global $argv;
 
-  foreach ( $argv as $argument ) {
-    if( $argument != $argv[ 0 ] ) {
-      if ('--debug' === $argument) {
-        $isDebug = true;
-      }
+    foreach ($argv as $argument) {
+        if ($argument != $argv[ 0 ]) {
+            if ('--debug' === $argument) {
+                $isDebug = true;
+            }
 
-      $pair = explode( "=", $argument );
-      if (2 === count($pair)) {
-        $variableName = $pair[0];
-        $variableValue = $pair[1];
+            $pair = explode("=", $argument);
+            if (2 === count($pair)) {
+                $variableName = $pair[0];
+                $variableValue = $pair[1];
 
-        if ('--date' === $variableName) {
-          $now = new Carbon($variableValue);
+                if ('--date' === $variableName) {
+                    $now = new Carbon($variableValue);
+                }
+            }
         }
-      }
     }
-  }
 }
 
 $tomorrow = new Carbon($now . '+ 1 day', TIMEZONE);
@@ -63,72 +63,72 @@ $versionText = $version ? "<$repoURL/commit/$version|$version>" : 'dev';
 
 echo "Checking calendar against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n\n";
 
-foreach($calendar as $idx => $temadag) {
-  // resolve against each date's own year so --date and new year's eve work; unparseable day rules resolve to null and never match
-  $isToday = $now->format("Y-m-d") == resolveDayRule($temadag["day"], $now->year)?->format("Y-m-d");
-  $isTomorrow = $tomorrow->format("Y-m-d") == resolveDayRule($temadag["day"], $tomorrow->year)?->format("Y-m-d");
+foreach ($calendar as $idx => $temadag) {
+    // resolve against each date's own year so --date and new year's eve work; unparseable day rules resolve to null and never match
+    $isToday = $now->format("Y-m-d") == resolveDayRule($temadag["day"], $now->year)?->format("Y-m-d");
+    $isTomorrow = $tomorrow->format("Y-m-d") == resolveDayRule($temadag["day"], $tomorrow->year)?->format("Y-m-d");
 
-  if($isToday || $isTomorrow) {
-    echo "------------------------------------------------------\n";
-    echo "🎉 " . $temadag['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
-    $payload = [
-      'blocks' => [
-        [
-          'type' => 'card',
-          'title' => [
-            'type' => 'mrkdwn',
-            'text' => $temadag['title'],
-          ],
-          'hero_image' => [
-            'type' => 'image',
-            'image_url' => $temadag['image'],
-            'alt_text' => $temadag['title'],
-          ],
-          'subtitle' => [
-            'type' => 'mrkdwn',
-            'text' => $temadag['link'],
-          ],
-          'body' => [
-            'type' => 'mrkdwn',
-            'text' => sprintf('%s är det %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $temadag['title']),
-          ],
-        ],
-        [
-          'type' => 'context',
-          'elements' => [
-            [
-              'type' => 'mrkdwn',
-              'text' => "<$repoURL|BAJSMACKANS-DAG> · $versionText",
+    if ($isToday || $isTomorrow) {
+        echo "------------------------------------------------------\n";
+        echo "🎉 " . $temadag['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
+        $payload = [
+            'blocks' => [
+                [
+                    'type' => 'card',
+                    'title' => [
+                        'type' => 'mrkdwn',
+                        'text' => $temadag['title'],
+                    ],
+                    'hero_image' => [
+                        'type' => 'image',
+                        'image_url' => $temadag['image'],
+                        'alt_text' => $temadag['title'],
+                    ],
+                    'subtitle' => [
+                        'type' => 'mrkdwn',
+                        'text' => $temadag['link'],
+                    ],
+                    'body' => [
+                        'type' => 'mrkdwn',
+                        'text' => sprintf('%s är det %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $temadag['title']),
+                    ],
+                ],
+                [
+                    'type' => 'context',
+                    'elements' => [
+                        [
+                            'type' => 'mrkdwn',
+                            'text' => "<$repoURL|BAJSMACKANS-DAG> · $versionText",
+                        ],
+                    ],
+                ],
             ],
-          ],
-        ],
-      ],
-    ];
+        ];
 
-    if ($isDebug) {
-      // debug previews the payload, so it never posts, whatever WEBHOOK_URL says
-      echo "```json\n" . json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n```\n\n";
-      echo "Not posting to Slack in debug mode.\n";
-    } elseif ($webhookURL) {
-      // Guzzle throws on 4xx/5xx statuses, refused connections, timeouts and unencodable payloads, and a malformed URL throws
-      // InvalidArgumentException; an unfollowed 3xx means nothing was delivered either
-      try {
-        $posted = (new Client())->post($webhookURL, slackPostOptions($payload))->getStatusCode() < 300;
-      } catch (GuzzleException | InvalidArgumentException) {
-        $posted = false;
-      }
+        if ($isDebug) {
+            // debug previews the payload, so it never posts, whatever WEBHOOK_URL says
+            echo "```json\n" . json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n```\n\n";
+            echo "Not posting to Slack in debug mode.\n";
+        } elseif ($webhookURL) {
+            // Guzzle throws on 4xx/5xx statuses, refused connections, timeouts and unencodable payloads, and a malformed URL throws
+            // InvalidArgumentException; an unfollowed 3xx means nothing was delivered either
+            try {
+                $posted = (new Client())->post($webhookURL, slackPostOptions($payload))->getStatusCode() < 300;
+            } catch (GuzzleException|InvalidArgumentException) {
+                $posted = false;
+            }
 
-      // the remaining announcements and reminders still run
-      if (!$posted) {
-        echo "Posting to Slack failed.\n";
-        $failed = true;
-      }
-    } else {
-      echo "No webhook URL found.\n";
+            // the remaining announcements and reminders still run
+            if (!$posted) {
+                echo "Posting to Slack failed.\n";
+                $failed = true;
+            }
+        } else {
+            echo "No webhook URL found.\n";
+        }
+        echo "------------------------------------------------------\n";
+        echo "\n\n";
     }
-    echo "------------------------------------------------------\n";
-    echo "\n\n";
-  }
 }
 
 exit($failed ? 1 : 0);
