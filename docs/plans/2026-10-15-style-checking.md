@@ -8,7 +8,7 @@ Issue #20. CI linted PHP syntax and the data file but checked no style. `.editor
 
 `ec` checks every tracked file against `.editorconfig` and skips binaries such as `fika.png` on its own. It runs without `--strict`: strict mode flags docblock alignment and the `LICENSE` text. So `ec` catches tabs, trailing whitespace, missing final newlines and line endings, but not a 4-space indent where 2 is expected.
 
-`.editorconfig` adds `indent_size = 4` sections for `*.php` and for `composer.lock`, which composer writes with 4 spaces. Everything else stays at 2.
+`.editorconfig` adds `indent_size = 4` sections for `*.php` and for `composer.lock`, which composer writes with 4 spaces. Everything else stays at 2. PHP lines may be at most 80 characters (`max_line_length`). `@PER-CS` sets no hard limit, so `ec` checks it, and long lines are wrapped by hand: neither tool wraps them.
 
 `composer.json` gets two scripts. `lint:style` runs `php-cs-fixer fix --dry-run --diff`, then `ec --git-only`, and fails on any violation. `fix:style` runs `php-cs-fixer fix`, then `ec --git-only --fix`.
 
