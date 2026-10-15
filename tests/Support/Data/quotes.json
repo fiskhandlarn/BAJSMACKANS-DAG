@@ -2,13 +2,13 @@
   {
     "day": "march 25",
     "title": "Våffeldagen (it's waffle day)",
-    "link": "x",
+    "links": ["https://sv.wikipedia.org/wiki/V%C3%A5ffeldagen"],
     "image": "y"
   },
   {
     "day": "march 27",
     "title": "The \"best\" bun day",
-    "link": "x",
+    "links": ["https://sv.wikipedia.org/wiki/Kanelbulle"],
     "image": "y"
   }
 ]

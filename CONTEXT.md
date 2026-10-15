@@ -14,7 +14,7 @@ _Avoid_: Data file, days list, fikakalender
 An external list of temadagar that the calendar draws from, such as the fikakalender, a published baking calendar. The calendar has many sources.
 
 **Temadag**:
-A recurring themed day, such as Mazarinens dag or Halloween, with a title, a link and an image.
+A recurring themed day, such as Mazarinens dag or Halloween, with a title, one or more links and an image.
 _Avoid_: Day, entry, fikadag, theme day
 
 **Day rule**:

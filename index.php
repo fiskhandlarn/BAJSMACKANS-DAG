@@ -100,7 +100,7 @@ foreach ($calendar as $idx => $temadag) {
                     ],
                     'subtitle' => [
                         'type' => 'mrkdwn',
-                        'text' => $temadag['link'],
+                        'text' => slackSubtitle($temadag['links']),
                     ],
                     'body' => [
                         'type' => 'mrkdwn',
