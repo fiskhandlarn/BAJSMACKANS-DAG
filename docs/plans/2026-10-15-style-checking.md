@@ -10,13 +10,13 @@ Issue #20. CI linted PHP syntax and the data file but checked no style. `.editor
 
 `.editorconfig` adds `indent_size = 4` sections for `*.php` and for `composer.lock`, which composer writes with 4 spaces. Everything else stays at 2. PHP lines may be at most 80 characters (`max_line_length`). `@PER-CS` sets no hard limit, so `ec` checks it, and long lines are wrapped by hand: neither tool wraps them.
 
-`composer.json` gets two scripts. `lint:style` runs `php-cs-fixer fix --dry-run --diff`, then `ec --git-only`, and fails on any violation. `fix:style` runs `php-cs-fixer fix`, then `ec --git-only --fix`.
+`composer.json` gets two scripts that run both tools over tracked files: `lint:style` only checks and fails on any violation, `fix:style` rewrites what the tools can fix.
 
 The `lint` job in `.github/workflows/pull-request.yml` sets up PHP 8.1, like the `test` job, and runs `composer run lint:style`.
 
 `AGENTS.md` tells agents to run `fix:style` before committing.
 
-A separate commit reformats the repo: `fix:style` over every file, plus `.vscode/extensions.json`, `codeception.yml` and `tests/Cli.suite.yml` moved from 4 to 2 spaces by hand.
+The existing files are reformatted apart from the tooling changes: `fix:style` over every file, `.vscode/extensions.json`, `codeception.yml` and `tests/Cli.suite.yml` moved from 4 to 2 spaces by hand, and the long PHP lines wrapped by hand.
 
 ## Manual steps
 None.
