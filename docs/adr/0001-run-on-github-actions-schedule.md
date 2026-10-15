@@ -1,5 +1,7 @@
 # Run on a GitHub Actions schedule instead of a server
 
+Superseded in part by `0002-start-daily-run-from-server-crontab.md`: a server crontab now starts the workflow, because GitHub's `schedule` trigger never started a run. The consequences about the 07:45 trigger, dropped runs, #14 and the 60-day rule are history; see 0002 for the current setup. The checkout of `main` and the `WEBHOOK_URL` handling still hold.
+
 The app is a CLI script (`php index.php`) that posts to a Slack webhook once a day at 08:00 Europe/Stockholm. It used to run from a crontab on a developer's machine, with files copied over by hand. We now run it from a scheduled GitHub Actions workflow that checks out `main`. That way every merge to main is live with no deploy step. The script serves no requests and keeps no state, so a server and atomic deploys would add upkeep without solving anything.
 
 ## Considered Options
@@ -14,4 +16,4 @@ The app is a CLI script (`php index.php`) that posts to a Slack webhook once a d
 - A dropped run means no post that day. GitHub does not record dropped runs, so nothing alerts on it either. Both remedies are deferred until drops recur: a fallback trigger that posts only if the first run did not (#14), and a dead-man's switch such as healthchecks.io (#15).
 - `WEBHOOK_URL` is a repo secret, passed to the step as an env var. The runner's PHP has no `E` in `variables_order`, so env vars never reach `$_ENV`, and immutable phpdotenv will not load `.env` over a var that is already set. `env()` in `src/env.php` therefore falls back to `getenv()`.
 - On a public repo, scheduled workflows turn off after 60 days with no repo activity. GitHub emails a warning first, and one click turns the workflow back on.
-- The old crontab must be removed when this goes live, or Slack gets two posts each day.
+- The developer machine's crontab must be removed when this goes live, or Slack gets two posts each day.
