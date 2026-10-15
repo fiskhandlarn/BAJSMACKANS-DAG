@@ -153,6 +153,15 @@
     "image": "https://www.sharmispassions.com/wp-content/uploads/2019/04/VanillaMuffins7-500x500.jpg"
   },
   {
+    "day": "first friday of june",
+    "title": "Internationella donutdagen :doughnut:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Munk_(bakverk)",
+      "https://temadagar.se/internationella-donutdagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Doughnut.jpg/960px-Doughnut.jpg"
+  },
+  {
     "day": "6 june",
     "title": "Nationaldagsbakelse :flag-union:",
     "links": ["https://sv.wikipedia.org/wiki/Nationaldagsbakelse"],
