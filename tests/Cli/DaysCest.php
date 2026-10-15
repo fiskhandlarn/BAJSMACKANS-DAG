@@ -395,6 +395,9 @@ class DaysCest
 
         $prefix = 'https://app.slack.com/block-kit-builder/T0/builder#';
         Assert::assertStringStartsWith($prefix, $link);
+        // the builder decodes the fragment twice, so the link's %C3%B6 must
+        // not go in as %25C3%25B6
+        Assert::assertStringNotContainsString('%25', $link);
         Assert::assertSame(
             $card,
             json_decode(rawurldecode(substr($link, strlen($prefix))), true),

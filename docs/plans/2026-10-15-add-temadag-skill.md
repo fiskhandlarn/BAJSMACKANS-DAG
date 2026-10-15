@@ -14,5 +14,5 @@ Set `SLACK_TEAM_ID` in `.env` to the `T…` id from your Block Kit Builder URL.
 ## Verification
 - `php .claude/skills/add-temadag/preview.php 2027-02-15 "Geléhallonens dag"` prints the card and a link that opens it in Block Kit Builder.
 - With `SLACK_TEAM_ID` unset, it prints the card and a hint instead of the link; an unknown title exits 1.
-- `skillPreview` in `tests/Cli/DaysCest.php` runs the script against `tests/Support/Data/quotes.json` and checks that the link decodes back to the printed card, so CI catches a change to the `--debug` output that breaks the script.
+- `skillPreview` in `tests/Cli/DaysCest.php` runs the script against `tests/Support/Data/quotes.json` and checks that the link decodes back to the printed card, so CI catches a change to the `--debug` output that breaks the script. Its fixture link is percent-encoded, and the test fails if the link carries `%25`: Block Kit Builder percent-decodes the payload a second time, so the script sends each `%` as the JSON escape `\u0025`.
 - `composer run lint:style` passes.
