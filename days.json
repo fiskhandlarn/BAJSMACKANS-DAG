@@ -6,6 +6,15 @@
     "image": "https://cdn.valio.fi/mediafiles/f0ca373f-3641-483b-83ef-88f2d2bad34c/1440x1080-recipe-hero/4x3/klassisk-laktosfri-semla.jpg"
   },
   {
+    "day": "47 days before easter",
+    "title": "Internationella pannkaksdagen :pancakes:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Pannkaka",
+      "https://temadagar.se/internationella-pannkaksdagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Pannkakor_4.png/500px-Pannkakor_4.png"
+  },
+  {
     "day": "january 10",
     "title": "Mazarinens dag",
     "links": ["https://sv.wikipedia.org/wiki/Mazarin_(bakverk)"],
@@ -34,6 +43,15 @@
     "title": "Runebergsdagen",
     "links": ["https://sv.wikipedia.org/wiki/Runebergst%C3%A5rta"],
     "image": "https://files-aller-blogger-platform.aws.aller.com/uploads/sites/87/2022/04/runebergstarta-recept-2-700x454.jpg?w=700&fit=max&auto=format%201x"
+  },
+  {
+    "day": "february 15",
+    "title": "Geléhallonens dag",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Gel%C3%A9hallon",
+      "https://vilkendag.nu/temadagar/gelehallonens-dag"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Geleehallon.jpg"
   },
   {
     "day": "first thursday of march",
@@ -96,6 +114,15 @@
     "image": "https://res.cloudinary.com/anora/image/upload/t_FullWidthImage-XS-IN/f_auto/folkofolk%2FLakritsgodis"
   },
   {
+    "day": "20 april",
+    "title": "Polkagrisens dag :peppa-pig:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Polkagris",
+      "https://vilkendag.nu/temadagar/polkagrisens-dag"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Polkagrisar_i_burk_%28red_candy_in_a_jar%29_%28explore_2018-12-09%29_-_Flickr_-_Maria_Eklind.jpg/960px-Polkagrisar_i_burk_%28red_candy_in_a_jar%29_%28explore_2018-12-09%29_-_Flickr_-_Maria_Eklind.jpg"
+  },
+  {
     "day": "second wednesday of may",
     "title": "Syltkakans dag",
     "links": ["https://www.instagram.com/explore/tags/syltkakansdag/"],
@@ -126,10 +153,28 @@
     "image": "https://www.sharmispassions.com/wp-content/uploads/2019/04/VanillaMuffins7-500x500.jpg"
   },
   {
+    "day": "first friday of june",
+    "title": "Internationella donutdagen :doughnut:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Munk_(bakverk)",
+      "https://temadagar.se/internationella-donutdagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Doughnut.jpg/960px-Doughnut.jpg"
+  },
+  {
     "day": "6 june",
     "title": "Nationaldagsbakelse :flag-union:",
     "links": ["https://sv.wikipedia.org/wiki/Nationaldagsbakelse"],
     "image": "http://d2ihp3fq52ho68.cloudfront.net/YTo2OntzOjI6ImlkIjtpOjEzMDMwMDE7czoxOiJ3IjtpOjEwMjA7czoxOiJoIjtpOjMyMDA7czoxOiJjIjtpOjA7czoxOiJzIjtpOjA7czoxOiJrIjtzOjQwOiIxYjU3NzdiOGRiYTRjYjA1YTVhZjE2M2MwZWIzZmI5ODc4MGMyYTc2Ijt9"
+  },
+  {
+    "day": "6 june",
+    "title": "Fruktens dag :banan-melon-kiwi-citron:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Frukt",
+      "https://vilkendag.nu/temadagar/fruktens-dag"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Misc_fruit.jpg/960px-Misc_fruit.jpg"
   },
   {
     "day": "9 august",
@@ -154,6 +199,15 @@
     "title": "Kebabens dag :stuffed_flatbread:",
     "links": ["https://matkalender.nu/events/kebabens-dag/"],
     "image": "https://t4.ftcdn.net/jpg/01/12/60/35/360_F_112603585_SNY1XNd6JJgMxR8DKFJGTvWQ6STPPKEi.jpg"
+  },
+  {
+    "day": "25 september",
+    "title": "Äpplets dag :green_apple:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/%C3%84pple",
+      "https://vilkendag.nu/temadagar/applets-dag"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/960px-Red_Apple.jpg"
   },
   {
     "day": "first sunday of october",
