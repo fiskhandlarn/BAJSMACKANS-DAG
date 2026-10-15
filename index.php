@@ -30,11 +30,11 @@ if (!$calendar) {
 $now = new Carbon('now', TIMEZONE);
 $isDebug = false;
 
-if (php_sapi_name() == "cli") {
+if (php_sapi_name() === "cli") {
     global $argv;
 
     foreach ($argv as $argument) {
-        if ($argument != $argv[ 0 ]) {
+        if ($argument !== $argv[0]) {
             if ('--debug' === $argument) {
                 $isDebug = true;
             }
@@ -60,10 +60,12 @@ $repoURL = 'https://github.com/fiskhandlarn/BAJSMACKANS-DAG';
 // gives 'dev'
 // git searches parent directories, so without its own .git (a file in a
 // worktree) a copy inside another repo would report that repo's SHA
-$version = file_exists(__DIR__ . '/.git')
-    ? trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__)
-        . ' rev-parse --short HEAD 2>/dev/null'))
-    : '';
+$version = '';
+if (file_exists(__DIR__ . '/.git')) {
+    $git = 'git -C ' . escapeshellarg(__DIR__);
+    $sha = shell_exec("$git rev-parse --short HEAD 2>/dev/null");
+    $version = trim((string) $sha);
+}
 $versionText = $version ? "<$repoURL/commit/$version|$version>" : 'dev';
 $footer = "<$repoURL|BAJSMACKANS-DAG> · $versionText";
 
