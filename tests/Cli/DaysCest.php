@@ -12,6 +12,7 @@ use Tests\Support\CliTester;
 
 require_once __DIR__ . '/../../src/env.php';
 require_once __DIR__ . '/../../src/days.php';
+require_once __DIR__ . '/../../src/slack.php';
 
 // Every temadag in the calendar (DATA_JSON) becomes a test case, so new
 // temadagar are covered automatically.
@@ -65,17 +66,33 @@ class DaysCest
     public function fields(CliTester $I, Example $example): void
     {
         $temadag = $example['temadag'];
-        foreach (['day', 'title', 'link', 'image'] as $key) {
+        foreach (['day', 'title', 'image'] as $key) {
             Assert::assertIsString($temadag[$key] ?? null, "missing $key");
             Assert::assertNotSame('', trim($temadag[$key]), "empty $key");
         }
 
-        // Slack rejects the whole message when a card's title or subtitle
-        // (the link) is over 150 characters
-        foreach (['title', 'link'] as $key) {
+        $links = $temadag['links'] ?? null;
+        Assert::assertIsArray($links, 'links is not an array');
+        Assert::assertNotEmpty($links, 'empty links');
+        foreach ($links as $url) {
+            Assert::assertIsString($url, 'link is not a string');
+            // the host is the link's label in the subtitle
+            Assert::assertNotEmpty(
+                parse_url($url, PHP_URL_HOST),
+                "link without host: '$url'",
+            );
+        }
+
+        // Slack rejects the whole message when a card's title or subtitle is
+        // over 150 characters
+        $fields = [
+            'title' => $temadag['title'],
+            'subtitle' => slackSubtitle($links),
+        ];
+        foreach ($fields as $key => $text) {
             Assert::assertLessThanOrEqual(
                 150,
-                mb_strlen($temadag[$key]),
+                mb_strlen($text),
                 "$key over 150 characters",
             );
         }
@@ -242,7 +259,7 @@ class DaysCest
         return $blocks[1]['elements'][0]['text'] ?? '';
     }
 
-    // The day is a card: title, image, link as subtitle, and today or
+    // The day is a card: title, image, links as subtitle, and today or
     // tomorrow in the body.
     public function card(CliTester $I): void
     {
@@ -253,7 +270,10 @@ class DaysCest
             $card['title']['text'] ?? null,
         );
         Assert::assertSame('y', $card['hero_image']['image_url'] ?? null);
-        Assert::assertSame('x', $card['subtitle']['text'] ?? null);
+        Assert::assertSame(
+            '<https://sv.wikipedia.org/wiki/V%C3%A5ffeldagen|sv.wikipedia.org>',
+            $card['subtitle']['text'] ?? null,
+        );
         Assert::assertSame(
             ":warning: Idag är det Våffeldagen (it's waffle day)",
             $card['body']['text'] ?? null,

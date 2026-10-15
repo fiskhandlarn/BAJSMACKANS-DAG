@@ -2,13 +2,13 @@
   {
     "day": "december 31",
     "title": "Nyårsafton",
-    "link": "x",
+    "links": ["https://sv.wikipedia.org/wiki/Ny%C3%A5rsafton"],
     "image": "y"
   },
   {
     "day": "january 1",
     "title": "Nyårsdagen",
-    "link": "x",
+    "links": ["https://sv.wikipedia.org/wiki/Ny%C3%A5rsdagen"],
     "image": "y"
   }
 ]
