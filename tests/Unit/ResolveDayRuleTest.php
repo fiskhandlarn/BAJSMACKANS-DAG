@@ -11,7 +11,8 @@ require_once __DIR__ . '/../../src/days.php';
 
 class ResolveDayRuleTest extends Unit
 {
-    // Expected dates are hard-coded so a bug in resolveDayRule() can't hide behind itself.
+    // Expected dates are hard-coded so a bug in resolveDayRule() can't hide
+    // behind itself.
     public static function dayRules(): array
     {
         return [
@@ -31,8 +32,11 @@ class ResolveDayRuleTest extends Unit
     }
 
     #[DataProvider('dayRules')]
-    public function testResolves(string $dayRule, int $year, string $expected): void
-    {
+    public function testResolves(
+        string $dayRule,
+        int $year,
+        string $expected,
+    ): void {
         $carbon = resolveDayRule($dayRule, $year);
 
         $this->assertSame($expected, $carbon->toDateString());

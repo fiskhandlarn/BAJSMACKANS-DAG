@@ -56,21 +56,33 @@ $tomorrow = new Carbon($now . '+ 1 day', TIMEZONE);
 $webhookURL = env('WEBHOOK_URL');
 $failed = false;
 $repoURL = 'https://github.com/fiskhandlarn/BAJSMACKANS-DAG';
-// the short SHA of the running commit is the app's version; no git or .git gives 'dev'
-// git searches parent directories, so without its own .git (a file in a worktree) a copy inside another repo would report that repo's SHA
-$version = file_exists(__DIR__ . '/.git') ? trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__) . ' rev-parse --short HEAD 2>/dev/null')) : '';
+// the short SHA of the running commit is the app's version; no git or .git
+// gives 'dev'
+// git searches parent directories, so without its own .git (a file in a
+// worktree) a copy inside another repo would report that repo's SHA
+$version = file_exists(__DIR__ . '/.git')
+    ? trim((string) shell_exec('git -C ' . escapeshellarg(__DIR__)
+        . ' rev-parse --short HEAD 2>/dev/null'))
+    : '';
 $versionText = $version ? "<$repoURL/commit/$version|$version>" : 'dev';
+$footer = "<$repoURL|BAJSMACKANS-DAG> · $versionText";
 
-echo "Checking calendar against " . $now->toDateString() . " and " . $tomorrow->toDateString() . ":\n\n";
+echo "Checking calendar against " . $now->toDateString()
+    . " and " . $tomorrow->toDateString() . ":\n\n";
 
 foreach ($calendar as $idx => $temadag) {
-    // resolve against each date's own year so --date and new year's eve work; unparseable day rules resolve to null and never match
-    $isToday = $now->format("Y-m-d") == resolveDayRule($temadag["day"], $now->year)?->format("Y-m-d");
-    $isTomorrow = $tomorrow->format("Y-m-d") == resolveDayRule($temadag["day"], $tomorrow->year)?->format("Y-m-d");
+    // resolve against each date's own year so --date and new year's eve work;
+    // unparseable day rules resolve to null and never match
+    $isToday = $now->format("Y-m-d")
+        == resolveDayRule($temadag["day"], $now->year)?->format("Y-m-d");
+    $isTomorrow = $tomorrow->format("Y-m-d")
+        == resolveDayRule($temadag["day"], $tomorrow->year)?->format("Y-m-d");
 
     if ($isToday || $isTomorrow) {
         echo "------------------------------------------------------\n";
-        echo "🎉 " . $temadag['title'] . ' is ' . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
+        echo "🎉 " . $temadag['title'] . ' is '
+            . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
+        $when = $isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon';
         $payload = [
             'blocks' => [
                 [
@@ -90,7 +102,7 @@ foreach ($calendar as $idx => $temadag) {
                     ],
                     'body' => [
                         'type' => 'mrkdwn',
-                        'text' => sprintf('%s är det %s', ($isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon'), $temadag['title']),
+                        'text' => "$when är det {$temadag['title']}",
                     ],
                 ],
                 [
@@ -98,7 +110,7 @@ foreach ($calendar as $idx => $temadag) {
                     'elements' => [
                         [
                             'type' => 'mrkdwn',
-                            'text' => "<$repoURL|BAJSMACKANS-DAG> · $versionText",
+                            'text' => $footer,
                         ],
                     ],
                 ],
@@ -106,14 +118,23 @@ foreach ($calendar as $idx => $temadag) {
         ];
 
         if ($isDebug) {
-            // debug previews the payload, so it never posts, whatever WEBHOOK_URL says
-            echo "```json\n" . json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR) . "\n```\n\n";
+            // debug previews the payload, so it never posts, whatever
+            // WEBHOOK_URL says
+            echo "```json\n" . json_encode(
+                $payload,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+                    | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR,
+            ) . "\n```\n\n";
             echo "Not posting to Slack in debug mode.\n";
         } elseif ($webhookURL) {
-            // Guzzle throws on 4xx/5xx statuses, refused connections, timeouts and unencodable payloads, and a malformed URL throws
-            // InvalidArgumentException; an unfollowed 3xx means nothing was delivered either
+            // Guzzle throws on 4xx/5xx statuses, refused connections, timeouts
+            // and unencodable payloads, and a malformed URL throws
+            // InvalidArgumentException; an unfollowed 3xx means nothing was
+            // delivered either
             try {
-                $posted = (new Client())->post($webhookURL, slackPostOptions($payload))->getStatusCode() < 300;
+                $posted = (new Client())
+                    ->post($webhookURL, slackPostOptions($payload))
+                    ->getStatusCode() < 300;
             } catch (GuzzleException|InvalidArgumentException) {
                 $posted = false;
             }

@@ -10,7 +10,8 @@ require_once __DIR__ . '/../../src/slack.php';
 
 class SlackPostOptionsTest extends Unit
 {
-    // A Slack that accepts the connection but never answers must not block the run until the job limit.
+    // A Slack that accepts the connection but never answers must not block
+    // the run until the job limit.
     public function testTimeouts(): void
     {
         $options = slackPostOptions([]);
@@ -19,7 +20,8 @@ class SlackPostOptionsTest extends Unit
         $this->assertSame(30, $options['timeout']);
     }
 
-    // A redirect must not re-send the payload to wherever Slack's response points.
+    // A redirect must not re-send the payload to wherever Slack's response
+    // points.
     public function testNoRedirects(): void
     {
         $this->assertFalse(slackPostOptions([])['allow_redirects']);
