@@ -1,8 +1,8 @@
 # Start the daily run from a server crontab
 
-Supersedes the trigger in ADR 0001; the rest of 0001 still holds.
+Supersedes the trigger in ADR 0001 and the consequences that follow from it. The checkout of `main` and the `WEBHOOK_URL` handling in 0001 still hold.
 
-GitHub's `schedule` trigger never started a daily run in this repo, and since about 2026-08-26 it starts runs hours late or not at all for many accounts, on any minute (community discussion 206019). `workflow_dispatch` is unaffected. So a crontab on a server we already run POSTs to the workflow's dispatch API at 08:00 Europe/Stockholm, and the workflow has no `schedule` trigger. The workflow still checks out `main`, so a merge is still live with no deploy step; the server holds one crontab line and one token, no code.
+GitHub's `schedule` trigger never started a daily run in this repo, and since about 2026-08-26 it starts runs hours late or not at all for many accounts, on any minute (community discussion 206019). `workflow_dispatch` is unaffected. So a crontab on a server we already run POSTs to the workflow's dispatch API at 08:00 Europe/Stockholm, and the workflow has no `schedule` trigger.
 
 ## Considered Options
 

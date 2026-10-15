@@ -12,11 +12,9 @@ GitHub never started a single scheduled daily run: the `schedule` slots on 2026-
 
 ## Manual steps
 1. Create a fine-grained personal access token for this repo only, with the repository permission Actions: read and write. Note its expiry date.
-2. On the server, `crontab -e` and add a `GH_TOKEN=<token>` line, then a line that runs at `0 8 * * *` and calls `curl -fsS -X POST` against `https://api.github.com/repos/fiskhandlarn/BAJSMACKANS-DAG/actions/workflows/daily.yml/dispatches` with the headers `Authorization: Bearer $GH_TOKEN` and `Accept: application/vnd.github+json` and the body `{"ref":"main"}`. With `-f`, an HTTP error makes curl exit non-zero, and cron mails its output when the server has mail set up.
+2. On the server, `crontab -e` and add a `GH_TOKEN=<token>` line, then a line that runs at `0 8 * * *` and calls `curl -fsS --connect-timeout 10 --max-time 30 -X POST` against `https://api.github.com/repos/fiskhandlarn/BAJSMACKANS-DAG/actions/workflows/daily.yml/dispatches` with the headers `Authorization: Bearer $GH_TOKEN` and `Accept: application/vnd.github+json` and the body `{"ref":"main"}`. Cron runs the line through `/bin/sh`: put the `Authorization` header in double quotes so `$GH_TOKEN` expands, the body in single quotes, and escape any `%` as `\%`. The timeouts end a stalled request instead of letting it run into the next morning. With `-f`, an HTTP error makes curl exit non-zero, and cron mails its output when the server has mail set up.
 3. Run the curl line once by hand and check that a `workflow_dispatch` run of Daily appears.
 4. Renew the token before it expires.
 
 ## Verification
-- `daily.yml` has no `schedule` key, and the Actions tab lists no Schedule probe workflow.
-- The manual curl starts a Daily run within seconds.
 - The next morning, a Daily run starts at about 08:00 Stockholm time, started by `workflow_dispatch`.
