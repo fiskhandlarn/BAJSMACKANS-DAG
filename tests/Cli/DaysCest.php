@@ -131,6 +131,39 @@ class DaysCest
         $I->seeInShellOutput('Nyårsdagen is tomorrow!');
     }
 
+    // Runs index.php with the calendar at $path and checks it fails the run
+    // with $message on stderr and nothing on stdout.
+    private function seeCalendarFails(
+        CliTester $I,
+        string $path,
+        string $message,
+    ): void {
+        $command = 'DATA_JSON=' . escapeshellarg($path) . ' php index.php';
+        $I->runShellCommand("$command 2>/dev/null", false);
+        $I->seeResultCodeIs(1);
+        Assert::assertSame('', $I->grabShellOutput());
+        // stderr goes to the captured stdout, stdout to /dev/null
+        $I->runShellCommand("$command 2>&1 >/dev/null", false);
+        Assert::assertSame($message, trim($I->grabShellOutput()));
+    }
+
+    // A missing calendar must fail the run, or the scheduled workflow stays
+    // green while posting nothing.
+    public function missingCalendar(CliTester $I): void
+    {
+        $this->seeCalendarFails($I, 'nope.json', 'nope.json not found.');
+    }
+
+    // A calendar that isn't JSON must fail the run too.
+    public function invalidCalendar(CliTester $I): void
+    {
+        $this->seeCalendarFails(
+            $I,
+            'tests/Support/Data/invalid.json',
+            'Invalid JSON.',
+        );
+    }
+
     // Runs index.php posting to $webhookURL and checks the post failed the run.
     private function seePostFails(CliTester $I, string $webhookURL): void
     {

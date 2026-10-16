@@ -17,14 +17,18 @@ date_default_timezone_set(TIMEZONE);
 
 $calendarJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
 
+// a calendar error must fail the run, or the scheduled workflow stays green
+// while posting nothing
 if (!$calendarJSON) {
-    die(env('DATA_JSON') . " not found.\n");
+    fwrite(STDERR, env('DATA_JSON') . " not found.\n");
+    exit(1);
 }
 
 $calendar = @json_decode($calendarJSON, true);
 
 if (!$calendar) {
-    die("Invalid JSON.\n");
+    fwrite(STDERR, "Invalid JSON.\n");
+    exit(1);
 }
 
 $now = new Carbon('now', TIMEZONE);
