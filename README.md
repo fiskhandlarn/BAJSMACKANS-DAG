@@ -4,6 +4,15 @@
 
 ## Install
 
+Requires PHP 8.5.4. `mise.toml` pins it for [mise](https://mise.jdx.dev/):
+
+```bash
+mise trust
+mise install
+```
+
+Then:
+
 ```bash
 composer install
 ```
