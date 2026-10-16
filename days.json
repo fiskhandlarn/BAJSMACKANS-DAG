@@ -309,6 +309,15 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Snus_nobrand.jpg/960px-Snus_nobrand.jpg"
   },
   {
+    "day": "26 october",
+    "title": "Potatisens dag :potato:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Potatis#Potatisens_dag",
+      "https://temadagar.se/potatisens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/960px-Patates.jpg"
+  },
+  {
     "day": "31 october",
     "title": "Halloween :doot:",
     "links": ["https://sv.wikipedia.org/wiki/Halloween"],
