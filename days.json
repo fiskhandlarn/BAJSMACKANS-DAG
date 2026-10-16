@@ -405,6 +405,15 @@
     "image": "https://i.imgur.com/efQdjij.jpeg"
   },
   {
+    "day": "1 december",
+    "title": "Glöggens dag",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Gl%C3%B6gg",
+      "https://temadagar.se/gloggens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Gl%C3%B6gg_kastrull.JPG/960px-Gl%C3%B6gg_kastrull.JPG"
+  },
+  {
     "day": "9 december",
     "title": "Pepparkakans dag",
     "links": ["https://sv.wikipedia.org/wiki/Pepparkaka#Pepparkakans_dag"],
