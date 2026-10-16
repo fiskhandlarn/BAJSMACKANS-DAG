@@ -459,6 +459,20 @@ class DaysCest
         );
     }
 
+    // A failed run's error reaches the preview's user as is, without a stray
+    // blank line from the empty stdout it replays.
+    public function skillPreviewError(CliTester $I): void
+    {
+        // stderr goes to the captured stdout, stdout to /dev/null
+        $I->runShellCommand(
+            'DATA_JSON=nope.json php .claude/skills/add-temadag/preview.php'
+                . ' 2030-03-27 X 2>&1 >/dev/null',
+            false,
+        );
+        $I->seeResultCodeIs(1);
+        Assert::assertSame('nope.json not found.', $I->grabShellOutput());
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];
