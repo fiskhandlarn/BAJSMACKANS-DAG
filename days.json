@@ -243,6 +243,15 @@
     "image": "https://res.cloudinary.com/hufennija/image/upload/q_auto,f_auto,fl_progressive,c_lfill/2367529.jpg"
   },
   {
+    "day": "10 october",
+    "title": "Grötens dag :bowl_with_spoon:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Gr%C3%B6t",
+      "https://temadagar.se/grotens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Porridge.jpg/960px-Porridge.jpg"
+  },
+  {
     "day": "14 october",
     "title": "Räkmackans dag :shrimp:",
     "links": ["https://sv.wikipedia.org/wiki/R%C3%A4ksm%C3%B6rg%C3%A5s"],
