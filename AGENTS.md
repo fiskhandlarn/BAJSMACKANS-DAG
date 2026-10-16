@@ -16,6 +16,10 @@ Never commit directly to `main`: it has branch protection. Commit on a branch an
 
 The repo is public and `.github/workflows/daily.yml` uses the `WEBHOOK_URL` secret. Trigger PR workflows with `pull_request`, which gives fork PRs no secrets. Never use `pull_request_target`: it runs with the repo's secrets, and checking out the PR's code in it hands those secrets to any fork.
 
+## PHP
+
+Run PHP and composer on the version `mise.toml` pins. Check `php -v` before the first PHP or composer command; on a mismatch, stop and ask the user to fix their environment.
+
 ## Dependencies
 
 Change `composer.lock` only through composer (`composer require`, `composer update`), never by hand.
