@@ -164,6 +164,16 @@ class DaysCest
         );
     }
 
+    // An empty calendar file exists, so it's invalid, not missing.
+    public function emptyCalendar(CliTester $I): void
+    {
+        $this->seeCalendarFails(
+            $I,
+            'tests/Support/Data/empty.json',
+            'Invalid JSON.',
+        );
+    }
+
     // Runs index.php posting to $webhookURL and checks the post failed the run.
     private function seePostFails(CliTester $I, string $webhookURL): void
     {

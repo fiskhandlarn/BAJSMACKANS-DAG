@@ -19,7 +19,7 @@ $calendarJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
 
 // a calendar error must fail the run, or the scheduled workflow stays green
 // while posting nothing
-if (!$calendarJSON) {
+if (false === $calendarJSON) {
     fwrite(STDERR, env('DATA_JSON') . " not found.\n");
     exit(1);
 }
