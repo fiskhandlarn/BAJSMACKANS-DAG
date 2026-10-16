@@ -85,7 +85,7 @@
   },
   {
     "day": "17 march",
-    "title": "Hallongrottans dag",
+    "title": "Hallongrottans dag :hallongrotta:",
     "links": ["https://sv.wikipedia.org/wiki/Hallongrotta"],
     "image": "https://hogtider.files.wordpress.com/2023/03/hallongrottor-konditori-jonkoping.jpg"
   },
@@ -222,6 +222,15 @@
     "image": "https://i.ytimg.com/vi/WAVT9aUKmJc/maxresdefault.jpg"
   },
   {
+    "day": "next friday october 29",
+    "title": "Lutfiskens dag :fish:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Lutfisk",
+      "https://temadagar.se/lutfiskens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/LutefiskBowl.jpg/960px-LutefiskBowl.jpg"
+  },
+  {
     "day": "october 1",
     "title": "Internationella kaffedagen :coffee:",
     "links": ["https://sv.wikipedia.org/wiki/Internationella_kaffedagen"],
@@ -232,6 +241,15 @@
     "title": "Kanelbullens dag :cinnamon_roll:",
     "links": ["https://sv.wikipedia.org/wiki/Kanelbullens_dag"],
     "image": "https://res.cloudinary.com/hufennija/image/upload/q_auto,f_auto,fl_progressive,c_lfill/2367529.jpg"
+  },
+  {
+    "day": "10 october",
+    "title": "Grötens dag :bowl_with_spoon:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Gr%C3%B6t",
+      "https://temadagar.se/grotens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Porridge.jpg/960px-Porridge.jpg"
   },
   {
     "day": "14 october",
@@ -267,6 +285,15 @@
     "image": "https://images.recept.se/images/recipes/finska-pinnar-med-smak-av-bittermandel_23197.jpg?fit=crop&crop=focalpoint&auto=format&fp-x=0.50037668876352&fp-y=0.51275960934352&fp-z=1.0224387536154&w=1200&h=628"
   },
   {
+    "day": "22 october",
+    "title": "INTERNATIONELLA CAPS LOCK-DAGEN :capital_abcd:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Caps_lock",
+      "https://temadagar.se/internationella-caps-lock-dagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/09/Keyboard-left_keys.jpg"
+  },
+  {
     "day": "24 october",
     "title": "FN-dagen :flag-un:",
     "links": ["https://sv.wikipedia.org/wiki/FN-bakelse"],
@@ -282,10 +309,37 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Snus_nobrand.jpg/960px-Snus_nobrand.jpg"
   },
   {
+    "day": "26 october",
+    "title": "Potatisens dag :potato:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Potatis#Potatisens_dag",
+      "https://temadagar.se/potatisens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/960px-Patates.jpg"
+  },
+  {
     "day": "31 october",
     "title": "Halloween :doot:",
     "links": ["https://sv.wikipedia.org/wiki/Halloween"],
     "image": "https://media.tenor.com/xXMKqzQrpJ0AAAAM/skeleton-trumpet.gif"
+  },
+  {
+    "day": "first monday of november",
+    "title": "Frysrättens dag :ice_cube:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/F%C3%A4rdigmat",
+      "https://temadagar.se/frysrattens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Findus_Porterbiff.jpg/960px-Findus_Porterbiff.jpg"
+  },
+  {
+    "day": "third tuesday of november",
+    "title": "Raggmunkens dag",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Raggmunk",
+      "https://raggmunksakademien.se/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Raggmunk_med_fl%C3%A4sk.jpg/960px-Raggmunk_med_fl%C3%A4sk.jpg"
   },
   {
     "day": "6 november",
@@ -334,6 +388,15 @@
     "title": "Wienerbrödets dag",
     "links": ["https://sv.wikipedia.org/wiki/Wienerbr%C3%B6d"],
     "image": "https://solstollarna.se/bilder/sol/bild03.jpg"
+  },
+  {
+    "day": "24 november",
+    "title": "Julmustens dag :christmas_tree:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Julmust",
+      "https://temadagar.se/julmustens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Glass_of_Swedish_must.jpg/960px-Glass_of_Swedish_must.jpg"
   },
   {
     "day": "30 november",
