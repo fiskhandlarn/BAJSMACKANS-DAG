@@ -222,6 +222,15 @@
     "image": "https://i.ytimg.com/vi/WAVT9aUKmJc/maxresdefault.jpg"
   },
   {
+    "day": "next friday october 29",
+    "title": "Lutfiskens dag :fish:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Lutfisk",
+      "https://temadagar.se/lutfiskens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/LutefiskBowl.jpg/960px-LutefiskBowl.jpg"
+  },
+  {
     "day": "october 1",
     "title": "Internationella kaffedagen :coffee:",
     "links": ["https://sv.wikipedia.org/wiki/Internationella_kaffedagen"],
