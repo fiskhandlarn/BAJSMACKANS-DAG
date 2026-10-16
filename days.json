@@ -15,6 +15,24 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Pannkakor_4.png/500px-Pannkakor_4.png"
   },
   {
+    "day": "january 1",
+    "title": "Internationella pizzadagen :pizza:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Pizza",
+      "https://temadagar.se/internationella-pizzadagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/960px-Eq_it-na_pizza-margherita_sep2005_sml.jpg"
+  },
+  {
+    "day": "january 3",
+    "title": "Internationella JRR Tolkien-dagen :tolkien:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/J.R.R._Tolkien",
+      "https://temadagar.se/internationella-jrr-tolkien-dagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/J._R._R._Tolkien%2C_ca._1925_%28cropped%29.jpg/960px-J._R._R._Tolkien%2C_ca._1925_%28cropped%29.jpg"
+  },
+  {
     "day": "january 10",
     "title": "Mazarinens dag",
     "links": ["https://sv.wikipedia.org/wiki/Mazarin_(bakverk)"],
@@ -25,6 +43,24 @@
     "title": "Marsipandagen",
     "links": ["https://sv.wikipedia.org/wiki/Marsipan"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/95/Marcipangris_cropped.jpg"
+  },
+  {
+    "day": "january 19",
+    "title": "Internationella popcorndagen :popcorn:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Popcorn",
+      "https://temadagar.se/internationella-popcorndagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Bowl_of_Popcorn_%28Unsplash%29.jpg/960px-Bowl_of_Popcorn_%28Unsplash%29.jpg"
+  },
+  {
+    "day": "january 29",
+    "title": "Veganpizza-dagen :pizza:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Pizza",
+      "https://temadagar.se/veganpizza-dagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Vegan_pizza_at_Pizza_Luc%C3%A9.jpg/960px-Vegan_pizza_at_Pizza_Luc%C3%A9.jpg"
   },
   {
     "day": "february 3",
@@ -405,6 +441,15 @@
     "image": "https://i.imgur.com/efQdjij.jpeg"
   },
   {
+    "day": "1 december",
+    "title": "Glöggens dag",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Gl%C3%B6gg",
+      "https://temadagar.se/gloggens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Gl%C3%B6gg_kastrull.JPG/960px-Gl%C3%B6gg_kastrull.JPG"
+  },
+  {
     "day": "9 december",
     "title": "Pepparkakans dag",
     "links": ["https://sv.wikipedia.org/wiki/Pepparkaka#Pepparkakans_dag"],
@@ -421,5 +466,14 @@
     "title": "Kakans dag :cookie:",
     "links": ["https://sv.wikipedia.org/wiki/Kaka"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Choco_chip_cookie.jpg"
+  },
+  {
+    "day": "21 december",
+    "title": "Skumtomtens dag :santa:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Cloetta_Juleskum",
+      "https://temadagar.se/skumtomtens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Guimauves-figures.jpg/960px-Guimauves-figures.jpg"
   }
 ]
