@@ -390,6 +390,15 @@
     "image": "https://solstollarna.se/bilder/sol/bild03.jpg"
   },
   {
+    "day": "24 november",
+    "title": "Julmustens dag :christmas_tree:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Julmust",
+      "https://temadagar.se/julmustens-dag/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Glass_of_Swedish_must.jpg/960px-Glass_of_Swedish_must.jpg"
+  },
+  {
     "day": "30 november",
     "title": "Kåldolmens dag :leafy_green:",
     "links": ["https://sv.wikipedia.org/wiki/K%C3%A5ldolmens_dag"],
