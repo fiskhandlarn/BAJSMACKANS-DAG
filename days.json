@@ -45,6 +45,15 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/95/Marcipangris_cropped.jpg"
   },
   {
+    "day": "january 19",
+    "title": "Internationella popcorndagen :popcorn:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Popcorn",
+      "https://temadagar.se/internationella-popcorndagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Bowl_of_Popcorn_%28Unsplash%29.jpg/960px-Bowl_of_Popcorn_%28Unsplash%29.jpg"
+  },
+  {
     "day": "february 3",
     "title": "Morotskakans dag :carrot:",
     "links": ["https://sv.wikipedia.org/wiki/Morotskaka"],
