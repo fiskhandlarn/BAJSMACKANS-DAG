@@ -1,6 +1,6 @@
 ---
 name: bump-composer
-description: Bump every composer dependency to its latest PHP-8.1-compatible version and pin constraints as ^n.n.n.
+description: Bump every composer dependency to its latest PHP-8.5-compatible version and pin constraints as ^n.n.n.
 disable-model-invocation: true
 ---
 

@@ -12,7 +12,7 @@ Issue #20. CI linted PHP syntax and the data file but checked no style. `.editor
 
 `composer.json` gets two scripts that run both tools over tracked files: `lint:style` only checks and fails on any violation, `fix:style` rewrites what the tools can fix.
 
-The `lint` job in `.github/workflows/pull-request.yml` sets up PHP 8.1, like the `test` job, and runs `composer run lint:style`.
+The `lint` job in `.github/workflows/pull-request.yml` sets up PHP 8.5, like the `test` job, and runs `composer run lint:style`.
 
 `AGENTS.md` tells agents to run `fix:style` before committing.
 
