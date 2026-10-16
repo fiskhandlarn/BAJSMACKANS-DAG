@@ -27,7 +27,7 @@
     "vlucas/phpdotenv": "^5.7.0"
   },
   "require-dev": {
-    "armin/editorconfig-cli": "^1.8.1",
+    "armin/editorconfig-cli": "^2.2.1",
     "codeception/codeception": "^5.3.7",
     "codeception/module-cli": "^2.0.1",
     "friendsofphp/php-cs-fixer": "^3.95.27",
