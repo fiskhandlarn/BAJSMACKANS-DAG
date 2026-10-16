@@ -333,6 +333,15 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Findus_Porterbiff.jpg/960px-Findus_Porterbiff.jpg"
   },
   {
+    "day": "third tuesday of november",
+    "title": "Raggmunkens dag",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Raggmunk",
+      "https://raggmunksakademien.se/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Raggmunk_med_fl%C3%A4sk.jpg/960px-Raggmunk_med_fl%C3%A4sk.jpg"
+  },
+  {
     "day": "6 november",
     "title": "Gustav Adolfs dödsdag :skull:",
     "links": ["https://sv.wikipedia.org/wiki/Gustav_Adolfsbakelse"],
