@@ -131,6 +131,61 @@ class DaysCest
         $I->seeInShellOutput('Nyårsdagen is tomorrow!');
     }
 
+    // Runs index.php with the calendar at $path and checks it fails the run
+    // with $message on stderr and nothing on stdout.
+    private function seeCalendarFails(
+        CliTester $I,
+        string $path,
+        string $message,
+    ): void {
+        $command = 'DATA_JSON=' . escapeshellarg($path) . ' php index.php';
+        $I->runShellCommand("$command 2>/dev/null", false);
+        $I->seeResultCodeIs(1);
+        Assert::assertSame('', $I->grabShellOutput());
+        // stderr goes to the captured stdout, stdout to /dev/null
+        $I->runShellCommand("$command 2>&1 >/dev/null", false);
+        Assert::assertSame($message, trim($I->grabShellOutput()));
+    }
+
+    // A missing calendar must fail the run, or the scheduled workflow stays
+    // green while posting nothing.
+    public function missingCalendar(CliTester $I): void
+    {
+        $this->seeCalendarFails($I, 'nope.json', 'nope.json not found.');
+    }
+
+    // A calendar that isn't JSON must fail the run too.
+    public function invalidCalendar(CliTester $I): void
+    {
+        $this->seeCalendarFails(
+            $I,
+            'tests/Support/Data/invalid.json',
+            'Invalid JSON.',
+        );
+    }
+
+    // An empty calendar file exists, so it's invalid, not missing.
+    public function emptyCalendar(CliTester $I): void
+    {
+        $this->seeCalendarFails(
+            $I,
+            'tests/Support/Data/empty.json',
+            'Invalid JSON.',
+        );
+    }
+
+    // Valid JSON that isn't a list of temadagar is no calendar either.
+    public function notListCalendar(CliTester $I): void
+    {
+        foreach (['scalar', 'object'] as $name) {
+            $this->seeCalendarFails(
+                $I,
+                "tests/Support/Data/$name.json",
+                'Invalid JSON.',
+            );
+        }
+    }
+
     // Runs index.php posting to $webhookURL and checks the post failed the run.
     private function seePostFails(CliTester $I, string $webhookURL): void
     {
@@ -402,6 +457,20 @@ class DaysCest
             $card,
             json_decode(rawurldecode(substr($link, strlen($prefix))), true),
         );
+    }
+
+    // A failed run's error reaches the preview's user as is, without a stray
+    // blank line from the empty stdout it replays.
+    public function skillPreviewError(CliTester $I): void
+    {
+        // stderr goes to the captured stdout, stdout to /dev/null
+        $I->runShellCommand(
+            'DATA_JSON=nope.json php .claude/skills/add-temadag/preview.php'
+                . ' 2030-03-27 X 2>&1 >/dev/null',
+            false,
+        );
+        $I->seeResultCodeIs(1);
+        Assert::assertSame('nope.json not found.', $I->grabShellOutput());
     }
 
     public function noDuplicateTitles(CliTester $I): void

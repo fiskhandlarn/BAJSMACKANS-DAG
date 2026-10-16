@@ -19,7 +19,11 @@ if (!$date || !$title) {
 $command = PHP_BINARY . ' index.php --debug --date=' . escapeshellarg($date);
 exec($command, $output, $code);
 if (0 !== $code) {
-    fwrite(STDERR, implode("\n", $output) . "\n");
+    // index.php's own errors already reached stderr; this replays what went to
+    // stdout, such as PHP's warnings
+    if ($output) {
+        fwrite(STDERR, implode("\n", $output) . "\n");
+    }
     exit($code);
 }
 preg_match_all('/```json\n(.*?)\n```/s', implode("\n", $output), $matches);

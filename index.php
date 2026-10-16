@@ -17,14 +17,19 @@ date_default_timezone_set(TIMEZONE);
 
 $calendarJSON = @file_get_contents(__DIR__ . '/' . env('DATA_JSON'));
 
-if (!$calendarJSON) {
-    die(env('DATA_JSON') . " not found.\n");
+// a calendar error must fail the run, or the scheduled workflow stays green
+// while posting nothing
+if (false === $calendarJSON) {
+    fwrite(STDERR, env('DATA_JSON') . " not found.\n");
+    exit(1);
 }
 
 $calendar = @json_decode($calendarJSON, true);
 
-if (!$calendar) {
-    die("Invalid JSON.\n");
+// a calendar is a non-empty list of temadagar
+if (!is_array($calendar) || !$calendar || !array_is_list($calendar)) {
+    fwrite(STDERR, "Invalid JSON.\n");
+    exit(1);
 }
 
 $now = new Carbon('now', TIMEZONE);
