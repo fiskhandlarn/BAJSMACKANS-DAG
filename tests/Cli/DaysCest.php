@@ -174,6 +174,18 @@ class DaysCest
         );
     }
 
+    // Valid JSON that isn't a list of temadagar is no calendar either.
+    public function notListCalendar(CliTester $I): void
+    {
+        foreach (['scalar', 'object'] as $name) {
+            $this->seeCalendarFails(
+                $I,
+                "tests/Support/Data/$name.json",
+                'Invalid JSON.',
+            );
+        }
+    }
+
     // Runs index.php posting to $webhookURL and checks the post failed the run.
     private function seePostFails(CliTester $I, string $webhookURL): void
     {

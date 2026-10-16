@@ -26,7 +26,8 @@ if (false === $calendarJSON) {
 
 $calendar = @json_decode($calendarJSON, true);
 
-if (!$calendar) {
+// a calendar is a non-empty list of temadagar
+if (!is_array($calendar) || !$calendar || !array_is_list($calendar)) {
     fwrite(STDERR, "Invalid JSON.\n");
     exit(1);
 }
