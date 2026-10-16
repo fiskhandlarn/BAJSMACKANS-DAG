@@ -6,7 +6,7 @@ on:
 
 jobs:
   notify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     # a normal run takes under a minute; fail fast instead of the 6 h default
     timeout-minutes: 5
     steps:
