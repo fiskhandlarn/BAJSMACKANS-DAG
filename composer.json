@@ -32,7 +32,7 @@
     "codeception/module-cli": "^2.0.1",
     "friendsofphp/php-cs-fixer": "^3.95.27",
     "seld/jsonlint": "^1.12.1",
-    "symfony/var-dumper": "^6.4.48"
+    "symfony/var-dumper": "^8.1.9"
   },
   "scripts": {
     "lint:php": [
