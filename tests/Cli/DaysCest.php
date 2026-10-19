@@ -364,6 +364,20 @@ class DaysCest
         );
     }
 
+    // The emoji shows in the card title only, not in the image's alt text.
+    public function emojiOnlyInCardTitle(CliTester $I): void
+    {
+        $card = $this->posted($I, '2030-03-27')['blocks'][0] ?? [];
+        Assert::assertSame(
+            'The "best" bun day :bread:',
+            $card['title']['text'] ?? null,
+        );
+        Assert::assertSame(
+            'The "best" bun day',
+            $card['hero_image']['alt_text'] ?? null,
+        );
+    }
+
     // A reminder's body ends in a period, and leaves out the emoji the card
     // title shows.
     public function reminderBody(CliTester $I): void

@@ -102,7 +102,7 @@ foreach ($calendar as $idx => $temadag) {
                     'hero_image' => [
                         'type' => 'image',
                         'image_url' => $temadag['image'],
-                        'alt_text' => $title,
+                        'alt_text' => $temadag['title'],
                     ],
                     'subtitle' => [
                         'type' => 'mrkdwn',
