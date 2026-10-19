@@ -89,10 +89,29 @@ class DaysCest
             );
         }
 
+        Assert::assertDoesNotMatchRegularExpression(
+            '/:[a-z0-9_+-]+:$/',
+            $temadag['title'],
+            'emoji in title, not in emoji',
+        );
+
+        // absent is undecided and false is decided: no emoji. null would read
+        // as absent through ?? and isset, so it's not allowed
+        if (array_key_exists('emoji', $temadag)) {
+            $emoji = $temadag['emoji'];
+            Assert::assertTrue(
+                false === $emoji
+                    || is_string($emoji)
+                        && preg_match('/^:[a-z0-9_+-]+:$/', $emoji),
+                'emoji is neither false nor a :name: string: '
+                    . json_encode($emoji),
+            );
+        }
+
         // Slack rejects the whole message when a card's title or subtitle is
         // over 150 characters
         $fields = [
-            'title' => $temadag['title'],
+            'title' => displayTitle($temadag),
             'subtitle' => slackSubtitle($links),
         ];
         foreach ($fields as $key => $text) {
@@ -109,7 +128,9 @@ class DaysCest
     {
         $this->runAt($I, $example, '+0 days');
         $I->seeResultCodeIs(0);
-        $I->seeInShellOutput($example['temadag']['title'] . ' is today!');
+        $I->seeInShellOutput(
+            displayTitle($example['temadag']) . ' is today!',
+        );
     }
 
     #[DataProvider('temadagar')]
@@ -117,7 +138,9 @@ class DaysCest
     {
         $this->runAt($I, $example, '-1 day');
         $I->seeResultCodeIs(0);
-        $I->seeInShellOutput($example['temadag']['title'] . ' is tomorrow!');
+        $I->seeInShellOutput(
+            displayTitle($example['temadag']) . ' is tomorrow!',
+        );
     }
 
     // A year other than the current one, crossing into the next year.
@@ -477,9 +500,7 @@ class DaysCest
     {
         $seen = [];
         foreach (self::calendar() as $temadag) {
-            // "Foo :coffee:" and "foo" are the same temadag
-            $title = preg_replace('#:[\w+-]+:#', '', $temadag['title']);
-            $seen[] = trim(mb_strtolower($title));
+            $seen[] = trim(mb_strtolower($temadag['title']));
         }
 
         $duplicates = array_keys(

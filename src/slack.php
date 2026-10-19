@@ -16,6 +16,15 @@ function slackPostOptions(array $payload): array
     ];
 }
 
+// A temadag's title as Slack shows it: with its emoji, when it has one.
+// emoji false means decided: no emoji; a missing emoji is undecided.
+function displayTitle(array $temadag): string
+{
+    $emoji = $temadag['emoji'] ?? false;
+
+    return $temadag['title'] . (false === $emoji ? '' : " $emoji");
+}
+
 // A card subtitle linking each URL, labelled with its host.
 function slackSubtitle(array $links): string
 {

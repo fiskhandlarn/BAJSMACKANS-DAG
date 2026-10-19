@@ -1,13 +1,15 @@
 [
   {
     "day": "47 days before easter",
-    "title": "Fettisdagen :semla:",
+    "title": "Fettisdagen",
+    "emoji": ":semla:",
     "links": ["https://sv.wikipedia.org/wiki/Fettisdagen"],
     "image": "https://cdn.valio.fi/mediafiles/f0ca373f-3641-483b-83ef-88f2d2bad34c/1440x1080-recipe-hero/4x3/klassisk-laktosfri-semla.jpg"
   },
   {
     "day": "47 days before easter",
-    "title": "Internationella pannkaksdagen :pancakes:",
+    "title": "Internationella pannkaksdagen",
+    "emoji": ":pancakes:",
     "links": [
       "https://sv.wikipedia.org/wiki/Pannkaka",
       "https://temadagar.se/internationella-pannkaksdagen/"
@@ -16,7 +18,8 @@
   },
   {
     "day": "january 1",
-    "title": "Internationella pizzadagen :pizza:",
+    "title": "Internationella pizzadagen",
+    "emoji": ":pizza:",
     "links": [
       "https://sv.wikipedia.org/wiki/Pizza",
       "https://temadagar.se/internationella-pizzadagen/"
@@ -25,7 +28,8 @@
   },
   {
     "day": "january 3",
-    "title": "Internationella JRR Tolkien-dagen :tolkien:",
+    "title": "Internationella JRR Tolkien-dagen",
+    "emoji": ":tolkien:",
     "links": [
       "https://sv.wikipedia.org/wiki/J.R.R._Tolkien",
       "https://temadagar.se/internationella-jrr-tolkien-dagen/"
@@ -46,7 +50,8 @@
   },
   {
     "day": "january 19",
-    "title": "Internationella popcorndagen :popcorn:",
+    "title": "Internationella popcorndagen",
+    "emoji": ":popcorn:",
     "links": [
       "https://sv.wikipedia.org/wiki/Popcorn",
       "https://temadagar.se/internationella-popcorndagen/"
@@ -55,7 +60,8 @@
   },
   {
     "day": "january 29",
-    "title": "Veganpizza-dagen :pizza:",
+    "title": "Veganpizza-dagen",
+    "emoji": ":pizza:",
     "links": [
       "https://sv.wikipedia.org/wiki/Pizza",
       "https://temadagar.se/veganpizza-dagen/"
@@ -64,7 +70,8 @@
   },
   {
     "day": "february 3",
-    "title": "Morotskakans dag :carrot:",
+    "title": "Morotskakans dag",
+    "emoji": ":carrot:",
     "links": ["https://sv.wikipedia.org/wiki/Morotskaka"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Morotskaka.JPG/960px-Morotskaka.JPG"
   },
@@ -76,7 +83,8 @@
   },
   {
     "day": "february 5",
-    "title": "Runebergsdagen :flag-fi:",
+    "title": "Runebergsdagen",
+    "emoji": ":flag-fi:",
     "links": ["https://sv.wikipedia.org/wiki/Runebergst%C3%A5rta"],
     "image": "https://files-aller-blogger-platform.aws.aller.com/uploads/sites/87/2022/04/runebergstarta-recept-2-700x454.jpg?w=700&fit=max&auto=format%201x"
   },
@@ -103,7 +111,8 @@
   },
   {
     "day": "7 march",
-    "title": "Punschrullens dag :punschrulle:",
+    "title": "Punschrullens dag",
+    "emoji": ":punschrulle:",
     "links": ["https://sv.wikipedia.org/wiki/Dammsugare_(bakverk)"],
     "image": "https://assets.icanet.se/jsbbqvtajuijftaemyhz.jpg"
   },
@@ -121,19 +130,22 @@
   },
   {
     "day": "17 march",
-    "title": "Hallongrottans dag :hallongrotta:",
+    "title": "Hallongrottans dag",
+    "emoji": ":hallongrotta:",
     "links": ["https://sv.wikipedia.org/wiki/Hallongrotta"],
     "image": "https://svenskahogtider.com/wp-content/uploads/2023/03/hallongrottor-konditori-jonkoping.jpg"
   },
   {
     "day": "25 march",
-    "title": "Jungfru Maria bebådelsedag :waffle:",
+    "title": "Jungfru Maria bebådelsedag",
+    "emoji": ":waffle:",
     "links": ["https://sv.wikipedia.org/wiki/Jungfru_Marie_beb%C3%A5delsedag"],
     "image": "https://res.cloudinary.com/coopsverige/images/w_1200,h_1200/v1610649402/417035/V%C3%A5fflor+utan+%C3%A4gg.jpg"
   },
   {
     "day": "second saturday of april",
-    "title": "Surdegsdagen :bread:",
+    "title": "Surdegsdagen",
+    "emoji": ":bread:",
     "links": ["https://www.kungsornen.se/tips-tricks/teman-bakning/surdegsdagen/"],
     "image": "https://static.standard.co.uk/s3fs-public/thumbnails/image/2020/04/30/10/jake-gyllenhaal.png"
   },
@@ -151,7 +163,8 @@
   },
   {
     "day": "20 april",
-    "title": "Polkagrisens dag :peppa-pig:",
+    "title": "Polkagrisens dag",
+    "emoji": ":peppa-pig:",
     "links": [
       "https://sv.wikipedia.org/wiki/Polkagris",
       "https://vilkendag.nu/temadagar/polkagrisens-dag"
@@ -169,7 +182,8 @@
   },
   {
     "day": "1 may",
-    "title": "Budapestbakelsens dag :flag-hu:",
+    "title": "Budapestbakelsens dag",
+    "emoji": ":flag-hu:",
     "links": ["https://sv.wikipedia.org/wiki/Budapestbakelse"],
     "image": "https://konditorikatarina.se/media/product_photos/product_photo_OEQ0X8JOt18HodWr_product.jpg"
   },
@@ -187,13 +201,15 @@
   },
   {
     "day": "27 may",
-    "title": "Muffinsdagen :cupcake:",
+    "title": "Muffinsdagen",
+    "emoji": ":cupcake:",
     "links": ["https://www.kungsornen.se/tips-tricks/teman-bakning/muffinsdagen/"],
     "image": "https://www.sharmispassions.com/wp-content/uploads/2019/04/VanillaMuffins7-500x500.jpg"
   },
   {
     "day": "first friday of june",
-    "title": "Internationella donutdagen :doughnut:",
+    "title": "Internationella donutdagen",
+    "emoji": ":doughnut:",
     "links": [
       "https://sv.wikipedia.org/wiki/Munk_(bakverk)",
       "https://temadagar.se/internationella-donutdagen/"
@@ -202,13 +218,15 @@
   },
   {
     "day": "6 june",
-    "title": "Nationaldagsbakelse :flag-union:",
+    "title": "Nationaldagsbakelse",
+    "emoji": ":flag-union:",
     "links": ["https://sv.wikipedia.org/wiki/Nationaldagsbakelse"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Nationaldagsbakelse_2020.jpg/500px-Nationaldagsbakelse_2020.jpg"
   },
   {
     "day": "6 june",
-    "title": "Fruktens dag :banan-melon-kiwi-citron:",
+    "title": "Fruktens dag",
+    "emoji": ":banan-melon-kiwi-citron:",
     "links": [
       "https://sv.wikipedia.org/wiki/Frukt",
       "https://vilkendag.nu/temadagar/fruktens-dag"
@@ -217,7 +235,8 @@
   },
   {
     "day": "9 august",
-    "title": "Rulltårtans dag :scroll:",
+    "title": "Rulltårtans dag",
+    "emoji": ":scroll:",
     "links": [
       "https://sv.wikipedia.org/wiki/Rullt%C3%A5rta",
       "https://temadagar.se/rulltartans-dag/"
@@ -232,19 +251,22 @@
   },
   {
     "day": "september 9",
-    "title": "Internationella köp-en-öl-till-en-präst-dagen :pray:",
+    "title": "Internationella köp-en-öl-till-en-präst-dagen",
+    "emoji": ":pray:",
     "links": ["https://revpacman.com/2024/09/04/international-buy-a-priest-a-beer-day/"],
     "image": "https://i.imgur.com/2g55f7n.jpeg"
   },
   {
     "day": "11 september",
-    "title": "Kebabens dag :stuffed_flatbread:",
+    "title": "Kebabens dag",
+    "emoji": ":stuffed_flatbread:",
     "links": ["https://matkalender.nu/events/kebabens-dag/"],
     "image": "https://t4.ftcdn.net/jpg/01/12/60/35/360_F_112603585_SNY1XNd6JJgMxR8DKFJGTvWQ6STPPKEi.jpg"
   },
   {
     "day": "25 september",
-    "title": "Äpplets dag :green_apple:",
+    "title": "Äpplets dag",
+    "emoji": ":green_apple:",
     "links": [
       "https://sv.wikipedia.org/wiki/%C3%84pple",
       "https://vilkendag.nu/temadagar/applets-dag"
@@ -253,19 +275,22 @@
   },
   {
     "day": "first sunday of october",
-    "title": "Gräddtårtans dag :strawberry:",
+    "title": "Gräddtårtans dag",
+    "emoji": ":strawberry:",
     "links": ["https://sv.wikipedia.org/wiki/Gr%C3%A4ddt%C3%A5rta"],
     "image": "https://i0.wp.com/media.zeinaskitchen.se/2016/04/08042016-IMG_4958-e1487070756944.jpg?fit=2000%2C1333&ssl=1"
   },
   {
     "day": "second friday of october",
-    "title": "Äggets dag :egg:",
+    "title": "Äggets dag",
+    "emoji": ":egg:",
     "links": ["https://blog.omlet.se/2021/10/04/aggets-dag-9-fascinerande-fakta-om-agg/"],
     "image": "https://i.ytimg.com/vi/WAVT9aUKmJc/maxresdefault.jpg"
   },
   {
     "day": "next friday october 29",
-    "title": "Lutfiskens dag :fish:",
+    "title": "Lutfiskens dag",
+    "emoji": ":fish:",
     "links": [
       "https://sv.wikipedia.org/wiki/Lutfisk",
       "https://temadagar.se/lutfiskens-dag/"
@@ -274,19 +299,22 @@
   },
   {
     "day": "october 1",
-    "title": "Internationella kaffedagen :coffee:",
+    "title": "Internationella kaffedagen",
+    "emoji": ":coffee:",
     "links": ["https://sv.wikipedia.org/wiki/Internationella_kaffedagen"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG"
   },
   {
     "day": "october 4",
-    "title": "Kanelbullens dag :cinnamon_roll:",
+    "title": "Kanelbullens dag",
+    "emoji": ":cinnamon_roll:",
     "links": ["https://sv.wikipedia.org/wiki/Kanelbullens_dag"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Kanelbulle.jpg/500px-Kanelbulle.jpg"
   },
   {
     "day": "10 october",
-    "title": "Grötens dag :bowl_with_spoon:",
+    "title": "Grötens dag",
+    "emoji": ":bowl_with_spoon:",
     "links": [
       "https://sv.wikipedia.org/wiki/Gr%C3%B6t",
       "https://temadagar.se/grotens-dag/"
@@ -295,19 +323,22 @@
   },
   {
     "day": "14 october",
-    "title": "Räkmackans dag :shrimp:",
+    "title": "Räkmackans dag",
+    "emoji": ":shrimp:",
     "links": ["https://sv.wikipedia.org/wiki/R%C3%A4ksm%C3%B6rg%C3%A5s"],
     "image": "https://res.cloudinary.com/coopsverige/images/w_1200,h_1200/v1566997026/380073/R%C3%A4kmacka.jpg"
   },
   {
     "day": "15 october",
-    "title": "Fetaostens dag :flag-gr:",
+    "title": "Fetaostens dag",
+    "emoji": ":flag-gr:",
     "links": ["https://temadagar.se/fetaostens-dag/"],
     "image": "https://www.fontana.se/wp-content/uploads/2023/10/smarrig-tiktok-pasta-image.png.webp"
   },
   {
     "day": "17 october",
-    "title": "Parisarens dag :flag-fr:",
+    "title": "Parisarens dag",
+    "emoji": ":flag-fr:",
     "links": [
       "https://sv.wikipedia.org/wiki/Parisare_(korv)",
       "https://temadagar.se/parisarens-dag/"
@@ -316,19 +347,22 @@
   },
   {
     "day": "18 october",
-    "title": "Chokladmuffinsens dag :cupcake:",
+    "title": "Chokladmuffinsens dag",
+    "emoji": ":cupcake:",
     "links": ["https://chalmers.it/posts/2013-chokladmuffinsens-dag-18-e-oktober"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Schokoladenmuffins.JPG/960px-Schokoladenmuffins.JPG"
   },
   {
     "day": "20 october",
-    "title": "Finska pinnens dag :flag-fi:",
+    "title": "Finska pinnens dag",
+    "emoji": ":flag-fi:",
     "links": ["https://sv.wikipedia.org/wiki/Finska_pinnar"],
     "image": "https://images.recept.se/images/recipes/finska-pinnar-med-smak-av-bittermandel_23197.jpg?fit=crop&crop=focalpoint&auto=format&fp-x=0.50037668876352&fp-y=0.51275960934352&fp-z=1.0224387536154&w=1200&h=628"
   },
   {
     "day": "22 october",
-    "title": "INTERNATIONELLA CAPS LOCK-DAGEN :capital_abcd:",
+    "title": "INTERNATIONELLA CAPS LOCK-DAGEN",
+    "emoji": ":capital_abcd:",
     "links": [
       "https://sv.wikipedia.org/wiki/Caps_lock",
       "https://temadagar.se/internationella-caps-lock-dagen/"
@@ -337,13 +371,15 @@
   },
   {
     "day": "24 october",
-    "title": "FN-dagen :flag-un:",
+    "title": "FN-dagen",
+    "emoji": ":flag-un:",
     "links": ["https://sv.wikipedia.org/wiki/FN-bakelse"],
     "image": "https://img.meny.menu/storage/media/company_gallery/3400162/conversions/contribution_gallery.jpg"
   },
   {
     "day": "24 october",
-    "title": "Snusets dag :snus:",
+    "title": "Snusets dag",
+    "emoji": ":snus:",
     "links": [
       "https://sv.wikipedia.org/wiki/Snus",
       "https://temadagar.se/snusets-dag/"
@@ -352,7 +388,8 @@
   },
   {
     "day": "26 october",
-    "title": "Potatisens dag :potato:",
+    "title": "Potatisens dag",
+    "emoji": ":potato:",
     "links": [
       "https://sv.wikipedia.org/wiki/Potatis#Potatisens_dag",
       "https://temadagar.se/potatisens-dag/"
@@ -361,13 +398,15 @@
   },
   {
     "day": "31 october",
-    "title": "Halloween :doot:",
+    "title": "Halloween",
+    "emoji": ":doot:",
     "links": ["https://sv.wikipedia.org/wiki/Halloween"],
     "image": "https://media.tenor.com/xXMKqzQrpJ0AAAAM/skeleton-trumpet.gif"
   },
   {
     "day": "first monday of november",
-    "title": "Frysrättens dag :ice_cube:",
+    "title": "Frysrättens dag",
+    "emoji": ":ice_cube:",
     "links": [
       "https://sv.wikipedia.org/wiki/F%C3%A4rdigmat",
       "https://temadagar.se/frysrattens-dag/"
@@ -385,7 +424,8 @@
   },
   {
     "day": "6 november",
-    "title": "Gustav Adolfs dödsdag :skull:",
+    "title": "Gustav Adolfs dödsdag",
+    "emoji": ":skull:",
     "links": ["https://sv.wikipedia.org/wiki/Gustav_Adolfsbakelse"],
     "image": "https://cached-images.bonnier.news/gcs/bilder/epi-30-dn/Images/2011/11/05/gustav-683.jpg"
   },
@@ -397,25 +437,29 @@
   },
   {
     "day": "10 november",
-    "title": "Äppelkakans dag :apple:",
+    "title": "Äppelkakans dag",
+    "emoji": ":apple:",
     "links": ["https://sv.wikipedia.org/wiki/%C3%84ppelkaka"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/5/51/Appelkaka.jpg"
   },
   {
     "day": "11 november",
-    "title": "Chokladens dag :chocolate_bar:",
+    "title": "Chokladens dag",
+    "emoji": ":chocolate_bar:",
     "links": ["https://www.youtube.com/watch?v=EwTZ2xpQwpA"],
     "image": "https://shared.cdn.smp.schibsted.com/v2/images/8c8768e1-257f-4446-b0e1-9a1c98536003?fit=crop&h=1425&w=1900&s=ef7aabb4001453b643f45e169cfaa5ee3f63e51d"
   },
   {
     "day": "13 november",
-    "title": "Smörgåstårtans dag :sandwich:",
+    "title": "Smörgåstårtans dag",
+    "emoji": ":sandwich:",
     "links": ["https://sv.wikipedia.org/wiki/Sm%C3%B6rg%C3%A5st%C3%A5rta"],
     "image": "https://images.recept.se/images/recipes/festlig-raktarta-med-polarbrod_7949.jpg?fit=crop&crop=focalpoint&auto=format&fp-x=0.5&fp-y=0.58863806555395&fp-z=1&w=800&h=570&auto=format"
   },
   {
     "day": "14 november",
-    "title": "Ostkakans dag :cheese_wedge:",
+    "title": "Ostkakans dag",
+    "emoji": ":cheese_wedge:",
     "links": ["https://sv.wikipedia.org/wiki/Ostkaka"],
     "image": "http://1.bp.blogspot.com/-NQDqu--2rOQ/VHNMmvt112I/AAAAAAAADIk/T3WrEdkfaZ0/s1600/Tacotallrik%2C%2Bostkaka%2Boch%2Bbudapest%2B052%2B(2).jpg"
   },
@@ -427,13 +471,15 @@
   },
   {
     "day": "22 november",
-    "title": "Wienerbrödets dag :flag-dk:",
+    "title": "Wienerbrödets dag",
+    "emoji": ":flag-dk:",
     "links": ["https://sv.wikipedia.org/wiki/Wienerbr%C3%B6d"],
     "image": "https://solstollarna.se/bilder/sol/bild03.jpg"
   },
   {
     "day": "24 november",
-    "title": "Julmustens dag :christmas_tree:",
+    "title": "Julmustens dag",
+    "emoji": ":christmas_tree:",
     "links": [
       "https://sv.wikipedia.org/wiki/Julmust",
       "https://temadagar.se/julmustens-dag/"
@@ -442,7 +488,8 @@
   },
   {
     "day": "30 november",
-    "title": "Kåldolmens dag :leafy_green:",
+    "title": "Kåldolmens dag",
+    "emoji": ":leafy_green:",
     "links": ["https://sv.wikipedia.org/wiki/K%C3%A5ldolmens_dag"],
     "image": "https://i.imgur.com/efQdjij.jpeg"
   },
@@ -469,13 +516,15 @@
   },
   {
     "day": "18 dec",
-    "title": "Kakans dag :cookie:",
+    "title": "Kakans dag",
+    "emoji": ":cookie:",
     "links": ["https://sv.wikipedia.org/wiki/Kaka"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Choco_chip_cookie.jpg"
   },
   {
     "day": "21 december",
-    "title": "Skumtomtens dag :santa:",
+    "title": "Skumtomtens dag",
+    "emoji": ":santa:",
     "links": [
       "https://sv.wikipedia.org/wiki/Cloetta_Juleskum",
       "https://temadagar.se/skumtomtens-dag/"

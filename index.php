@@ -86,8 +86,9 @@ foreach ($calendar as $idx => $temadag) {
         == resolveDayRule($temadag["day"], $tomorrow->year)?->format("Y-m-d");
 
     if ($isToday || $isTomorrow) {
+        $title = displayTitle($temadag);
         echo "------------------------------------------------------\n";
-        echo "🎉 " . $temadag['title'] . ' is '
+        echo "🎉 " . $title . ' is '
             . ($isToday ? 'today' : 'tomorrow') . "! 🎉\n\n";
         $when = $isToday ? ':warning: Idag' : ':spiral_calendar_pad: Imorgon';
         $payload = [
@@ -96,12 +97,12 @@ foreach ($calendar as $idx => $temadag) {
                     'type' => 'card',
                     'title' => [
                         'type' => 'mrkdwn',
-                        'text' => $temadag['title'],
+                        'text' => $title,
                     ],
                     'hero_image' => [
                         'type' => 'image',
                         'image_url' => $temadag['image'],
-                        'alt_text' => $temadag['title'],
+                        'alt_text' => $title,
                     ],
                     'subtitle' => [
                         'type' => 'mrkdwn',
@@ -109,7 +110,7 @@ foreach ($calendar as $idx => $temadag) {
                     ],
                     'body' => [
                         'type' => 'mrkdwn',
-                        'text' => "$when är det {$temadag['title']}",
+                        'text' => "$when är det $title",
                     ],
                 ],
                 [

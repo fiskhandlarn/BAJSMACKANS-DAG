@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 // Prints a temadag's Slack payload and a Block Kit Builder link to it.
 // Usage, from the repo root:
-// php .claude/skills/add-temadag/preview.php YYYY-MM-DD "Title"
+// php .claude/skills/add-temadag/preview.php YYYY-MM-DD "Title :emoji:"
+// where the title is as shown, with its emoji when it has one.
 // The link needs SLACK_TEAM_ID (the T… id in your Block Kit Builder URL) in
 // .env, which stays out of git.
 
