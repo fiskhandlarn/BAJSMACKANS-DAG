@@ -218,7 +218,10 @@
   {
     "day": "9 august",
     "title": "Rulltårtans dag :scroll:",
-    "links": ["https://matwebben.se/startsida/receptkategorier/tillfallen/rulltartans-dag/"],
+    "links": [
+      "https://sv.wikipedia.org/wiki/Rullt%C3%A5rta",
+      "https://temadagar.se/rulltartans-dag/"
+    ],
     "image": "https://assets.icanet.se/imagevaultfiles/id_71068/cf_259/rulltarta.jpg"
   },
   {
