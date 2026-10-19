@@ -46,6 +46,7 @@
   {
     "day": "january 12",
     "title": "Marsipandagen",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Marsipan"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/95/Marcipangris_cropped.jpg"
   },
