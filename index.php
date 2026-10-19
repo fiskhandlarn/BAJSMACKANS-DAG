@@ -110,7 +110,9 @@ foreach ($calendar as $idx => $temadag) {
                     ],
                     'body' => [
                         'type' => 'mrkdwn',
-                        'text' => "$when är det $title",
+                        // the card title already shows the emoji
+                        'text' => "$when är det {$temadag['title']}"
+                            . ($isToday ? '!' : '.'),
                     ],
                 ],
                 [

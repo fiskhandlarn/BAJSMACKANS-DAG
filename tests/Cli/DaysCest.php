@@ -359,8 +359,18 @@ class DaysCest
             $card['subtitle']['text'] ?? null,
         );
         Assert::assertSame(
-            ":warning: Idag är det Våffeldagen (it's waffle day)",
+            ":warning: Idag är det Våffeldagen (it's waffle day)!",
             $card['body']['text'] ?? null,
+        );
+    }
+
+    // A reminder's body ends in a period, and leaves out the emoji the card
+    // title shows.
+    public function reminderBody(CliTester $I): void
+    {
+        Assert::assertSame(
+            ':spiral_calendar_pad: Imorgon är det The "best" bun day.',
+            $this->postedText($I, '2030-03-26'),
         );
     }
 
@@ -461,7 +471,7 @@ class DaysCest
     // Builder link must decode back to the card it printed.
     public function skillPreview(CliTester $I): void
     {
-        $title = 'The "best" bun day';
+        $title = 'The "best" bun day :bread:';
         $I->runShellCommand(
             'DATA_JSON=tests/Support/Data/quotes.json SLACK_TEAM_ID=T0'
                 . ' php .claude/skills/add-temadag/preview.php 2030-03-27 '
