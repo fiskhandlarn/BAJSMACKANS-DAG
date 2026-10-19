@@ -2,8 +2,8 @@
 # Lists what in the calendar breaks the Links, Image and Emoji rules of
 # .claude/skills/add-temadag/SKILL.md. Prints one tab-separated line per
 # problem (kind, title, problem, url). Exits 1 when a link or image has a
-# problem or a temadag has no emoji property (undecided; false is a decided
-# "no emoji"), 2 when the calendar is unreadable.
+# problem or a temadag's emoji is undecided (no emoji property; false is a
+# decided "no emoji") or invalid, 2 when the calendar is unreadable.
 # Usage, from the repo root:
 # bash .claude/skills/audit-calendar/audit.sh [days.json]
 set -u
@@ -60,11 +60,15 @@ while IFS=$'\t' read -r kind title url; do
       problem=$(image_problem "$url")
       [ -z "$problem" ] || report image "$title" "$problem" "$url"
       ;;
-    emoji) report emoji "$title" "emoji undecided" "" ;;
+    # an emoji line carries its problem where the others carry a url
+    emoji) report emoji "$title" "$url" "" ;;
   esac
 done < <(jq -r '.[] | .title as $t
   | (.links[] | ["link", $t, .]), ["image", $t, .image],
-    (select(has("emoji") | not) | ["emoji", $t, ""])
+    (if has("emoji") | not then ["emoji", $t, "emoji undecided"]
+      elif .emoji == false
+        or (.emoji | type == "string" and test("^:[a-z0-9_+-]+:$")) then empty
+      else ["emoji", $t, "emoji invalid: \(.emoji | tojson)"] end)
   | @tsv' "$file")
 
 exit $found

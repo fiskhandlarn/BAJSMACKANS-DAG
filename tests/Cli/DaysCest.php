@@ -519,6 +519,29 @@ class DaysCest
         Assert::assertSame('nope.json not found.', $I->grabShellOutput());
     }
 
+    // The calendar audit reports an undecided emoji and an invalid one, and
+    // leaves a declined or valid one alone.
+    public function auditEmoji(CliTester $I): void
+    {
+        // port 9 (discard) refuses the connection, so links and images fail
+        // fast without leaving the machine
+        $I->runShellCommand(
+            'bash .claude/skills/audit-calendar/audit.sh'
+                . ' tests/Support/Data/emoji.json',
+            false,
+        );
+        $I->seeResultCodeIs(1);
+        $lines = preg_grep('/^emoji\t/', explode("\n", $I->grabShellOutput()));
+        Assert::assertSame(
+            [
+                "emoji\tUndecided\temoji undecided",
+                "emoji\tNull\temoji invalid: null",
+                "emoji\tNo colons\temoji invalid: \"semla\"",
+            ],
+            array_map('rtrim', array_values($lines)),
+        );
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];

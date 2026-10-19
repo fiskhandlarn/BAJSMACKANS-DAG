@@ -1,0 +1,36 @@
+[
+  {
+    "day": "march 25",
+    "title": "Undecided",
+    "links": ["http://127.0.0.1:9/"],
+    "image": "http://127.0.0.1:9/"
+  },
+  {
+    "day": "march 25",
+    "title": "Declined",
+    "emoji": false,
+    "links": ["http://127.0.0.1:9/"],
+    "image": "http://127.0.0.1:9/"
+  },
+  {
+    "day": "march 25",
+    "title": "Semla",
+    "emoji": ":semla:",
+    "links": ["http://127.0.0.1:9/"],
+    "image": "http://127.0.0.1:9/"
+  },
+  {
+    "day": "march 25",
+    "title": "Null",
+    "emoji": null,
+    "links": ["http://127.0.0.1:9/"],
+    "image": "http://127.0.0.1:9/"
+  },
+  {
+    "day": "march 25",
+    "title": "No colons",
+    "emoji": "semla",
+    "links": ["http://127.0.0.1:9/"],
+    "image": "http://127.0.0.1:9/"
+  }
+]
