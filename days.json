@@ -111,6 +111,7 @@
   {
     "day": "march 3",
     "title": "Mandelkubbens dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Mandelkubb"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Mandelkubb.JPG/500px-Mandelkubb.JPG"
   },
