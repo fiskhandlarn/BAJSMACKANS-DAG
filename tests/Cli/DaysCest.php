@@ -128,9 +128,7 @@ class DaysCest
     {
         $this->runAt($I, $example, '+0 days');
         $I->seeResultCodeIs(0);
-        $I->seeInShellOutput(
-            displayTitle($example['temadag']) . ' is today!',
-        );
+        $I->seeInShellOutput($example['temadag']['title'] . ' is today!');
     }
 
     #[DataProvider('temadagar')]
@@ -138,9 +136,7 @@ class DaysCest
     {
         $this->runAt($I, $example, '-1 day');
         $I->seeResultCodeIs(0);
-        $I->seeInShellOutput(
-            displayTitle($example['temadag']) . ' is tomorrow!',
-        );
+        $I->seeInShellOutput($example['temadag']['title'] . ' is tomorrow!');
     }
 
     // A year other than the current one, crossing into the next year.
