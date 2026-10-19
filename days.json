@@ -259,6 +259,7 @@
   {
     "day": "last monday of september",
     "title": "Prinsesstårtans vecka",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Prinsesst%C3%A5rta"],
     "image": "https://shared.cdn.smp.schibsted.com/v2/images/a2da274e-e4ef-44d3-a772-9860c59ffcaa?fit=crop&h=1425&w=1900&s=b72122d42b58f4045e8c2b74aced479715c53d8b"
   },
