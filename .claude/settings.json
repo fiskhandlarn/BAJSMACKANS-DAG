@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "in=$(cat); printf '%s' \"$in\" | jq -r '.tool_input.command // empty' | tr '\\n' ' ' | grep -qE '\\bgit\\b.*\\b(commit|push)\\b' && [ \"$(git -C \"$(printf '%s' \"$in\" | jq -r '.cwd // empty')\" branch --show-current)\" = main ] && { echo 'On main: commit on a branch and merge through a PR (AGENTS.md). Run git checkout -b on its own first.' >&2; exit 2; } || exit 0"
+            "command": "in=$(cat); printf '%s' \"$in\" | jq -r '.tool_input.command // empty' | tr '\\n' ' ' | grep -qE '(^|[^[:alnum:]_])git[^[:alnum:]_](.*[^[:alnum:]_])?(commit|push)([^[:alnum:]_]|$)' && [ \"$(git -C \"$(printf '%s' \"$in\" | jq -r '.cwd // empty')\" branch --show-current)\" = main ] && { echo 'On main: commit on a branch and merge through a PR (AGENTS.md). Run git checkout -b on its own first.' >&2; exit 2; } || exit 0"
           },
           {
             "type": "command",
