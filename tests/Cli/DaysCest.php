@@ -481,7 +481,7 @@ class DaysCest
     // Builder link must decode back to the card it printed.
     public function skillPreview(CliTester $I): void
     {
-        $title = 'The "best" bun day :bread:';
+        $title = 'The "best" bun day';
         $I->runShellCommand(
             'DATA_JSON=tests/Support/Data/quotes.json SLACK_TEAM_ID=T0'
                 . ' php .claude/skills/add-temadag/preview.php 2030-03-27 '
@@ -489,7 +489,10 @@ class DaysCest
         );
         [$json, $link] = explode("\n\n", trim($I->grabShellOutput()));
         $card = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-        Assert::assertSame($title, $card['blocks'][0]['title']['text']);
+        Assert::assertSame(
+            $title,
+            $card['blocks'][0]['hero_image']['alt_text'],
+        );
 
         $prefix = 'https://app.slack.com/block-kit-builder/T0/builder#';
         Assert::assertStringStartsWith($prefix, $link);

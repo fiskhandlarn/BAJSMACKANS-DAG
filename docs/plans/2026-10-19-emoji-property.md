@@ -6,7 +6,7 @@ A temadag's Slack emoji was the tail of its title, so nothing told "not decided 
 ## Change
 Each temadag in `days.json` may carry an `emoji` property: a Slack `:name:` string, or `false` for "decided: no emoji". A missing property means undecided. `null` is not allowed, since PHP's `??` and `isset` read it as missing. Titles no longer hold the emoji; the 49 existing emoji moved to `emoji` unchanged, and the 20 temadagar without one stay undecided.
 
-`displayTitle()` in `src/slack.php` builds the title as shown: the title, then a space and the emoji when there is one. `index.php` uses it for the card title only, and the `fields` test checks its length. The image's alt text, the body and the console line leave the emoji out; the body ends in "!" on the temadag's date and "." the date before.
+`displayTitle()` in `src/slack.php` builds the title as shown: the title, then a space and the emoji when there is one. `index.php` uses it for the card title only, and the `fields` test checks its length. The image's alt text, the body and the console line leave the emoji out, and `.claude/skills/add-temadag/preview.php` finds its card by the alt text, so it takes the title without the emoji; the body ends in "!" on the temadag's date and "." the date before.
 
 The `fields` test in `tests/Cli/DaysCest.php` rejects an `emoji` that is neither `false` nor a `:name:` string, a title ending in an emoji, and a shown title over 150 characters. `audit.sh` reports temadagar with no `emoji` property, and they set its exit code like links and images. The `add-temadag` and `audit-calendar` skills write the user's answer to the property, and `CONTEXT.md` names the emoji as part of a temadag.
 

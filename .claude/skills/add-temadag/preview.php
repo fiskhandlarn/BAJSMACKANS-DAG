@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 // Prints a temadag's Slack payload and a Block Kit Builder link to it.
 // Usage, from the repo root:
-// php .claude/skills/add-temadag/preview.php YYYY-MM-DD "Title :emoji:"
-// where the title is as shown, with its emoji when it has one.
+// php .claude/skills/add-temadag/preview.php YYYY-MM-DD "Title"
 // The link needs SLACK_TEAM_ID (the T… id in your Block Kit Builder URL) in
 // .env, which stays out of git.
 
@@ -13,7 +12,7 @@ require 'src/env.php';
 
 [, $date, $title] = $argv + [null, null, null];
 if (!$date || !$title) {
-    fwrite(STDERR, "Usage: php preview.php YYYY-MM-DD \"Title :emoji:\"\n");
+    fwrite(STDERR, "Usage: php preview.php YYYY-MM-DD \"Title\"\n");
     exit(1);
 }
 
@@ -31,7 +30,8 @@ preg_match_all('/```json\n(.*?)\n```/s', implode("\n", $output), $matches);
 
 foreach ($matches[1] as $json) {
     $payload = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-    if ($payload['blocks'][0]['title']['text'] !== $title) {
+    // the alt text is the title without its emoji
+    if ($payload['blocks'][0]['hero_image']['alt_text'] !== $title) {
         continue;
     }
 
