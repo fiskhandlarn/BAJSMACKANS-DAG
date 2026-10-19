@@ -104,6 +104,7 @@
   {
     "day": "first thursday of march",
     "title": "Fössta tossdan i mass",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/F%C3%B6ssta_tossdan_i_mass"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Sm%C3%A5lands_nationaldag.jpg/1920px-Sm%C3%A5lands_nationaldag.jpg"
   },
