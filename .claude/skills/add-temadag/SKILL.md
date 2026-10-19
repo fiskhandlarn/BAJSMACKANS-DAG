@@ -16,7 +16,7 @@ Terms follow `CONTEXT.md`: calendar, source, temadag, day rule. The user decides
    5. **Emoji**: ask whether the temadag gets a Slack emoji, shown after the title. Offer standard emoji that fit; the user may answer with a custom workspace emoji. Write the answer to the temadag's `emoji` property: the `:name:` string, or `false` when the user declines. Done when the property is written.
    6. **Insert** into `days.json` in ascending date order. Movable rules open their month, before its fixed dates; easter-relative rules go first in the file, beside Fettisdagen.
    7. **Preview**: run `php .claude/skills/add-temadag/preview.php YYYY-MM-DD "Title"` for a date the rule resolves to, and give the user its JSON and its Block Kit Builder link. Done when the user has both.
-   8. **Confirm** title, links and image with the user, each by name. Done when the user has approved all three.
+   8. **Confirm** title, emoji, links and image with the user, each by name. Done when the user has approved all four.
    9. **Sources**: the list where the temadag was found belongs in `## Sources` in `README.md`: the calendar the user named, or the list research started from when the user named only the temadag. When it is missing, add it in its own `docs:` commit.
    10. **Commit**: run `composer run lint:json`, `composer run lint:style` and `composer run test`, then commit `days.json` alone as `feat: add <title> on <day rule in words>`. Done when all three are green and the commit exists.
 4. **Pull request** for the batch branch, once the user says the batch is done.
