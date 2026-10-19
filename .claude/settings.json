@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && jq -r '.tool_input.file_path // empty' | grep '\\.php$' | xargs -r -d '\\n' vendor/bin/php-cs-fixer fix --path-mode=intersection --show-progress=none -q"
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case $f in *.php) cd \"$CLAUDE_PROJECT_DIR\" && vendor/bin/php-cs-fixer fix --path-mode=intersection --show-progress=none -q \"$f\";; esac"
           }
         ]
       }
