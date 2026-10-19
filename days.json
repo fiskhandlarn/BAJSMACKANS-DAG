@@ -80,6 +80,7 @@
   {
     "day": "february 5",
     "title": "Nutelladagen",
+    "emoji": false,
     "links": ["https://www.ica.se/artikel/nutelladagen/"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Nutella_ak.jpg"
   },
