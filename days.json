@@ -167,6 +167,7 @@
   {
     "day": "12 april",
     "title": "Lakritsdagen",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Lakrits"],
     "image": "https://res.cloudinary.com/anora/image/upload/t_FullWidthImage-XS-IN/f_auto/folkofolk%2FLakritsgodis"
   },
