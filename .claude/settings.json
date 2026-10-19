@@ -2,11 +2,39 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
             "command": "jq -r '.tool_input.file_path // empty' | grep -q 'composer\\.lock$' && { echo 'composer.lock is generated: change it only through composer (composer require / composer update), never by hand.' >&2; exit 2; } || exit 0"
+          },
+          {
+            "type": "command",
+            "command": "jq -e '(.tool_input.file_path // \"\" | test(\"\\\\.github/workflows/\")) and ([.tool_input.content, .tool_input.new_string, .tool_input.edits[]?.new_string] | map(. // \"\") | join(\"\\n\") | test(\"pull_request_target\"))' >/dev/null && { echo 'Never use pull_request_target: it hands the repo secrets to fork PRs. Use pull_request (AGENTS.md).' >&2; exit 2; } || exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "in=$(cat); printf '%s' \"$in\" | jq -r '.tool_input.command // empty' | tr '\\n' ' ' | grep -qE '(^|[^[:alnum:]_])git[^[:alnum:]_](.*[^[:alnum:]_])?(commit|push)([^[:alnum:]_]|$)' && [ \"$(git -C \"$(printf '%s' \"$in\" | jq -r '.cwd // empty')\" branch --show-current)\" = main ] && { echo 'On main: commit on a branch and merge through a PR (AGENTS.md). Run git checkout -b on its own first.' >&2; exit 2; } || exit 0"
+          },
+          {
+            "type": "command",
+            "command": "c=$(jq -r '.tool_input.command // empty'); case $c in *pull_request_target*) case $c in *.github/workflows*) echo 'Never use pull_request_target: it hands the repo secrets to fork PRs. Use pull_request (AGENTS.md).' >&2; exit 2;; esac;; esac; exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case $f in *.php) cd \"$CLAUDE_PROJECT_DIR\" && vendor/bin/php-cs-fixer fix --path-mode=intersection --show-progress=none -q \"$f\";; esac"
           }
         ]
       }
