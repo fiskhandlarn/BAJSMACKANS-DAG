@@ -174,6 +174,7 @@
   {
     "day": "second wednesday of may",
     "title": "Syltkakans dag",
+    "emoji": false,
     "links": [
       "https://sv.wikipedia.org/wiki/Bakverk#Bakverk_vid_h%C3%B6gtider",
       "https://sv.wikipedia.org/wiki/Syltkaka"
