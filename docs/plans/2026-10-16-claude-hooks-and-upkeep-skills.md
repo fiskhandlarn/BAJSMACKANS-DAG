@@ -9,7 +9,7 @@ Three rules in `AGENTS.md` rested on the agent remembering them: commit on a bra
 - One blocks `pull_request_target` from reaching `.github/workflows/`: through Edit, Write and MultiEdit content, and through any Bash command naming both. These are guardrails against slips, not a wall.
 - One runs php-cs-fixer on every PHP file Claude edits, limited to the files its config covers.
 
-`/audit-calendar` (`.claude/skills/audit-calendar/`) runs `audit.sh`. The script lists every link, image and title breaking `add-temadag`'s Links, Image and Emoji rules. The skill then walks the user through fixes by those rules, one temadag at a time. The script sends a descriptive User-Agent, since Wikimedia answers curl's default one with 429, and retries transient failures. Servers that ignore its one-byte range request and send no length are measured by what they sent.
+`/audit-calendar` (`.claude/skills/audit-calendar/`) runs `audit.sh`. The script lists every link, image and title breaking `add-temadag`'s Links, Image and Emoji rules. The skill then walks the user through fixes by those rules, one temadag at a time. The script sends a descriptive User-Agent, since Wikimedia answers curl's default one with 429, and retries transient failures, judging only the final response. An unreadable calendar stops it with exit 2. Servers that ignore its one-byte range request and send no length are measured by what they sent.
 
 `.github/dependabot.yml` opens weekly PRs bumping the actions, and closes its own once `main` has the version. `/bump-actions` (`.claude/skills/bump-actions/`) bumps them all at once on demand, resolving each release tag to its commit SHA.
 
