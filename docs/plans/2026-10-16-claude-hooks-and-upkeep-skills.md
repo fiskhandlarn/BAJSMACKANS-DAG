@@ -13,6 +13,8 @@ Three rules in `AGENTS.md` rested on the agent remembering them: commit on a bra
 
 `.github/dependabot.yml` opens weekly PRs bumping the actions, and closes its own once `main` has the version. `/bump-actions` (`.claude/skills/bump-actions/`) bumps them all at once on demand, resolving each release tag to its commit SHA.
 
+`.github/dependabot.yml` also opens one weekly PR bumping every composer package. Dependabot runs composer itself, so the lock changes only through composer and resolution respects `config.platform.php`. Its `increase` strategy raises the constraints in `composer.json` too. `/bump-composer` stays for major bumps and its blocker report, which Dependabot does not give.
+
 ## Manual steps
 None. Dependabot starts once the config is on `main`.
 
