@@ -39,12 +39,14 @@
   {
     "day": "january 10",
     "title": "Mazarinens dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Mazarin_(bakverk)"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Mazariner1.jpg/500px-Mazariner1.jpg"
   },
   {
     "day": "january 12",
     "title": "Marsipandagen",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Marsipan"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/95/Marcipangris_cropped.jpg"
   },
@@ -78,6 +80,7 @@
   {
     "day": "february 5",
     "title": "Nutelladagen",
+    "emoji": false,
     "links": ["https://www.ica.se/artikel/nutelladagen/"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Nutella_ak.jpg"
   },
@@ -91,6 +94,7 @@
   {
     "day": "february 15",
     "title": "Geléhallonens dag",
+    "emoji": false,
     "links": [
       "https://sv.wikipedia.org/wiki/Gel%C3%A9hallon",
       "https://vilkendag.nu/temadagar/gelehallonens-dag"
@@ -100,12 +104,14 @@
   {
     "day": "first thursday of march",
     "title": "Fössta tossdan i mass",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/F%C3%B6ssta_tossdan_i_mass"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Sm%C3%A5lands_nationaldag.jpg/1920px-Sm%C3%A5lands_nationaldag.jpg"
   },
   {
     "day": "march 3",
     "title": "Mandelkubbens dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Mandelkubb"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Mandelkubb.JPG/500px-Mandelkubb.JPG"
   },
@@ -119,12 +125,14 @@
   {
     "day": "march 13",
     "title": "Mazarindagen (Return of the Mazarin)",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Mazarin_(bakverk)"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Mazariner1.jpg/500px-Mazariner1.jpg"
   },
   {
     "day": "15 march",
     "title": "Kristofferdagen",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Polhemsbakelse"],
     "image": "https://dms-api.ntm.eu/api/v1/images/jp5m3v6r/smart/width/980/height/551/as/jpeg"
   },
@@ -152,12 +160,14 @@
   {
     "day": "10 april",
     "title": "Bulle med bulle-dagen",
+    "emoji": false,
     "links": ["https://www.facebook.com/BulleMedBullensDag/?locale=sv_SE"],
     "image": "https://static.bonniernews.se/ba/965f424d-b389-5c37-beb4-b5d0051179bb.jpeg"
   },
   {
     "day": "12 april",
     "title": "Lakritsdagen",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Lakrits"],
     "image": "https://res.cloudinary.com/anora/image/upload/t_FullWidthImage-XS-IN/f_auto/folkofolk%2FLakritsgodis"
   },
@@ -174,11 +184,12 @@
   {
     "day": "second wednesday of may",
     "title": "Syltkakans dag",
+    "emoji": false,
     "links": [
       "https://sv.wikipedia.org/wiki/Bakverk#Bakverk_vid_h%C3%B6gtider",
       "https://sv.wikipedia.org/wiki/Syltkaka"
     ],
-    "image": "https://usercontent.one/wp/www.lyckasmedbakning.nu/wp-content/uploads/2017/05/Syltkakor-syltsnittar.jpg"
+    "image": "https://usercontent.one/wp/www.lyckasmedbakning.nu/wp-content/uploads/2017/05/Syltkakor-syltsnittar-1024x768.jpg"
   },
   {
     "day": "1 may",
@@ -190,12 +201,14 @@
   {
     "day": "11 may",
     "title": "Chokladbollens dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Chokladboll"],
     "image": "https://64.media.tumblr.com/tumblr_m2ojbvuC5F1r9ez18o4_400.gifv"
   },
   {
     "day": "15 may",
     "title": "Kardemummabullens dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Bulle"],
     "image": "https://www.bonjour.se/contentassets/b07a8ebb7dc940fd85e9175db59180cd/221071_kardemummabulle_opv_med.jpg"
   },
@@ -246,6 +259,7 @@
   {
     "day": "last monday of september",
     "title": "Prinsesstårtans vecka",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Prinsesst%C3%A5rta"],
     "image": "https://shared.cdn.smp.schibsted.com/v2/images/a2da274e-e4ef-44d3-a772-9860c59ffcaa?fit=crop&h=1425&w=1900&s=b72122d42b58f4045e8c2b74aced479715c53d8b"
   },
@@ -416,6 +430,7 @@
   {
     "day": "third tuesday of november",
     "title": "Raggmunkens dag",
+    "emoji": false,
     "links": [
       "https://sv.wikipedia.org/wiki/Raggmunk",
       "https://raggmunksakademien.se/"
@@ -432,6 +447,7 @@
   {
     "day": "7 november",
     "title": "Kladdkakans dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Kladdkaka"],
     "image": "https://assets.icanet.se/t_ICAseAbsoluteUrl/imagevaultfiles/id_221660/cf_259/kladdig_kladdkaka.jpg"
   },
@@ -466,6 +482,7 @@
   {
     "day": "17 november",
     "title": "Napoleonbakelsens dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Napoleonbakelse"],
     "image": "https://upload.wikimedia.org/wikipedia/commons/3/38/Napoleonbakelse.jpg"
   },
@@ -496,6 +513,7 @@
   {
     "day": "1 december",
     "title": "Glöggens dag",
+    "emoji": false,
     "links": [
       "https://sv.wikipedia.org/wiki/Gl%C3%B6gg",
       "https://temadagar.se/gloggens-dag/"
@@ -505,12 +523,14 @@
   {
     "day": "9 december",
     "title": "Pepparkakans dag",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Pepparkaka#Pepparkakans_dag"],
     "image": "https://i.pinimg.com/736x/5b/e0/07/5be0070ae625ebdea00efbadfe583ea7.jpg"
   },
   {
     "day": "13 december",
     "title": "Lussekattsdagen",
+    "emoji": ":candle:",
     "links": ["https://sv.wikipedia.org/wiki/Lussekatt"],
     "image": "https://images.recept.se/images/recipes/vara-godaste-lussekatter-med-smor_6992.jpg?fit=crop&crop=focalpoint&auto=format&fp-x=0.5&fp-y=0.46765511080213&fp-z=1&w=1200&h=628"
   },
