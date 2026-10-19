@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Lists what in the calendar breaks the Links, Image and Emoji rules of
 # .claude/skills/add-temadag/SKILL.md. Prints one tab-separated line per
-# problem (kind, title, problem, url) and exits 1 when any exist, 2 when the
-# calendar is unreadable.
+# problem (kind, title, problem, url). Exits 1 when a link or image has a
+# problem, 2 when the calendar is unreadable; titles are suggestions, since
+# a temadag may stay without an emoji, and never change the exit code.
 # Usage, from the repo root:
 # bash .claude/skills/audit-calendar/audit.sh [days.json]
 set -u
@@ -18,6 +19,11 @@ jq -e 'type == "array" and all(.[];
 ua='bajsmackans-dag-calendar-audit (https://github.com/fiskhandlarn/BAJSMACKANS-DAG)'
 # --retry covers timeouts, 429 and 5xx
 curl=(curl -s -A "$ua" --retry 2 --max-time 20)
+
+# curl reports 000 when it got no response at all, such as a dead host
+http() {
+  [ "${1:-000}" = 000 ] && echo unreachable || echo "HTTP $1"
+}
 
 report() {
   printf '%s\t%s\t%s\t%s\n' "$@"
@@ -35,7 +41,7 @@ image_problem() {
   size=${range##*/}
   [ -n "$size" ] || size=$length
   [ -n "$size" ] || [ "$code" != 200 ] || size=$downloaded
-  case $code in 200 | 206) ;; *) echo "HTTP ${code:-000}" && return ;; esac
+  case $code in 200 | 206) ;; *) http "$code" && return ;; esac
   case $type in image/*) ;; *) echo "type ${type:-none}" && return ;; esac
   case $size in '' | *[!0-9]*) echo "size unknown" && return ;; esac
   [ "$size" -le 1100000 ] || echo "size $size bytes"
@@ -43,17 +49,20 @@ image_problem() {
 
 # ponytail: sequential, about a minute for 160 urls; parallelise if the calendar grows
 while IFS=$'\t' read -r kind title url; do
-  if [ "$kind" = link ]; then
-    code=$("${curl[@]}" -o /dev/null -w '%{http_code}' "$url")
-    [ "$code" = 200 ] || report link "$title" "HTTP $code" "$url"
-  else
-    problem=$(image_problem "$url")
-    [ -z "$problem" ] || report image "$title" "$problem" "$url"
-  fi
-done < <(jq -r '.[] | .title as $t | (.links[] | ["link", $t, .]), ["image", $t, .image] | @tsv' "$file")
-
-while IFS= read -r title; do
-  report title "$title" "no trailing emoji" ""
-done < <(jq -r '.[].title | select(test(":[a-z0-9_+-]+:$") | not)' "$file")
+  case $kind in
+    link)
+      code=$("${curl[@]}" -o /dev/null -w '%{http_code}' "$url")
+      [ "$code" = 200 ] || report link "$title" "$(http "$code")" "$url"
+      ;;
+    image)
+      problem=$(image_problem "$url")
+      [ -z "$problem" ] || report image "$title" "$problem" "$url"
+      ;;
+    title) printf 'title\t%s\tno trailing emoji\t\n' "$title" ;;
+  esac
+done < <(jq -r '.[] | .title as $t
+  | (.links[] | ["link", $t, .]), ["image", $t, .image],
+    (select($t | test(":[a-z0-9_+-]+:$") | not) | ["title", $t, ""])
+  | @tsv' "$file")
 
 exit $found

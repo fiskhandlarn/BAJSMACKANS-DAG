@@ -7,7 +7,7 @@ disable-model-invocation: true
 Terms follow `CONTEXT.md`. Every fix meets the rules of the **Links**, **Image**, **Emoji** and **Preview** steps in `.claude/skills/add-temadag/SKILL.md`. The user decides every fix; you research and propose.
 
 1. **Branch**: start on a new branch `fix/calendar-audit` off an up-to-date `main`. Done when `git status` is clean on the new branch.
-2. **Audit**: run `bash .claude/skills/audit-calendar/audit.sh`. It prints one tab-separated line per problem: kind (`link`, `image`, `title`), title, problem, url. Done when the user has every problem, grouped by temadag.
+2. **Audit**: run `bash .claude/skills/audit-calendar/audit.sh`. It prints one tab-separated line per problem: kind (`link`, `image`, `title`), title, problem, url. It exits 1 on `link` and `image` lines only; `title` lines are suggestions and come back on every run, declined or not. Done when the user has every problem, grouped by temadag.
 3. Per temadag with problems, in turn:
    1. **Links**: a 3xx whose target (`curl -sL -o /dev/null -w '%{url_effective}'`) is the same page gets the target as its fix. Any other broken link gets a replacement by the **Links** rules. Done when every offered set answers HTTP 200 and fits the subtitle limits.
    2. **Image**: a broken or oversized image gets a fix by the **Image** rules; for a Wikimedia thumbnail that starts with the same file at a standard width. Done when you have looked at every image you offer and given the user each one's full URL.
