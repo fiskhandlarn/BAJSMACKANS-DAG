@@ -30,7 +30,8 @@ preg_match_all('/```json\n(.*?)\n```/s', implode("\n", $output), $matches);
 
 foreach ($matches[1] as $json) {
     $payload = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-    if ($payload['blocks'][0]['title']['text'] !== $title) {
+    // the alt text is the title without its emoji
+    if ($payload['blocks'][0]['hero_image']['alt_text'] !== $title) {
         continue;
     }
 

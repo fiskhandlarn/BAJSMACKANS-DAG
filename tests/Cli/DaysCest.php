@@ -89,10 +89,29 @@ class DaysCest
             );
         }
 
+        Assert::assertDoesNotMatchRegularExpression(
+            '/:[a-z0-9_+-]+:$/',
+            $temadag['title'],
+            'emoji in title, not in emoji',
+        );
+
+        // absent is undecided and false is decided: no emoji. null would read
+        // as absent through ?? and isset, so it's not allowed
+        if (array_key_exists('emoji', $temadag)) {
+            $emoji = $temadag['emoji'];
+            Assert::assertTrue(
+                false === $emoji
+                    || is_string($emoji)
+                        && preg_match('/^:[a-z0-9_+-]+:$/', $emoji),
+                'emoji is neither false nor a :name: string: '
+                    . json_encode($emoji),
+            );
+        }
+
         // Slack rejects the whole message when a card's title or subtitle is
         // over 150 characters
         $fields = [
-            'title' => $temadag['title'],
+            'title' => displayTitle($temadag),
             'subtitle' => slackSubtitle($links),
         ];
         foreach ($fields as $key => $text) {
@@ -336,8 +355,32 @@ class DaysCest
             $card['subtitle']['text'] ?? null,
         );
         Assert::assertSame(
-            ":warning: Idag är det Våffeldagen (it's waffle day)",
+            ":warning: Idag är det Våffeldagen (it's waffle day)!",
             $card['body']['text'] ?? null,
+        );
+    }
+
+    // The emoji shows in the card title only, not in the image's alt text.
+    public function emojiOnlyInCardTitle(CliTester $I): void
+    {
+        $card = $this->posted($I, '2030-03-27')['blocks'][0] ?? [];
+        Assert::assertSame(
+            'The "best" bun day :bread:',
+            $card['title']['text'] ?? null,
+        );
+        Assert::assertSame(
+            'The "best" bun day',
+            $card['hero_image']['alt_text'] ?? null,
+        );
+    }
+
+    // A reminder's body ends in a period, and leaves out the emoji the card
+    // title shows.
+    public function reminderBody(CliTester $I): void
+    {
+        Assert::assertSame(
+            ':spiral_calendar_pad: Imorgon är det The "best" bun day.',
+            $this->postedText($I, '2030-03-26'),
         );
     }
 
@@ -446,7 +489,10 @@ class DaysCest
         );
         [$json, $link] = explode("\n\n", trim($I->grabShellOutput()));
         $card = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-        Assert::assertSame($title, $card['blocks'][0]['title']['text']);
+        Assert::assertSame(
+            $title,
+            $card['blocks'][0]['hero_image']['alt_text'],
+        );
 
         $prefix = 'https://app.slack.com/block-kit-builder/T0/builder#';
         Assert::assertStringStartsWith($prefix, $link);
@@ -473,13 +519,34 @@ class DaysCest
         Assert::assertSame('nope.json not found.', $I->grabShellOutput());
     }
 
+    // The calendar audit reports an undecided emoji and an invalid one, and
+    // leaves a declined or valid one alone.
+    public function auditEmoji(CliTester $I): void
+    {
+        // port 9 (discard) refuses the connection, so links and images fail
+        // fast without leaving the machine
+        $I->runShellCommand(
+            'bash .claude/skills/audit-calendar/audit.sh'
+                . ' tests/Support/Data/emoji.json',
+            false,
+        );
+        $I->seeResultCodeIs(1);
+        $lines = preg_grep('/^emoji\t/', explode("\n", $I->grabShellOutput()));
+        Assert::assertSame(
+            [
+                "emoji\tUndecided\temoji undecided",
+                "emoji\tNull\temoji invalid: null",
+                "emoji\tNo colons\temoji invalid: \"semla\"",
+            ],
+            array_map('rtrim', array_values($lines)),
+        );
+    }
+
     public function noDuplicateTitles(CliTester $I): void
     {
         $seen = [];
         foreach (self::calendar() as $temadag) {
-            // "Foo :coffee:" and "foo" are the same temadag
-            $title = preg_replace('#:[\w+-]+:#', '', $temadag['title']);
-            $seen[] = trim(mb_strtolower($title));
+            $seen[] = trim(mb_strtolower($temadag['title']));
         }
 
         $duplicates = array_keys(
