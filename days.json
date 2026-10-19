@@ -132,6 +132,7 @@
   {
     "day": "15 march",
     "title": "Kristofferdagen",
+    "emoji": false,
     "links": ["https://sv.wikipedia.org/wiki/Polhemsbakelse"],
     "image": "https://dms-api.ntm.eu/api/v1/images/jp5m3v6r/smart/width/980/height/551/as/jpeg"
   },
