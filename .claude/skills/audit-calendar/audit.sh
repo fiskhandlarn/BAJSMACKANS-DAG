@@ -8,8 +8,10 @@
 set -u
 file=${1:-days.json}
 found=0
-jq -e 'type == "array"' "$file" >/dev/null || {
-  echo "$file is not a JSON array of temadagar" >&2
+jq -e 'type == "array" and all(.[];
+  (.title | type) == "string" and (.image | type) == "string"
+  and (.links | type) == "array" and all(.links[]; type == "string"))' "$file" >/dev/null || {
+  echo "$file is not a JSON array of temadagar, each with a title, links and an image" >&2
   exit 2
 }
 # Wikimedia answers 429 to curl's default agent
