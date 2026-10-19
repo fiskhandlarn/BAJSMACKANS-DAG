@@ -430,6 +430,7 @@
   {
     "day": "third tuesday of november",
     "title": "Raggmunkens dag",
+    "emoji": false,
     "links": [
       "https://sv.wikipedia.org/wiki/Raggmunk",
       "https://raggmunksakademien.se/"
