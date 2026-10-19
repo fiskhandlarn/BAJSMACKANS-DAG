@@ -13,7 +13,7 @@ require 'src/env.php';
 
 [, $date, $title] = $argv + [null, null, null];
 if (!$date || !$title) {
-    fwrite(STDERR, "Usage: php preview.php YYYY-MM-DD \"Title\"\n");
+    fwrite(STDERR, "Usage: php preview.php YYYY-MM-DD \"Title :emoji:\"\n");
     exit(1);
 }
 
