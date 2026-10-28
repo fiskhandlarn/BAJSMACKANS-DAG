@@ -401,6 +401,16 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Snus_nobrand.jpg/960px-Snus_nobrand.jpg"
   },
   {
+    "day": "25 october",
+    "title": "Världspastadagen",
+    "emoji": ":spaghetti:",
+    "links": [
+      "https://sv.wikipedia.org/wiki/Pasta",
+      "https://temadagar.se/varldspastadagen/"
+    ],
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Pasta_Pomodoro_in_Rome.jpg/960px-Pasta_Pomodoro_in_Rome.jpg"
+  },
+  {
     "day": "26 october",
     "title": "Potatisens dag",
     "emoji": ":potato:",
